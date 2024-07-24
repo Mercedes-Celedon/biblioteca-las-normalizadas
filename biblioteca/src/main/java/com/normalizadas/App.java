@@ -1,13 +1,22 @@
 package com.normalizadas;
 
-import com.normalizadas.dbConnection;
-
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Scanner;
 
 public class App {
     public static Scanner scanner = new Scanner(System.in);
+    public static dbConnection connection = new dbConnection();
+    public static Connection conn = connection.getDbConnection();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
+
+        // Si la variable objeto conex es diferente de nulo
+
+        // para cerrar la conexión a BD
+
         /*
          * opening a loop (do while)
          * el do-while se cerrará solo cuando el usuario quiera salir y en cada vuelta
@@ -18,11 +27,11 @@ public class App {
         int opc;
 
         do {
-            System.out.println("¿Qué quieres hacer?");
+            System.out.println("\n¿Qué quieres hacer?");
             System.out.println("1. Ver catálogo entero.");
             System.out.println("2. Buscar un libro.");
             System.out.println("3. Añadir un libro.");
-            System.out.println("4. Salir.");
+            System.out.println("4. Salir.\n");
 
             opc = scanner.nextInt();
 
@@ -34,17 +43,30 @@ public class App {
 
             } else if (opc == 3) {
                 addBook();
-                
+
             } else if (opc == 4) {
-                //dbConnection.connectionClose();
+                connection.closeConnection(conn);
             }
 
         } while (opc != 4);
     }
 
     /* Function show all books - showAll */
-    public static void showAll() {
-        //System.out.println("Aquí tienes");
+    public static void showAll() throws SQLException {
+        // System.out.println("Aquí tienes");
+        if (conn != null) {
+            System.out.println("Conexión a la base de datos exitosa");
+
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM books");
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String nombre = rs.getString("title");
+                System.out.println(id + " " + nombre);
+            }
+            stmt.close();
+            rs.close();
+        }
     }
 
     /* Function search books by filters - searchBooks */
@@ -55,7 +77,7 @@ public class App {
          * searchByAuthor()
          * searchByGenre()
          */
-        //System.out.println("A buscar");
+        // System.out.println("A buscar");
     }
 
     /* Function search a book by title - searchByTitle */
