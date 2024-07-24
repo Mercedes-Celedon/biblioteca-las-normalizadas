@@ -2,7 +2,10 @@ package com.normalizadas;
 
 import com.normalizadas.dbConnection;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Scanner;
+
 
 public class App {
     public static Scanner scanner = new Scanner(System.in);
@@ -88,6 +91,22 @@ public class App {
      * @param id
      */
     public void deleteBook(int id) {
+
+        try {
+        PreparedStatement stmn = conn.prepareStatement("DELETE FROM books WHERE id = ?");
+        stmn.setInt(1, id);
+
+        int row = stmn.executeUpdate();
+
+        if ( row == 0) {
+            System.out.println("No se ha podido borrar el registro del libro con id: " + id);
+        } else {
+            System.out.println("Libro con id " + id + " se ha borrado correctamente.");
+        }
+
+        } catch (SQLException throwables) {
+        throwables.printStackTrace();
+        }
 
         dbConnection.deleteBook(id);
         System.out.println("Ingresa id del libro que quieres eliminar.");
