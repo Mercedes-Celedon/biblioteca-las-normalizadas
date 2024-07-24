@@ -53,20 +53,7 @@ public class App {
 
     /* Function show all books - showAll */
     public static void showAll() throws SQLException {
-        // System.out.println("Aquí tienes");
-        if (conn != null) {
-            System.out.println("Conexión a la base de datos exitosa");
 
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM books");
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String nombre = rs.getString("title");
-                System.out.println(id + " " + nombre);
-            }
-            stmt.close();
-            rs.close();
-        }
     }
 
     /* Function search books by filters - searchBooks */
