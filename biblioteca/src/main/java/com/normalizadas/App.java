@@ -44,8 +44,8 @@ public class App {
     /* Function show all books - showAll */
     public static void showAll() throws SQLException {
         System.out.println("\n\nListado de Libros disponibles: " + 
-        "\n\nTítulo | Autor | Género | ISBN | Stock | Idioma" +
-        "\n----------------------------------------------------------------------------------------------------------------------------------------------------------");
+        "\n\nID | Título | Autor | Género | ISBN | Stock | Idioma" +
+        "\n-----------------------------------------------------------------------------------------------------------------------------------------------------------");
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT b.id, b.title, b.isbn, b.stock, l.language FROM books as b\n" + //
                 "JOIN languages as l ON b.id_language=l.id\n" +
@@ -59,8 +59,8 @@ public class App {
             int stock = rs.getInt("stock");
             String language = rs.getString("language");
 
-            System.out.println(title + " | " + authors + " | " + genres + " | " + isbn + " | " + stock + " | " + language + 
-            "\n----------------------------------------------------------------------------------------------------------------------------------------------------------");
+            System.out.println(id + " | " + title + " | " + authors + " | " + genres + " | " + isbn + " | " + stock + " | " + language + 
+            "\n-----------------------------------------------------------------------------------------------------------------------------------------------------------");
         }
         stmt.close();
         rs.close();
