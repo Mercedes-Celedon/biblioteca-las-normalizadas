@@ -1,7 +1,8 @@
 package com.normalizadas;
 
-import com.normalizadas.dbConnection;
 
+
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class App 
@@ -9,11 +10,18 @@ public class App
     public static Scanner scanner= new Scanner(System.in);
     public static void main( String[] args )
     {
+        dbConnection.initConnection();
        /*
         * opening a loop (do while)
         * el do-while se cerrará solo cuando el usuario quiera salir y en cada vuelta se pregunta si quiere salir
         * tiene que enseñar una lista de lo que debe hacer (swtich)
         */
+        try {
+            addBook();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     /* Function show all books - showAll */
@@ -48,11 +56,32 @@ public class App
     }
 
     /*Function add a book - addBook */
-    public void addBook(){
+    public static void addBook() throws SQLException{
         /*Add title
          * addAuthor(bookId)
          * addGenre(bookId)
          */
+        System.out.println("Indica el título:");
+        String title = scanner.nextLine();
+        System.out.println("Añade una descripción (de menos de 200 caracteres):");
+        String description = scanner.nextLine();
+        System.out.println("Indica el ISBN:");
+        String isbn = scanner.nextLine();
+        System.out.println("Indica el stock:");
+        int stock = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("Indica el idioma (escribe solo el número): \n\t1. Español \n\t2. Inglés \n\t3. Francés \n\t4. Catalán.");
+        int id_language = scanner.nextInt();
+        scanner.nextLine();
+        // System.out.println("Indica el autor: ");
+        // String author = scanner.nextLine();
+        
+        // if(author){}
+        
+        // String genre = scanner.nextLine();
+        
+        // if(genre){}
+        dbConnection.insertBook(title, description, isbn, stock, id_language);
     }
 
     /**
