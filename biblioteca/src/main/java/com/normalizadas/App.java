@@ -1,14 +1,37 @@
 package com.normalizadas;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Scanner;
 
 public class App 
 {
     public static Scanner scanner= new Scanner(System.in);
-    public static void main( String[] args )
+    public static void main( String[] args ) throws SQLException
     {
         dbConnection connection = new dbConnection();
-        connection.getDbConnection();
+        Connection conn=connection.getDbConnection();
+        
+        // Si la variable objeto conex es diferente de nulo
+        if(conn != null){
+            System.out.println("Conexión a la base de datos exitosa");
+           
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM books");
+            while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String nombre = rs.getString("title");
+                    System.out.println(id + " " + nombre);
+                }
+            stmt.close();
+            rs.close();
+        }
+
+         
+        //para cerrar la conexión a BD
+
        /*
         * opening a loop (do while)
         * el do-while se cerrará solo cuando el usuario quiera salir y en cada vuelta se pregunta si quiere salir
@@ -45,7 +68,7 @@ public class App
     /* Function search a book by genre - searchByGenre */
     public void searchByGenre(){
         
-    }
+    }  
 
     /*Function add a book - addBook */
     public void addBook(){

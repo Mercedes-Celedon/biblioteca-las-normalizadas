@@ -1,5 +1,6 @@
 package com.normalizadas;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -7,28 +8,30 @@ import java.sql.SQLException;
 public class dbConnection {
   /* to do database connection*/
     public Connection getDbConnection() { 
+      Dotenv dotenv= Dotenv.load();
         String url = "jdbc:postgresql://127.0.0.1:5432/library";
-        String user = "postgres";
-        String password = "user615";
+        String user = dotenv.get("DB_USER");
+        String password = dotenv.get("DB_PASSWORD");
 
-        try (Connection conn = DriverManager.getConnection( url, user, password)) {
-          if (conn != null) {
-            // check connection status
-            // conn.isOpen()
-            System.out.println("Connected to the database!");
-            return conn;
-          } else {
-            System.out.println("Failed to make connection!");
-            return null;
-          }
-          } catch (SQLException e) {
-            System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
-            return null;
-          } catch (Exception e) {
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(url, user, password);
+        } catch (SQLException e) {
             e.printStackTrace();
-            return null;
-          }
-      } 
+        }
+        return conn;
+    } 
+
+    public void closeConnection(Connection conn){
+      if (conn != null) {
+        try {
+            conn.close();
+            System.out.println("Conexión cerrada");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+      }
+    }
 
 }
 
