@@ -34,6 +34,9 @@ public class App {
 
             } else if (opc == 3) {
                 addBook();
+                
+            } else if (opc == 4) {
+                //dbConnection.connectionClose();
             }
 
         } while (opc != 4);
