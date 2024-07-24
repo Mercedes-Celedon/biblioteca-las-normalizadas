@@ -1,7 +1,5 @@
 package com.normalizadas;
 
-import com.normalizadas.dbConnection;
-
 import java.util.Scanner;
 
 public class App 
@@ -9,6 +7,8 @@ public class App
     public static Scanner scanner= new Scanner(System.in);
     public static void main( String[] args )
     {
+        dbConnection connection = new dbConnection();
+        connection.getDbConnection();
        /*
         * opening a loop (do while)
         * el do-while se cerrará solo cuando el usuario quiera salir y en cada vuelta se pregunta si quiere salir
