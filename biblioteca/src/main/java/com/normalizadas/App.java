@@ -6,13 +6,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
 import com.normalizadas.crud.AllBooks;
+import com.normalizadas.crud.NewBook;
 
 public class App {
     public static Scanner scanner= new Scanner(System.in);
     private static Connection conn;//Inicializando atributo(property or class member) de la clase app
     //con un constructor se tiene organizada y separada la lógica de inicialización y ejecución. da claridad y organización del código.
     public App() {//implementando un constructor para la clase app  (inicialización de recurso que podría usar en esa clase) 
-        this.conn = new dbConnection().getDbConnection();
+        App.conn = new dbConnection().getDbConnection();
     }
 
     public static void main( String[] args ) throws SQLException
@@ -27,6 +28,7 @@ public class App {
          * tiene que enseñar una lista de lo que debe hacer (swtich)
          */
         AllBooks allBooks;
+        NewBook newBook;
         int opc;
 
         do {
@@ -37,6 +39,7 @@ public class App {
             System.out.println("4. Salir.\n");
 
             opc = scanner.nextInt();
+            
 
             if (opc == 1) {
                 allBooks = new AllBooks(conn);
@@ -46,7 +49,8 @@ public class App {
                 myApp.searchBooks();
 
             } else if (opc == 3) {
-                addBook();
+                newBook = new NewBook(conn, scanner);
+                newBook.addBook();
 
             } else if (opc == 4) {
                 //dbConnection.closeConnection(conn);
@@ -54,6 +58,7 @@ public class App {
             }
 
         } while (opc != 4);
+        
     }
 
 
@@ -80,7 +85,7 @@ public class App {
 
     /* Function search a book by genre - searchByGenre */
     public void searchByGenre()throws SQLException{
-        Statement stmt = this.conn.createStatement();
+        Statement stmt = App.conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM books ORDER BY id ASC");
             while (rs.next()) {
                     int id = rs.getInt("id");
@@ -92,48 +97,7 @@ public class App {
     }  
 
     /* Function add a book - addBook */
-    public static void addBook() {
-        /*
-         * Add title
-         * addAuthor(bookId)
-         * addGenre(bookId)
-         */
-        System.out.println("Indica el título:");
-        String title = scanner.nextLine();
-        System.out.println("Añade una descripción (de menos de 200 caracteres):");
-        String description = scanner.nextLine();
-        System.out.println("Indica el ISBN:");
-        String isbn = scanner.nextLine();
-        System.out.println("Indica el stock:");
-        int stock = scanner.nextInt();
-        scanner.nextLine();
-        System.out.println("Indica el idioma (escribe solo el número): \n\t1. Español \n\t2. Inglés \n\t3. Francés \n\t4. Catalán.");
-        int id_language = scanner.nextInt();
-        scanner.nextLine();
-        System.out.println("Indica el autor o autores (en este caso separados por comas): ");
-        String[] author = scanner.nextLine().split(",");
-        System.out.println("Indica el género o géneros (en este caso separados por comas): ");
-        String[] genre = scanner.nextLine().split(",");
-        
-        for(String authorName : author){
-            // int id_author = authorClass.findOrCreateAuthor(author.trim());
-            //bookClass.addBookAuthor()
-        }
-        
-        // insertBook(title, description, isbn, stock, id_language);
-    }
-
-    // public static void insertBook(String title, String description, String isbn, int stock, int id_language) throws SQLException{
-
-    //     PreparedStatement stmn = conn.prepareStatement("INSERT INTO books (title, description, isbn, stock, id_language) VALUES (?,?,?,?,?)");
-        
-    //     stmn.setString(1, title);
-    //     stmn.setString(2, description);
-    //     stmn.setString(3, isbn);
-    //     stmn.setInt(4, stock);
-    //     stmn.setInt(5, id_language);
-    //     stmn.execute();
-    // }
+    
     /**
      * Function add an author - addAuthor
      * 
