@@ -36,9 +36,35 @@ public void searchByTitle() {
 
 /* Function search a book by author - searchByAuthor */
 public void searchByAuthor() {
+       /* private Connection conn;
+        public searchByAuthor(Connection conn){
+        this.conn = conn; */
+        System.out.print("Introduce el nombre del Autor: ");
+        scanner.nextLine();
+        String authorFilter = scanner.nextLine();
+        System.out.println(authorFilter);
+        try {
+            Statement stmn = App.conn.createStatement();
+            ResultSet result = stmn.executeQuery("SELECT a.name, b.title FROM authors as a\n" + //
+                                                "\tJOIN books_authors as ba ON a.id=ba.id_author\n" + //
+                                                "\tJOIN books as b ON ba.id_book=b.id\n" + //
+                                                "\tWHERE a.name='"+authorFilter+"';");
+
+            System.out.println(" Author       |      Book ");
+            while (result.next() ){ 
+                String book = result.getString("title");
+
+                System.out.println(authorFilter+ " | " +book);
+                }
+            stmn.close();
+            result.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 
-}
+
 
 /* Function search a book by genre - searchByGenre */
 public void searchByGenre()throws SQLException{
