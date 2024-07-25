@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
+import com.normalizadas.crud.AllBooks;
 
 public class App {
     public static Scanner scanner = new Scanner(System.in);
@@ -23,7 +24,7 @@ public class App {
          * se pregunta si quiere salir
          * tiene que enseñar una lista de lo que debe hacer (swtich)
          */
-
+        AllBooks allBooks = new AllBooks();
         int opc;
 
         do {
@@ -36,7 +37,7 @@ public class App {
             opc = scanner.nextInt();
 
             if (opc == 1) {
-                showAll();
+                allBooks.showAll();
 
             } else if (opc == 2) {
                 searchBooks();
@@ -55,6 +56,7 @@ public class App {
     public static void showAll() throws SQLException {
 
     }
+
 
     /* Function search books by filters - searchBooks */
     public static void searchBooks() {
