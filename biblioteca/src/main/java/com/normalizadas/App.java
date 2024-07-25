@@ -1,12 +1,13 @@
 package com.normalizadas;
 
+import java.nio.channels.AcceptPendingException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
 import com.normalizadas.crud.AllBooks;
-import com.normalizadas.crud.DeleteBooks;
+import com.normalizadas.crud.SearchBooks;
 
 public class App {
     public static Scanner scanner = new Scanner(System.in);
@@ -30,8 +31,10 @@ public class App {
          * tiene que enseñar una lista de lo que debe hacer (swtich)
          */
         AllBooks allBooks;
-        DeleteBooks deleteBooks;
         int opc;
+
+        SearchBooks searchBooks;
+    
 
         do {
             System.out.println("\n¿Qué quieres hacer?");
@@ -47,7 +50,8 @@ public class App {
                 allBooks.showAll();
 
             } else if (opc == 2) {
-                myApp.searchBooks();
+                searchBooks = new SearchBooks(conn, scanner);
+                searchBooks.TypeOfFilters();
 
             } else if (opc == 3) {
 
@@ -58,46 +62,7 @@ public class App {
 
         } while (opc != 4);
     }
-
-    /* Function show all books - showAll */
-    public void showAll() {
-
-    }
-
-    /* Function search books by filters - searchBooks */
-    public void searchBooks() {
-        /*
-         * Add functions:
-         * searchByTitle()
-         * searchByAuthor()
-         * searchByGenre()
-         */
-        // System.out.println("A buscar");
-    }
-
-    /* Function search a book by title - searchByTitle */
-    public void searchByTitle() {
-
-    }
-
-    /* Function search a book by author - searchByAuthor */
-    public void searchByAuthor() {
-
-    }
-
-    /* Function search a book by genre - searchByGenre */
-    public void searchByGenre() throws SQLException {
-        Statement stmt = App.conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM books ORDER BY id ASC");
-        while (rs.next()) {
-            int id = rs.getInt("id");
-            String nombre = rs.getString("title");
-            System.out.println(id + " " + nombre);
-        }
-        stmt.close();
-        rs.close();
-    }
-
+   
     /* Function add a book - addBook */
     public static void addBook() {
         /*
