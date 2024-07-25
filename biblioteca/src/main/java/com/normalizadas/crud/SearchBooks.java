@@ -61,24 +61,33 @@ public class SearchBooks {
         String genreFilter = scanner.nextLine();
 
         try {
-            Statement stmn = conn.createStatement();
-            ResultSet result = stmn.executeQuery("SELECT a.genre, b.title FROM genres as a\n" + //
-                    "\tJOIN books_genres as ba ON a.id=ba.id_genre\n" + //
-                    "\tJOIN books as b ON ba.id_book=b.id\n" + //
-                    "\tWHERE a.genre ='" + genreFilter + "';");
+            Statement stmn = App.conn.createStatement();
+            ResultSet result = stmn.executeQuery(
+                    "SELECT a.genre, b.title, b.isbn, b.stock, b.id_language " +
+                    "FROM genres as a " +
+                    "JOIN books_genres as ba ON a.id = ba.id_genre " +
+                    "JOIN books as b ON ba.id_book = b.id " +
+                    "WHERE a.genre = '" + genreFilter + "';");
+
             if (!result.isBeforeFirst()) { // Verifica si el ResultSet está vacío
                 System.out.println("No se encontró el género: " + genreFilter);
             } else {
-                System.out.println("______________________________________________________\n");
-                System.out.println(" Género      |      Libro ");
+                System.out.println(" Género       |      Libro       |      ISBN       |      Stock       |      Lenguaje ");
+                System.out.println("_______________________________________________________________________________________________");
                 while (result.next()) {
-                    String book = result.getString("title");
-                    System.out.println(genreFilter + " | " + book);
+                    String genre = result.getString("genre");
+                    String title = result.getString("title");
+                    String isbn = result.getString("isbn");
+                    int stock = result.getInt("stock");
+                    int languageId = result.getInt("id_language");
+                    
+                    System.out.printf("%s | %s | %s | %d | %d%n", genre, title, isbn, stock, languageId);
+                    System.out.println("_______________________________________________________________________________________________");
                 }
-                stmn.close();
-                result.close();
-                System.out.println("______________________________________________________");
             }
+
+            result.close();
+            stmn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
