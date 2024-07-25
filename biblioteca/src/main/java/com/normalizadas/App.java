@@ -55,11 +55,6 @@ public class App {
         } while (opc != 4);
     }
 
-    /* Function show all books - showAll */
-    public void showAll(){
-        
-    }
-
 
     /* Function search books by filters - searchBooks */
     public void searchBooks() {
@@ -124,20 +119,20 @@ public class App {
             //bookClass.addBookAuthor()
         }
         
-        insertBook(title, description, isbn, stock, id_language);
+        // insertBook(title, description, isbn, stock, id_language);
     }
 
-    public static void insertBook(String title, String description, String isbn, int stock, int id_language) throws SQLException{
+    // public static void insertBook(String title, String description, String isbn, int stock, int id_language) throws SQLException{
 
-        PreparedStatement stmn = conn.prepareStatement("INSERT INTO books (title, description, isbn, stock, id_language) VALUES (?,?,?,?,?)");
+    //     PreparedStatement stmn = conn.prepareStatement("INSERT INTO books (title, description, isbn, stock, id_language) VALUES (?,?,?,?,?)");
         
-        stmn.setString(1, title);
-        stmn.setString(2, description);
-        stmn.setString(3, isbn);
-        stmn.setInt(4, stock);
-        stmn.setInt(5, id_language);
-        stmn.execute();
-    }
+    //     stmn.setString(1, title);
+    //     stmn.setString(2, description);
+    //     stmn.setString(3, isbn);
+    //     stmn.setInt(4, stock);
+    //     stmn.setInt(5, id_language);
+    //     stmn.execute();
+    // }
     /**
      * Function add an author - addAuthor
      * 
