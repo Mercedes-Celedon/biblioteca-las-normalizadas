@@ -16,10 +16,9 @@ public class App {
         conn = new dbConnection().getDbConnection();
         AllBooks allBooks;
         NewBook newBook;
-        int opc;
-
         SearchBooks searchBooks;
-
+    
+        int opc;
         do {
             System.out.println("\n¿Qué quieres hacer?");
             System.out.println("1. Ver catálogo entero.");
