@@ -8,19 +8,20 @@ import java.util.Scanner;
 import com.normalizadas.crud.AllBooks;
 import com.normalizadas.crud.DeleteBooks;
 
-public class App 
-{
-    public static Scanner scanner= new Scanner(System.in);
-    private static Connection conn;//Inicializando atributo(property or class member) de la clase app
-    //con un constructor se tiene organizada y separada la lógica de inicialización y ejecución. da claridad y organización del código.
-    public App() {//implementando un constructor para la clase app  (inicialización de recurso que podría usar en esa clase) 
+public class App {
+    public static Scanner scanner = new Scanner(System.in);
+    private static Connection conn;// Inicializando atributo(property or class member) de la clase app
+    // con un constructor se tiene organizada y separada la lógica de inicialización
+    // y ejecución. da claridad y organización del código.
+
+    public App() {// implementando un constructor para la clase app (inicialización de recurso que
+                  // podría usar en esa clase)
         App.conn = new dbConnection().getDbConnection();
     }
 
-    public static void main( String[] args ) throws SQLException
-    {
-        App myApp = new App();//creando una nueva variable con la instancia de la clase app que se llama myApp
-        
+    public static void main(String[] args) throws SQLException {
+        App myApp = new App();// creando una nueva variable con la instancia de la clase app que se llama
+                              // myApp
 
         /*
          * opening a loop (do while)
@@ -49,11 +50,9 @@ public class App
                 myApp.searchBooks();
 
             } else if (opc == 3) {
-                deleteBooks = new DeleteBooks(conn, scanner);
-                deleteBooks.delete(24);
 
             } else if (opc == 4) {
-                //dbConnection.closeConnection(conn);
+                // dbConnection.closeConnection(conn);
                 break;
             }
 
@@ -61,10 +60,9 @@ public class App
     }
 
     /* Function show all books - showAll */
-    public void showAll(){
-        
-    }
+    public void showAll() {
 
+    }
 
     /* Function search books by filters - searchBooks */
     public void searchBooks() {
@@ -88,17 +86,17 @@ public class App
     }
 
     /* Function search a book by genre - searchByGenre */
-    public void searchByGenre()throws SQLException{
+    public void searchByGenre() throws SQLException {
         Statement stmt = App.conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM books ORDER BY id ASC");
-            while (rs.next()) {
-                    int id = rs.getInt("id");
-                    String nombre = rs.getString("title");
-                    System.out.println(id + " " + nombre);
-                }
-            stmt.close();
-            rs.close();
-    }  
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String nombre = rs.getString("title");
+            System.out.println(id + " " + nombre);
+        }
+        stmt.close();
+        rs.close();
+    }
 
     /* Function add a book - addBook */
     public static void addBook() {
