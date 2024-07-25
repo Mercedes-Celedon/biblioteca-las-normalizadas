@@ -31,7 +31,6 @@ public class App {
          * tiene que enseñar una lista de lo que debe hacer (swtich)
          */
         AllBooks allBooks;
-        DeleteBooks deleteBooks;
         int opc;
 
         SearchBooks searchBooks;

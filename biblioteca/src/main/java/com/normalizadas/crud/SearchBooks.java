@@ -1,7 +1,5 @@
 package com.normalizadas.crud;
 
-import com.normalizadas.App;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -61,13 +59,13 @@ public class SearchBooks {
         String genreFilter = scanner.nextLine();
 
         try {
-            Statement stmn = App.conn.createStatement();
+            Statement stmn = conn.createStatement();
             ResultSet result = stmn.executeQuery(
-                    "SELECT a.genre, b.title, b.isbn, b.stock, b.id_language " +
-                    "FROM genres as a " +
-                    "JOIN books_genres as ba ON a.id = ba.id_genre " +
-                    "JOIN books as b ON ba.id_book = b.id " +
-                    "WHERE a.genre = '" + genreFilter + "';");
+                "SELECT ge.genre, b.title, b.isbn, b.stock, l.language FROM books as b\n"+
+                "JOIN books_genres as ba ON b.id=ba.id_book\n"+
+                "JOIN genres as ge ON ba.id_genre=ge.id\n"+
+                "JOIN languages as l ON l.id=b.id_language\n"+
+                "WHERE ge.genre = '" + genreFilter + "';");
 
             if (!result.isBeforeFirst()) { // Verifica si el ResultSet está vacío
                 System.out.println("No se encontró el género: " + genreFilter);
@@ -79,10 +77,10 @@ public class SearchBooks {
                     String title = result.getString("title");
                     String isbn = result.getString("isbn");
                     int stock = result.getInt("stock");
-                    int languageId = result.getInt("id_language");
+                    String language = result.getString("language");
                     
-                    System.out.printf("%s | %s | %s | %d | %d%n", genre, title, isbn, stock, languageId);
-                    System.out.println("_______________________________________________________________________________________________");
+                    System.out.println(genre + " | " + title + " | " + isbn + " | " + stock + " | " + language +
+                "\n-----------------------------------------------------------------------------------------------------------------------------------------------------------");
                 }
             }
 
