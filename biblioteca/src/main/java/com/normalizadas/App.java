@@ -13,13 +13,12 @@ public class App {
 
     public static void main(String[] args) throws SQLException {
 
+        conn = new dbConnection().getDbConnection();
         AllBooks allBooks;
         NewBook newBook;
-        int opc;
-
         SearchBooks searchBooks;
     
-
+        int opc;
         do {
             System.out.println("\n¿Qué quieres hacer?");
             System.out.println("1. Ver catálogo entero.");
