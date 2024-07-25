@@ -1,16 +1,18 @@
 package com.normalizadas;
 
+import java.nio.channels.AcceptPendingException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
 import com.normalizadas.crud.AllBooks;
+import com.normalizadas.crud.SearchBooks;
 
 public class App 
 {
     public static Scanner scanner= new Scanner(System.in);
-    private static Connection conn;//Inicializando atributo(property or class member) de la clase app
+    public static Connection conn;//Inicializando atributo(property or class member) de la clase app
     //con un constructor se tiene organizada y separada la lógica de inicialización y ejecución. da claridad y organización del código.
     public App() {//implementando un constructor para la clase app  (inicialización de recurso que podría usar en esa clase) 
         App.conn = new dbConnection().getDbConnection();
@@ -30,6 +32,9 @@ public class App
         AllBooks allBooks;
         int opc;
 
+        SearchBooks searchBooks;
+    
+
         do {
             System.out.println("\n¿Qué quieres hacer?");
             System.out.println("1. Ver catálogo entero.");
@@ -44,7 +49,11 @@ public class App
                 allBooks.showAll();
 
             } else if (opc == 2) {
-                myApp.searchBooks();
+                searchBooks = new SearchBooks(App.conn);
+                searchBooks.searchByTitle();
+                searchBooks.searchByAuthor();
+                searchBooks.searchByGenre();
+
 
             } else if (opc == 3) {
                 addBook();
