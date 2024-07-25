@@ -73,7 +73,8 @@ public class App
 
 
     /* Function search books by filters - searchBooks */
-    public void searchBooks() {
+    public void searchBooks() throws SQLException{
+        searchByGenre();
         /*
          * Add functions:
          * searchByTitle()
@@ -95,15 +96,34 @@ public class App
 
     /* Function search a book by genre - searchByGenre */
     public void searchByGenre()throws SQLException{
-        Statement stmt = App.conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM books ORDER BY id ASC");
-            while (rs.next()) {
-                    int id = rs.getInt("id");
-                    String nombre = rs.getString("title");
-                    System.out.println(id + " " + nombre);
-                }
-            stmt.close();
-            rs.close();
+        System.out.print("Introduce el nombre del Género: ");
+        scanner.nextLine();
+        String genreFilter = scanner.nextLine();
+        
+        try {
+            Statement stmn = App.conn.createStatement();
+            ResultSet result = stmn.executeQuery("SELECT a.genre, b.title FROM genres as a\n" + //
+                                                "\tJOIN books_genres as ba ON a.id=ba.id_genre\n" + //
+                                                "\tJOIN books as b ON ba.id_book=b.id\n" + //
+                                                "\tWHERE a.genre ='"+genreFilter+"';");
+            if (!result.isBeforeFirst()) { // Verifica si el ResultSet está vacío
+                System.out.println("No se encontró el género: " + genreFilter);
+            } else {
+                System.out.println("______________________________________________________\n");
+                System.out.println(" Genre       |      Book ");
+                while (result.next() ){ 
+                    String book = result.getString("title");
+                    System.out.println(genreFilter + " | " +book);
+                    }
+                stmn.close();
+                result.close();
+                System.out.println("______________________________________________________");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        
     }  
 
     /* Function add a book - addBook */
