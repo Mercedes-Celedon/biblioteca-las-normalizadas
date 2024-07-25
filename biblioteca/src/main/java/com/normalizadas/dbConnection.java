@@ -19,10 +19,12 @@ public class dbConnection {
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(url, user, password);
+            return conn;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return conn;
+        return null;
+        
     } 
 
     public void closeConnection(Connection conn){
