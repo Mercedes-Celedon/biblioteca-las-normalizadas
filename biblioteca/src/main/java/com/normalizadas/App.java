@@ -13,12 +13,12 @@ public class App {
 
     public static void main(String[] args) throws SQLException {
 
+        conn = new dbConnection().getDbConnection();
         AllBooks allBooks;
         NewBook newBook;
         int opc;
 
         SearchBooks searchBooks;
-    
 
         do {
             System.out.println("\n¿Qué quieres hacer?");
@@ -28,7 +28,6 @@ public class App {
             System.out.println("4. Salir.\n");
 
             opc = scanner.nextInt();
-            
 
             if (opc == 1) {
                 allBooks = new AllBooks(conn);
@@ -49,7 +48,4 @@ public class App {
         } while (opc != 4);
     }
 
-
-
 }
-
