@@ -18,13 +18,41 @@ public class App
     public static void main( String[] args ) throws SQLException
     {
         App myApp = new App();//creando una nueva variable con la instancia de la clase app que se llama myApp
-        myApp.searchByGenre();
+        
 
-       /*
-        * opening a loop (do while)
-        * el do-while se cerrará solo cuando el usuario quiera salir y en cada vuelta se pregunta si quiere salir
-        * tiene que enseñar una lista de lo que debe hacer (swtich)
-        */
+        /*
+         * opening a loop (do while)
+         * el do-while se cerrará solo cuando el usuario quiera salir y en cada vuelta
+         * se pregunta si quiere salir
+         * tiene que enseñar una lista de lo que debe hacer (swtich)
+         */
+
+        int opc;
+
+        do {
+            System.out.println("\n¿Qué quieres hacer?");
+            System.out.println("1. Ver catálogo entero.");
+            System.out.println("2. Buscar un libro.");
+            System.out.println("3. Añadir un libro.");
+            System.out.println("4. Salir.\n");
+
+            opc = scanner.nextInt();
+
+            if (opc == 1) {
+                myApp.showAll();
+
+            } else if (opc == 2) {
+                myApp.searchBooks();
+
+            } else if (opc == 3) {
+                addBook();
+
+            } else if (opc == 4) {
+                //dbConnection.closeConnection(conn);
+                break;
+            }
+
+        } while (opc != 4);
     }
 
     /* Function show all books - showAll */
@@ -32,25 +60,25 @@ public class App
         
     }
 
-    /* Function search books by filters  - searchBooks */
-    public void searchBooks(){
-        /* Add functions:
+    /* Function search books by filters - searchBooks */
+    public void searchBooks() {
+        /*
+         * Add functions:
          * searchByTitle()
          * searchByAuthor()
          * searchByGenre()
          */
+        // System.out.println("A buscar");
     }
-
 
     /* Function search a book by title - searchByTitle */
-    public void searchByTitle(){
-        
+    public void searchByTitle() {
+
     }
 
-    
     /* Function search a book by author - searchByAuthor */
-    public void searchByAuthor(){
-        
+    public void searchByAuthor() {
+
     }
 
     /* Function search a book by genre - searchByGenre */
@@ -66,9 +94,10 @@ public class App
             rs.close();
     }  
 
-    /*Function add a book - addBook */
-    public void addBook(){
-        /*Add title
+    /* Function add a book - addBook */
+    public static void addBook() {
+        /*
+         * Add title
          * addAuthor(bookId)
          * addGenre(bookId)
          */
@@ -76,33 +105,37 @@ public class App
 
     /**
      * Function add an author - addAuthor
+     * 
      * @param id (int)
      */
-    public void addAuthor(int id){
-        
+    public void addAuthor(int id) {
+
     }
 
     /**
      * Function add a genre - addGenre
+     * 
      * @param id (int)
      */
-    public void addGenre(int id){
-        
+    public void addGenre(int id) {
+
     }
 
     /**
      * Function edit a book - editBook
+     * 
      * @param id (int)
      */
-    public void editBook(int id){
+    public void editBook(int id) {
 
     }
 
     /**
      * Function delete a book - deleteBook
+     * 
      * @param id
      */
-    public void deleteBook(int id){
+    public void deleteBook(int id) {
 
     }
 }
