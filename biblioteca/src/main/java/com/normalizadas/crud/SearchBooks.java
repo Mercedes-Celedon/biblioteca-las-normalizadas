@@ -17,6 +17,7 @@ public class SearchBooks {
     }
 
     public void TypeOfFilters() throws SQLException{
+        //searchByAuthor();
         searchByGenre();
         /*Aquí se debe hacer switch y do while para mostrar opciones*/
     }
@@ -34,16 +35,28 @@ public class SearchBooks {
         System.out.println(authorFilter);
         try {
             Statement stmn = conn.createStatement();
-            ResultSet result = stmn.executeQuery("SELECT a.name, b.title FROM authors as a\n" + //
-                    "\tJOIN books_authors as ba ON a.id=ba.id_author\n" + //
-                    "\tJOIN books as b ON ba.id_book=b.id\n" + //
-                    "\tWHERE a.name='" + authorFilter + "';");
+            ResultSet result = stmn.executeQuery("SELECT a.name, b.title, b.description, b.isbn, b.stock, l.language FROM books as b\n" + //
+            "JOIN books_authors as ba ON b.id=ba.id_book\n" + //
+            "JOIN authors as a ON ba.id_author=a.id\n" + //
+            "JOIN languages as l ON l.id=b.id_language\n" + //
+            "WHERE a.name = '"+ authorFilter + "';");
 
-            System.out.println(" Autor       |      Libro ");
-            while (result.next()) {
-                String book = result.getString("title");
-
-                System.out.println(authorFilter + " | " + book);
+            if (!result.isBeforeFirst()) { // Verifica si el ResultSet está vacío
+                System.out.println("No se encontró el autor: " + authorFilter);
+            } else {
+                System.out.println(" Autor      |      Titulo       |      ISBN       |      Stock       |      Idioma ");
+                System.out.println("_______________________________________________________________________________________________");
+                while (result.next()) {
+                    String author = result.getString("name");
+                    String title = result.getString("title");
+                    String description=result.getString("description");
+                    String isbn = result.getString("isbn");
+                    int stock = result.getInt("stock");
+                    String language = result.getString("language");
+                    
+                    System.out.println( author + " | " + title + " | "+ description + " | " + isbn + " | " + stock + " | " + language +
+                "\n-----------------------------------------------------------------------------------------------------------------------------------------------------------");
+                }
             }
             stmn.close();
             result.close();
@@ -70,7 +83,7 @@ public class SearchBooks {
             if (!result.isBeforeFirst()) { // Verifica si el ResultSet está vacío
                 System.out.println("No se encontró el género: " + genreFilter);
             } else {
-                System.out.println(" Género       |      Libro       |      ISBN       |      Stock       |      Lenguaje ");
+                System.out.println(" Género       |      Titulo       |      ISBN       |      Stock       |      Idioma ");
                 System.out.println("_______________________________________________________________________________________________");
                 while (result.next()) {
                     String genre = result.getString("genre");
