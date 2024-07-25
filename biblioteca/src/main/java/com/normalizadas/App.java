@@ -4,19 +4,23 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.PreparedStatement;
 import java.util.Scanner;
+import com.normalizadas.crud.AllBooks;
+import com.normalizadas.crud.DeleteBooks;
 
-public class App {
-    public static Scanner scanner = new Scanner(System.in);
-    public static dbConnection connection = new dbConnection();
-    public static Connection conn = connection.getDbConnection();
+public class App 
+{
+    public static Scanner scanner= new Scanner(System.in);
+    private static Connection conn;//Inicializando atributo(property or class member) de la clase app
+    //con un constructor se tiene organizada y separada la lógica de inicialización y ejecución. da claridad y organización del código.
+    public App() {//implementando un constructor para la clase app  (inicialización de recurso que podría usar en esa clase) 
+        App.conn = new dbConnection().getDbConnection();
+    }
 
-    public static void main(String[] args) throws SQLException {
-
-        // Si la variable objeto conex es diferente de nulo
-
-        // para cerrar la conexión a BD
+    public static void main( String[] args ) throws SQLException
+    {
+        App myApp = new App();//creando una nueva variable con la instancia de la clase app que se llama myApp
+        
 
         /*
          * opening a loop (do while)
@@ -24,7 +28,8 @@ public class App {
          * se pregunta si quiere salir
          * tiene que enseñar una lista de lo que debe hacer (swtich)
          */
-
+        AllBooks allBooks;
+        DeleteBooks deleteBooks;
         int opc;
 
         do {
@@ -37,28 +42,32 @@ public class App {
             opc = scanner.nextInt();
 
             if (opc == 1) {
-                showAll();
+                allBooks = new AllBooks(conn);
+                allBooks.showAll();
 
             } else if (opc == 2) {
-                deleteBook(23);
+                myApp.searchBooks();
 
             } else if (opc == 3) {
-                addBook();
+                deleteBooks = new DeleteBooks(conn, scanner);
+                deleteBooks.delete(24);
 
             } else if (opc == 4) {
-                connection.closeConnection(conn);
+                //dbConnection.closeConnection(conn);
+                break;
             }
 
         } while (opc != 4);
     }
 
     /* Function show all books - showAll */
-    public static void showAll() {
-
+    public void showAll(){
+        
     }
 
+
     /* Function search books by filters - searchBooks */
-    public static void searchBooks() {
+    public void searchBooks() {
         /*
          * Add functions:
          * searchByTitle()
@@ -79,9 +88,17 @@ public class App {
     }
 
     /* Function search a book by genre - searchByGenre */
-    public void searchByGenre() {
-
-    }
+    public void searchByGenre()throws SQLException{
+        Statement stmt = App.conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM books ORDER BY id ASC");
+            while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String nombre = rs.getString("title");
+                    System.out.println(id + " " + nombre);
+                }
+            stmt.close();
+            rs.close();
+    }  
 
     /* Function add a book - addBook */
     public static void addBook() {
@@ -118,76 +135,4 @@ public class App {
     public void editBook(int id) {
 
     }
-
-    /**
-     * Function delete a book - deleteBook
-     * 
-     * @param id
-     */
-    public static void deleteBook(int id) {
-
-        int borrar;
-
-        System.out.println("¿Quieres borrar este libro?");
-        System.out.println("1. Sí.");
-        System.out.println("2. No.");
-
-        borrar = scanner.nextInt();
-
-        if (borrar == 1) {
-            
-        try {
-            
-            conn.setAutoCommit(false);
-
-            String deleteBooksAuthors = "DELETE FROM books_authors WHERE id_book = ?";
-            try (PreparedStatement pst = conn.prepareStatement(deleteBooksAuthors)) {
-                pst.setInt(1, id);
-                pst.executeUpdate();
-            }
-
-            String deleteBooksGenres = "DELETE FROM books_genres WHERE id_book = ?";
-            try (PreparedStatement pst = conn.prepareStatement(deleteBooksGenres)) {
-                pst.setInt(1, id);
-                pst.executeUpdate();
-            }
-
-            String deleteBooks = "DELETE FROM books WHERE id = ?";
-            try (PreparedStatement pst = conn.prepareStatement(deleteBooks)) {
-                pst.setInt(1, id);
-                int row = pst.executeUpdate();
-                if (row == 0) {
-                    System.out.println("No se ha podido borrar el registro.");
-                } else {
-                    System.out.println("Se ha borrado correctamente.");
-                }
-            }
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-            try {
-                if (conn != null) {
-                    conn.rollback();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        } finally {
-            try {
-                if (conn != null) {
-                    conn.setAutoCommit(true);
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } 
-        }
-
-        } 
-    }
-
-    // public static void deleteBook() {
-    //     // System.out.println("¿Quieres eliminar este libro?");
-    //     // int idLibro = scanner.nextInt();
-    //     logicDeleteBook();
-    // }
 }
