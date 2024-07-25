@@ -80,6 +80,10 @@ $RECYCLE.BIN/
 /out
 /.idea
 *.iml
-
+target/
+target/*
+target/
+/target/
+*/target/
 .env
 # End of https://www.toptal.com/developers/gitignore/api/macos,windows,linux
