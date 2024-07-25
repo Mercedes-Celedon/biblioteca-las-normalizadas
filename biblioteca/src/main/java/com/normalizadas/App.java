@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
 import com.normalizadas.crud.AllBooks;
+import com.normalizadas.crud.DeleteBooks;
 
 public class App 
 {
@@ -28,6 +29,7 @@ public class App
          * tiene que enseñar una lista de lo que debe hacer (swtich)
          */
         AllBooks allBooks;
+        DeleteBooks deleteBooks;
         int opc;
 
         do {
@@ -47,7 +49,8 @@ public class App
                 myApp.searchBooks();
 
             } else if (opc == 3) {
-                addBook();
+                deleteBooks = new DeleteBooks(conn, scanner);
+                deleteBooks.delete(24);
 
             } else if (opc == 4) {
                 //dbConnection.closeConnection(conn);
@@ -130,15 +133,6 @@ public class App
      * @param id (int)
      */
     public void editBook(int id) {
-
-    }
-
-    /**
-     * Function delete a book - deleteBook
-     * 
-     * @param id
-     */
-    public void deleteBook(int id) {
 
     }
 }
