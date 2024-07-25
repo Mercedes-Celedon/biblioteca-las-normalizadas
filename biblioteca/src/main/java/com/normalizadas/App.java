@@ -10,7 +10,7 @@ import com.normalizadas.crud.AllBooks;
 public class App 
 {
     public static Scanner scanner= new Scanner(System.in);
-    private Connection conn;//Inicializando atributo(property or class member) de la clase app
+    private static Connection conn;//Inicializando atributo(property or class member) de la clase app
     //con un constructor se tiene organizada y separada la lógica de inicialización y ejecución. da claridad y organización del código.
     public App() {//implementando un constructor para la clase app  (inicialización de recurso que podría usar en esa clase) 
         this.conn = new dbConnection().getDbConnection();
@@ -27,7 +27,7 @@ public class App
          * se pregunta si quiere salir
          * tiene que enseñar una lista de lo que debe hacer (swtich)
          */
-        AllBooks allBooks = new AllBooks();
+        AllBooks allBooks;
         int opc;
 
         do {
@@ -40,6 +40,7 @@ public class App
             opc = scanner.nextInt();
 
             if (opc == 1) {
+                allBooks = new AllBooks(conn);
                 allBooks.showAll();
 
             } else if (opc == 2) {

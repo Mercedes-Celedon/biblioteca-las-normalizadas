@@ -9,13 +9,19 @@ import java.sql.Statement;
 
 public class AllBooks {
 
-    public static dbConnection connection = new dbConnection();
-    public static Connection conn = connection.getDbConnection();
+    private Connection conn;
+    public AllBooks(Connection conn){
+        this.conn = conn;
+    }
+    public void showAll() throws SQLException {
+        System.out.println("""
+                Listado de Libros disponibles: \
 
-    public static void showAll() throws SQLException {
-        System.out.println("\n\nListado de Libros disponibles: " +
-                "\n\nID | Título | Autor | Género | ISBN | Stock | Idioma" +
-                "\n-----------------------------------------------------------------------------------------------------------------------------------------------------------");
+                ID | Título | Autor | Género | ISBN | Stock | Idioma\
+
+                -----------------------------------------------------------------------------------------------------------------------------------------------------------
+                
+                """);
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT b.id, b.title, b.isbn, b.stock, l.language FROM books as b\n" + //
                 "JOIN languages as l ON b.id_language=l.id\n" +
@@ -34,10 +40,9 @@ public class AllBooks {
         }
         stmt.close();
         rs.close();
-        connection.closeConnection(conn);
     }
 
-    public static String getInfo(int id, String dataType) throws SQLException {
+    public String getInfo(int id, String dataType) throws SQLException {
         String data = "";
         String query = "";
         String column = "";
