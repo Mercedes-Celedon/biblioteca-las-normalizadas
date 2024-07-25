@@ -9,19 +9,29 @@ import java.util.Scanner;
 import com.normalizadas.crud.AllBooks;
 import com.normalizadas.crud.SearchBooks;
 
-public class App 
-{
-    public static Scanner scanner= new Scanner(System.in);
-    public static Connection conn;//Inicializando atributo(property or class member) de la clase app
-    //con un constructor se tiene organizada y separada la lógica de inicialización y ejecución. da claridad y organización del código.
-    public App() {//implementando un constructor para la clase app  (inicialización de recurso que podría usar en esa clase) 
+public class App {
+    public static Scanner scanner = new Scanner(System.in);
+    private static Connection conn;// Inicializando atributo(property or class member) de la clase app
+    // con un constructor se tiene organizada y separada la lógica de inicialización
+    // y ejecución. da claridad y organización del código.
+
+    public App() {// implementando un constructor para la clase app (inicialización de recurso que
+                  // podría usar en esa clase)
         App.conn = new dbConnection().getDbConnection();
     }
 
-    public static void main( String[] args ) throws SQLException
-    {
-        App myApp = new App();//creando una nueva variable con la instancia de la clase app que se llama myApp
+    public static void main(String[] args) throws SQLException {
+        App myApp = new App();// creando una nueva variable con la instancia de la clase app que se llama
+                              // myApp
+
+        /*
+         * opening a loop (do while)
+         * el do-while se cerrará solo cuando el usuario quiera salir y en cada vuelta
+         * se pregunta si quiere salir
+         * tiene que enseñar una lista de lo que debe hacer (swtich)
+         */
         AllBooks allBooks;
+        DeleteBooks deleteBooks;
         int opc;
 
         SearchBooks searchBooks;
@@ -45,10 +55,9 @@ public class App
                 searchBooks.TypeOfFilters();
 
             } else if (opc == 3) {
-                addBook();
 
             } else if (opc == 4) {
-                //dbConnection.closeConnection(conn);
+                // dbConnection.closeConnection(conn);
                 break;
             }
 
@@ -88,15 +97,6 @@ public class App
      * @param id (int)
      */
     public void editBook(int id) {
-
-    }
-
-    /**
-     * Function delete a book - deleteBook
-     * 
-     * @param id
-     */
-    public void deleteBook(int id) {
 
     }
 }
