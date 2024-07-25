@@ -9,28 +9,16 @@ import java.util.Scanner;
 public class App 
 {
     public static Scanner scanner= new Scanner(System.in);
+    private Connection conn;//Inicializando atributo(property or class member) de la clase app
+    //con un constructor se tiene organizada y separada la lógica de inicialización y ejecución. da claridad y organización del código.
+    public App() {//implementando un constructor para la clase app  (inicialización de recurso que podría usar en esa clase) 
+        this.conn = new dbConnection().getDbConnection();
+    }
+
     public static void main( String[] args ) throws SQLException
     {
-        dbConnection connection = new dbConnection();
-        Connection conn=connection.getDbConnection();
-        
-        // Si la variable objeto conex es diferente de nulo
-        if(conn != null){
-            System.out.println("Conexión a la base de datos exitosa");
-           
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM books");
-            while (rs.next()) {
-                    int id = rs.getInt("id");
-                    String nombre = rs.getString("title");
-                    System.out.println(id + " " + nombre);
-                }
-            stmt.close();
-            rs.close();
-        }
-
-         
-        //para cerrar la conexión a BD
+        App myApp = new App();//creando una nueva variable con la instancia de la clase app que se llama myApp
+        myApp.searchByGenre();
 
        /*
         * opening a loop (do while)
@@ -41,7 +29,7 @@ public class App
 
     /* Function show all books - showAll */
     public void showAll(){
-
+        
     }
 
     /* Function search books by filters  - searchBooks */
@@ -66,8 +54,16 @@ public class App
     }
 
     /* Function search a book by genre - searchByGenre */
-    public void searchByGenre(){
-        
+    public void searchByGenre()throws SQLException{
+        Statement stmt = this.conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM books ORDER BY id ASC");
+            while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String nombre = rs.getString("title");
+                    System.out.println(id + " " + nombre);
+                }
+            stmt.close();
+            rs.close();
     }  
 
     /*Function add a book - addBook */
