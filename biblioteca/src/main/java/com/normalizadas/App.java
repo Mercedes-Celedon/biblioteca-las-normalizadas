@@ -1,18 +1,18 @@
 package com.normalizadas;
-
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
 
-public class App 
-{
+public class App {
     public static Scanner scanner= new Scanner(System.in);
+    public static dbConnection connection = new dbConnection();
+    public static Connection conn=connection.getDbConnection();
     public static void main( String[] args ) throws SQLException
     {
-        dbConnection connection = new dbConnection();
-        Connection conn=connection.getDbConnection();
+        
         
         // Si la variable objeto conex es diferente de nulo
         if(conn != null){
@@ -20,11 +20,14 @@ public class App
            
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM books");
-            while (rs.next()) {
-                    int id = rs.getInt("id");
-                    String nombre = rs.getString("title");
-                    System.out.println(id + " " + nombre);
-                }
+            // while (rs.next()) {
+            //         int id = rs.getInt("id");
+            //         String nombre = rs.getString("title");
+            //         System.out.println(id + " " + nombre);
+                    
+            //     }
+            addBook();
+            
             stmt.close();
             rs.close();
         }
@@ -94,17 +97,30 @@ public class App
         System.out.println("Indica el idioma (escribe solo el número): \n\t1. Español \n\t2. Inglés \n\t3. Francés \n\t4. Catalán.");
         int id_language = scanner.nextInt();
         scanner.nextLine();
-        // System.out.println("Indica el autor: ");
-        // String author = scanner.nextLine();
+        System.out.println("Indica el autor o autores (en este caso separados por comas): ");
+        String[] author = scanner.nextLine().split(",");
+        System.out.println("Indica el género o géneros (en este caso separados por comas): ");
+        String[] genre = scanner.nextLine().split(",");
         
-        // if(author){}
+        for(String authorName : author){
+            // int id_author = authorClass.findOrCreateAuthor(author.trim());
+            //bookClass.addBookAuthor()
+        }
         
-        // String genre = scanner.nextLine();
-        
-        // if(genre){}
-        //dbConnection.insertBook(title, description, isbn, stock, id_language);
+        insertBook(title, description, isbn, stock, id_language);
     }
 
+    public static void insertBook(String title, String description, String isbn, int stock, int id_language) throws SQLException{
+
+        PreparedStatement stmn = conn.prepareStatement("INSERT INTO books (title, description, isbn, stock, id_language) VALUES (?,?,?,?,?)");
+        
+        stmn.setString(1, title);
+        stmn.setString(2, description);
+        stmn.setString(3, isbn);
+        stmn.setInt(4, stock);
+        stmn.setInt(5, id_language);
+        stmn.execute();
+    }
     /**
      * Function add an author - addAuthor
      * @param id (int)
@@ -137,3 +153,4 @@ public class App
 
     }
 }
+

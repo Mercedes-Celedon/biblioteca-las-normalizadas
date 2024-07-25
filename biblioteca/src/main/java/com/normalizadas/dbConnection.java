@@ -3,6 +3,7 @@ package com.normalizadas;
 import io.github.cdimascio.dotenv.Dotenv;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import com.normalizadas.dbConnection;
 
@@ -33,6 +34,10 @@ public class dbConnection {
             e.printStackTrace();
         }
       }
+    }
+
+    public PreparedStatement prepareStatement(String string) {
+      throw new UnsupportedOperationException("Unimplemented method 'prepareStatement'");
     }
 
 }
