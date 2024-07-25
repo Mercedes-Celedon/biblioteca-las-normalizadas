@@ -15,21 +15,6 @@ public class App {
     public static void main(String[] args) throws SQLException {
 
         // Si la variable objeto conex es diferente de nulo
-        /*
-         * if(conn != null){
-         * System.out.println("Conexión a la base de datos exitosa");
-         * 
-         * Statement stmt = conn.createStatement();
-         * ResultSet rs = stmt.executeQuery("SELECT * FROM books");
-         * while (rs.next()) {
-         * int id = rs.getInt("id");
-         * String nombre = rs.getString("title");
-         * System.out.println(id + " " + nombre);
-         * }
-         * stmt.close();
-         * rs.close();
-         * }
-         */
 
         // para cerrar la conexión a BD
 
@@ -40,19 +25,48 @@ public class App {
          * tiene que enseñar una lista de lo que debe hacer (swtich)
          */
         AllBooks allBooks = new AllBooks();
-        allBooks.showAll();
+        int opc;
+
+        do {
+            System.out.println("\n¿Qué quieres hacer?");
+            System.out.println("1. Ver catálogo entero.");
+            System.out.println("2. Buscar un libro.");
+            System.out.println("3. Añadir un libro.");
+            System.out.println("4. Salir.\n");
+
+            opc = scanner.nextInt();
+
+            if (opc == 1) {
+                allBooks.showAll();
+
+            } else if (opc == 2) {
+                searchBooks();
+
+            } else if (opc == 3) {
+                addBook();
+
+            } else if (opc == 4) {
+                connection.closeConnection(conn);
+            }
+
+        } while (opc != 4);
+    }
+
+    /* Function show all books - showAll */
+    public static void showAll() throws SQLException {
 
     }
 
 
     /* Function search books by filters - searchBooks */
-    public void searchBooks() {
+    public static void searchBooks() {
         /*
          * Add functions:
          * searchByTitle()
          * searchByAuthor()
          * searchByGenre()
          */
+        // System.out.println("A buscar");
     }
 
     /* Function search a book by title - searchByTitle */
@@ -71,7 +85,7 @@ public class App {
     }
 
     /* Function add a book - addBook */
-    public void addBook() {
+    public static void addBook() {
         /*
          * Add title
          * addAuthor(bookId)
