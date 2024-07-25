@@ -21,14 +21,6 @@ public class App
     public static void main( String[] args ) throws SQLException
     {
         App myApp = new App();//creando una nueva variable con la instancia de la clase app que se llama myApp
-        
-
-        /*
-         * opening a loop (do while)
-         * el do-while se cerrará solo cuando el usuario quiera salir y en cada vuelta
-         * se pregunta si quiere salir
-         * tiene que enseñar una lista de lo que debe hacer (swtich)
-         */
         AllBooks allBooks;
         int opc;
 
@@ -49,11 +41,8 @@ public class App
                 allBooks.showAll();
 
             } else if (opc == 2) {
-                searchBooks = new SearchBooks(App.conn);
-                searchBooks.searchByTitle();
-                searchBooks.searchByAuthor();
-                searchBooks.searchByGenre();
-
+                searchBooks = new SearchBooks(conn, scanner);
+                searchBooks.TypeOfFilters();
 
             } else if (opc == 3) {
                 addBook();
@@ -65,67 +54,7 @@ public class App
 
         } while (opc != 4);
     }
-
-    /* Function show all books - showAll */
-    public void showAll(){
-        
-    }
-
-
-    /* Function search books by filters - searchBooks */
-    public void searchBooks() throws SQLException{
-        searchByGenre();
-        /*
-         * Add functions:
-         * searchByTitle()
-         * searchByAuthor()
-         * searchByGenre()
-         */
-        // System.out.println("A buscar");
-    }
-
-    /* Function search a book by title - searchByTitle */
-    public void searchByTitle() {
-
-    }
-
-    /* Function search a book by author - searchByAuthor */
-    public void searchByAuthor() {
-
-    }
-
-    /* Function search a book by genre - searchByGenre */
-    public void searchByGenre()throws SQLException{
-        System.out.print("Introduce el nombre del Género: ");
-        scanner.nextLine();
-        String genreFilter = scanner.nextLine();
-        
-        try {
-            Statement stmn = App.conn.createStatement();
-            ResultSet result = stmn.executeQuery("SELECT a.genre, b.title FROM genres as a\n" + //
-                                                "\tJOIN books_genres as ba ON a.id=ba.id_genre\n" + //
-                                                "\tJOIN books as b ON ba.id_book=b.id\n" + //
-                                                "\tWHERE a.genre ='"+genreFilter+"';");
-            if (!result.isBeforeFirst()) { // Verifica si el ResultSet está vacío
-                System.out.println("No se encontró el género: " + genreFilter);
-            } else {
-                System.out.println("______________________________________________________\n");
-                System.out.println(" Genre       |      Book ");
-                while (result.next() ){ 
-                    String book = result.getString("title");
-                    System.out.println(genreFilter + " | " +book);
-                    }
-                stmn.close();
-                result.close();
-                System.out.println("______________________________________________________");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        
-    }  
-
+   
     /* Function add a book - addBook */
     public static void addBook() {
         /*

@@ -1,7 +1,6 @@
 package com.normalizadas.crud;
 
 import com.normalizadas.App;
-import com.normalizadas.dbConnection;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -9,53 +8,45 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
 
-
 /* Function search books by filters - searchBooks */
 public class SearchBooks {
-    
-    public Scanner scanner;
+
+    private Scanner scanner;
     private Connection conn;
-    public SearchBooks(Connection conn){
+    public SearchBooks(Connection conn, Scanner scanner){
         this.conn = conn;
-    
-    /*
-     * Add functions:
-     * searchByTitle()
-     * searchByAuthor()
-     * searchByGenre()
-     */
-    // System.out.println("A buscar");
-}
+        this.scanner =scanner;
+    }
 
+    public void TypeOfFilters() throws SQLException{
+        searchByGenre();
+        /*Aquí se debe hacer switch y do while para mostrar opciones*/
+    }
 
-/* Function search a book by title - searchByTitle */
-public void searchByTitle() {
+    /* Function search a book by title - searchByTitle */
+    public void searchByTitle() {
 
-}
+    }
 
-
-/* Function search a book by author - searchByAuthor */
-public void searchByAuthor() {
-       /* private Connection conn;
-        public searchByAuthor(Connection conn){
-        this.conn = conn; */
+    /* Function search a book by author - searchByAuthor */
+    public void searchByAuthor() {
         System.out.print("Introduce el nombre del Autor: ");
         scanner.nextLine();
         String authorFilter = scanner.nextLine();
         System.out.println(authorFilter);
         try {
-            Statement stmn = App.conn.createStatement();
+            Statement stmn = conn.createStatement();
             ResultSet result = stmn.executeQuery("SELECT a.name, b.title FROM authors as a\n" + //
-                                                "\tJOIN books_authors as ba ON a.id=ba.id_author\n" + //
-                                                "\tJOIN books as b ON ba.id_book=b.id\n" + //
-                                                "\tWHERE a.name='"+authorFilter+"';");
+                    "\tJOIN books_authors as ba ON a.id=ba.id_author\n" + //
+                    "\tJOIN books as b ON ba.id_book=b.id\n" + //
+                    "\tWHERE a.name='" + authorFilter + "';");
 
-            System.out.println(" Author       |      Book ");
-            while (result.next() ){ 
+            System.out.println(" Autor       |      Libro ");
+            while (result.next()) {
                 String book = result.getString("title");
 
-                System.out.println(authorFilter+ " | " +book);
-                }
+                System.out.println(authorFilter + " | " + book);
+            }
             stmn.close();
             result.close();
         } catch (SQLException e) {
@@ -63,20 +54,34 @@ public void searchByAuthor() {
         }
     }
 
+    /* Function search a book by genre - searchByGenre */
+    public void searchByGenre() throws SQLException {
+        System.out.print("Introduce el nombre del Género: ");
+        scanner.nextLine();
+        String genreFilter = scanner.nextLine();
 
-
-
-/* Function search a book by genre - searchByGenre */
-public void searchByGenre()throws SQLException{
-    Statement stmt = App.conn.createStatement();
-    ResultSet rs = stmt.executeQuery("SELECT * FROM books ORDER BY id ASC");
-        while (rs.next()) {
-                int id = rs.getInt("id");
-                String nombre = rs.getString("title");
-                System.out.println(id + " " + nombre);
+        try {
+            Statement stmn = conn.createStatement();
+            ResultSet result = stmn.executeQuery("SELECT a.genre, b.title FROM genres as a\n" + //
+                    "\tJOIN books_genres as ba ON a.id=ba.id_genre\n" + //
+                    "\tJOIN books as b ON ba.id_book=b.id\n" + //
+                    "\tWHERE a.genre ='" + genreFilter + "';");
+            if (!result.isBeforeFirst()) { // Verifica si el ResultSet está vacío
+                System.out.println("No se encontró el género: " + genreFilter);
+            } else {
+                System.out.println("______________________________________________________\n");
+                System.out.println(" Género      |      Libro ");
+                while (result.next()) {
+                    String book = result.getString("title");
+                    System.out.println(genreFilter + " | " + book);
+                }
+                stmn.close();
+                result.close();
+                System.out.println("______________________________________________________");
             }
-        stmt.close();
-        rs.close();
-}  
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
+    }
 }
