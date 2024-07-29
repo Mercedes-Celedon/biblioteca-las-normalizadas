@@ -17,10 +17,11 @@ public class App {
         AllBooks allBooks;
         NewBook newBook;
         SearchBooks searchBooks;
-    
+
         int opc;
         do {
-            System.out.println("\n¿Qué quieres hacer?");
+            System.out.println("\nBienvenid@ a la Biblioteca Divergente.");
+            System.out.println("¿Qué quieres hacer?");
             System.out.println("1. Ver catálogo entero.");
             System.out.println("2. Buscar un libro.");
             System.out.println("3. Añadir un libro.");
