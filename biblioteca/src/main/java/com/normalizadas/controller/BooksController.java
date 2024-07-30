@@ -13,8 +13,8 @@ public class BooksController {
         this.bookDAOInterface = bookDAOInterface;
     }
 
-    public List<Book> getBooksbyGenres(String genreFilter){
-        List<Book> books = bookDAOInterface.getBooksbyGenres(genreFilter);
+    public List<Book> getBooksbyGenres(String genre){
+        List<Book> books = bookDAOInterface.getBooksbyGenres(genre);
         return books;
     }
 }
