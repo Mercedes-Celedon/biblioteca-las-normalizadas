@@ -9,7 +9,7 @@ public class BooksController {
 
     private BookDAOInterface bookDAOInterface;
 
-    public BooksController(BookDAOInterface BookDAOInterface){
+    public BooksController(BookDAOInterface bookDAOInterface){
         this.bookDAOInterface = bookDAOInterface;
     }
 

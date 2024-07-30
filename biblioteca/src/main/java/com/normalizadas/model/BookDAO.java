@@ -14,15 +14,15 @@ public class BookDAO implements BookDAOInterface{
 
     public List<Book> getBooksbyGenres(String genre){
         List<Book> books = new ArrayList<>();
-        String sql= "SELECT ge.genre, b.title, b.isbn, b.stock, l.language FROM books as b\n"+
+        String sql= "SELECT ge.genre, b.title, b.description, b.isbn, b.stock, b.id, l.language FROM books as b\n"+
                 "JOIN books_genres as ba ON b.id=ba.id_book\n"+
                 "JOIN genres as ge ON ba.id_genre=ge.id\n"+
-                "JOIN languages as l ON l.id=b.id_language\n"+
+                "JOIN languages as l ON l.id=b.id_language\n"+                
                 "WHERE ge.genre = ?";
         try{
             conn = DBManager.getDbConnection();
             stmn = conn.prepareStatement(sql);
-            stmn.setString(0, genre);
+            stmn.setString(1, genre);
             ResultSet result = stmn.executeQuery();
             while (result.next()) {
                 Book book = new Book();
@@ -32,10 +32,11 @@ public class BookDAO implements BookDAOInterface{
                 book.setIsbn(result.getString("isbn"));
                 book.setStock(result.getInt("stock"));
                 book.setLanguage(result.getString("language"));
+                books.add(book);
             }
 
         }catch(Exception e){
-            System.out.println("Conexión fallida");
+            System.out.println(e.getMessage());
         }finally{
             DBManager.closeConnection();
         }
