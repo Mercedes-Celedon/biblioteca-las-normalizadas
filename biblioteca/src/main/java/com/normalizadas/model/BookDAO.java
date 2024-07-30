@@ -2,7 +2,6 @@ package com.normalizadas.model;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.List;
 import java.sql.Connection;
 
 import com.normalizadas.config.DBManager;
@@ -10,9 +9,9 @@ import com.normalizadas.config.DBManager;
 public class BookDAO implements BookDAOInterface {
 
     private Connection conn;
-    private PreparedStatement stmn;
 
-    public void deletBook(int id) {
+
+    public void deleteBook(int id) {
 
         try {
 
