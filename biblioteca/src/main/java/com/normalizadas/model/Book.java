@@ -5,17 +5,17 @@ public class Book {
     private String title;
     private String description;
     private int stock;
-    private int id_language;
+    private String language;
     private String isbn;
 
     public Book(){}
 
-    public Book(String title, String description, int stock, String isbn, int id_language ){
+    public Book(String title, String description, int stock, String isbn, String language ){
         this.title = title;
         this.description = description;
         this.stock = stock;
         this.isbn = isbn;
-        this.id_language = id_language;
+        this.language = language;
     }
 
     public int getId() {
@@ -50,12 +50,12 @@ public class Book {
         this.stock = stock;
     }
 
-    public int getId_language() {
-        return this.id_language;
+    public String getLanguage() {
+        return this.language;
     }
 
-    public void setId_language(int id_language) {
-        this.id_language = id_language;
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
     public String getIsbn() {
@@ -64,22 +64,6 @@ public class Book {
 
     public void setIsbn(String isbn) {
         this.isbn = isbn;
-    }
-
-    public int getId_author() {
-        return this.id_author;
-    }
-
-    public void setId_author(int id_author) {
-        this.id_author = id_author;
-    }
-
-    public int getId_genre() {
-        return this.id_genre;
-    }
-
-    public void setId_genre(int id_genre) {
-        this.id_genre = id_genre;
     }
     
 
