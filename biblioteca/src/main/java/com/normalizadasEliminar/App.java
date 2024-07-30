@@ -3,8 +3,6 @@ package com.normalizadas;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Scanner;
-
-import com.normalizadas.config.DBManager;
 import com.normalizadas.crud.AllBooks;
 import com.normalizadas.crud.NewBook;
 import com.normalizadas.crud.SearchBooks;
@@ -15,7 +13,7 @@ public class App {
 
     public static void main(String[] args) throws SQLException {
 
-        conn = new DBManager().getDbConnection();
+        conn = new dbConnection().getDbConnection();
         AllBooks allBooks;
         NewBook newBook;
         SearchBooks searchBooks;
