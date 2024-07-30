@@ -7,8 +7,6 @@ public class Book {
     private int stock;
     private int id_language;
     private String isbn;
-    private int id_author;
-    private int id_genre;
 
     public Book(){}
 
@@ -18,7 +16,6 @@ public class Book {
         this.stock = stock;
         this.isbn = isbn;
         this.id_language = id_language;
-        /*Preguntar si aquí va id_author y id_genre */
     }
 
     public int getId() {

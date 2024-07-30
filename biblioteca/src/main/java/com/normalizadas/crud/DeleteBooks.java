@@ -1,9 +1,11 @@
 package com.normalizadas.crud;
 import java.util.Scanner;
+
+import com.normalizadas.config.DBManager;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import com.normalizadas.dbConnection;
 
 
 
