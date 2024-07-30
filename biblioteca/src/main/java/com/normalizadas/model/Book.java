@@ -8,9 +8,10 @@ public class Book {
     private int id_language;
     private String isbn;
 
-    public Book(){}
+    public Book() {
+    }
 
-    public Book(String title, String description, int stock, String isbn, int id_language ){
+    public Book(String title, String description, int stock, String isbn, int id_language) {
         this.title = title;
         this.description = description;
         this.stock = stock;
@@ -65,22 +66,5 @@ public class Book {
     public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
-
-    public int getId_author() {
-        return this.id_author;
-    }
-
-    public void setId_author(int id_author) {
-        this.id_author = id_author;
-    }
-
-    public int getId_genre() {
-        return this.id_genre;
-    }
-
-    public void setId_genre(int id_genre) {
-        this.id_genre = id_genre;
-    }
-    
 
 }
