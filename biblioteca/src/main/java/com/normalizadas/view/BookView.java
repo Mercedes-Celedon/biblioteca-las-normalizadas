@@ -1,6 +1,12 @@
 package com.normalizadas.view;
 
+import java.util.List;
 import java.util.Scanner;
+
+import com.normalizadas.controller.BooksController;
+import com.normalizadas.controller.GenresController;
+import com.normalizadas.model.Book;
+import com.normalizadas.model.Genre;
 
 public class BookView {
 
@@ -107,4 +113,75 @@ public class BookView {
         }
     }
 
+    public void showAddBook() {
+        scanner = new Scanner(System.in);
+
+        scanner.nextLine();
+        System.out.println("Indica el título:");
+        String title = scanner.nextLine();
+        // if (bookExists(title)) {
+        //     System.out.print("Este título ya está registrado");
+        //     return;
+        // }
+        System.out.print("Añade una descripción (de menos de 200 caracteres):");
+        String description = scanner.nextLine();
+        System.out.print("Indica el ISBN:");
+        String isbn = scanner.nextLine();
+        System.out.print("Indica el stock:");
+        int stock = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("Indica el idioma (escribe solo el número): "+
+                                                                "\n\t1. Español "+
+                                                                "\n\t2. Inglés "+
+                                                                "\n\t3. Francés "+
+                                                                "\n\t4. Catalán.");
+        int id_language = scanner.nextInt();
+        scanner.nextLine();
+
+        // int bookId = insertBook(title, description, isbn, stock, id_language);
+
+        System.out.print("Indica el autor o autores (en este caso separados por comas): ");
+        String[] authors = scanner.nextLine().split(",");
+
+        // for (String author : authors) {
+        //     int id_author = findOrCreateAuthor(author.trim());
+        //     addBookAuthor(bookId, id_author);
+        // }
+
+        System.out.print("Indica el género o géneros (en este caso separados por comas): ");
+        String[] genres = scanner.nextLine().split(",");
+        
+        // for (String genre : genres) {
+        //     int id_genre = findOrCreateGenre(genre.trim());
+        //     addBookGenre(bookId, id_genre);
+        // }
+        scanner.close();
+        System.out.println("Libro añadido con éxito");
+    }
+    private BooksController booksController;
+    private GenresController genresController;
+    
+    public BookView (BooksController booksController, GenresController genresController){
+        this.booksController=booksController;
+        this.genresController=genresController;
+    }
+
+    public void showBooks(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Escribe el género");
+        String genre=scanner.next(); 
+        List<Book> books=booksController.getBooksbyGenres(genre);
+        
+        for (Book book : books) {
+            List<Genre> genres=genresController.getBooksbyGenres(book.getId());
+            for (Genre g : genres) {
+                System.out.println(g.getGenre());
+            }
+            System.out.println(book.getTitle() +" - "+ book.getDescription() +" - "+book.getLanguage());
+            System.out.println(book.getIsbn());
+            System.out.println("-------------------");
+            
+           }
+        scanner.close();
+    }
 }

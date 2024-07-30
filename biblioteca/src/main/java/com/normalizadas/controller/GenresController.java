@@ -1,5 +1,19 @@
 package com.normalizadas.controller;
 
-public class GenresController {
+import java.util.List;
 
+import com.normalizadas.model.Genre;
+import com.normalizadas.model.GenreDAOInterface;
+
+public class GenresController {
+    private GenreDAOInterface genreDAOInterface;
+
+    public GenresController(GenreDAOInterface genreDAOInterface){
+        this.genreDAOInterface = genreDAOInterface;
+    }
+
+    public List<Genre> getBooksbyGenres(int id){
+        List<Genre> genres = genreDAOInterface.getGenres(id);
+        return genres;
+    }
 }
