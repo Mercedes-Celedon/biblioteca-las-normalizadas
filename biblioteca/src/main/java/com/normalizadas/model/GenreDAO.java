@@ -35,4 +35,32 @@ public class GenreDAO implements GenreDAOInterface{
         }  
         return genres;        
     }
+
+    public int findOrCreateGenre(String genre)  {
+        String sql = "SELECT id FROM genres WHERE genre = ?";
+        try {
+            conn=DBManager.getDbConnection();
+            stmn=conn.prepareStatement(sql);
+            stmn.setString(1, genre);
+            ResultSet rs = stmn.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("id");
+            }
+
+            sql = "INSERT INTO genres (genre) VALUES (?)";
+            stmn=conn.prepareStatement(sql);
+            stmn.setString(1, genre);
+            stmn.executeUpdate();
+            rs = stmn.getGeneratedKeys();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+            
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        } finally {
+            DBManager.closeConnection();
+        }
+        return 0;
+    }
 }

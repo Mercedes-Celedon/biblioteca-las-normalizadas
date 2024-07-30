@@ -18,7 +18,7 @@ public class App {
         BookView bookView = new BookView(bookController, genresController);
         bookView.showBooks();
     }
- }
+}
 
 
 
