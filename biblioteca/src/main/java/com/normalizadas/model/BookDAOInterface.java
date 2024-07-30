@@ -1,6 +1,7 @@
 package com.normalizadas.model;
 
-public interface BookDAOInterface {
+import java.util.List;
 
-    
+public interface BookDAOInterface {
+    List<Book> getBooksbyGenres(String genreFilter);
 } 

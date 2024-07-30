@@ -65,22 +65,6 @@ public class Book {
     public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
-
-    public int getId_author() {
-        return this.id_author;
-    }
-
-    public void setId_author(int id_author) {
-        this.id_author = id_author;
-    }
-
-    public int getId_genre() {
-        return this.id_genre;
-    }
-
-    public void setId_genre(int id_genre) {
-        this.id_genre = id_genre;
-    }
     
 
 }
