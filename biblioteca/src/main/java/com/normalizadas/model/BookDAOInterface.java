@@ -6,6 +6,7 @@ import java.util.List;
 public interface BookDAOInterface {
     List<Book> getBooksbyGenres(String genre);
     List<Book> getBooksbyAuthors(String author);
+    List<Book> getBooksbyTitle(String title);
 
     boolean bookExists(String title);
 
