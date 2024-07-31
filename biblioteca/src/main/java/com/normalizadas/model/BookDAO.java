@@ -13,6 +13,33 @@ public class BookDAO implements BookDAOInterface {
     private Connection conn;
     private PreparedStatement stmn;
 
+    public List<Book> getAllBooks(){
+        List<Book> books= new ArrayList<>();
+        String sql= "SELECT b.title, b.description, b.isbn, b.stock, b.id, l.language FROM books as b\n" +
+                "JOIN languages as l ON b.id_language=l.id\n"+
+                "ORDER BY b.id ASC";
+        try{
+            conn = DBManager.getDbConnection();
+            stmn = conn.prepareStatement(sql);
+            ResultSet result = stmn.executeQuery();
+            while (result.next()) {
+                Book book = new Book();
+                book.setId(result.getInt("id"));
+                book.setTitle(result.getString("title"));
+                book.setDescription(result.getString("description"));
+                book.setIsbn(result.getString("isbn"));
+                book.setStock(result.getInt("stock"));
+                book.setLanguage(result.getString("language"));
+                books.add(book);
+            }
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            DBManager.closeConnection();
+        }
+        return books;
+    }
+
     public List<Book> getBooksbyGenres(String genre) {
         List<Book> books = new ArrayList<>();
         String sql= "SELECT b.title, b.description, b.isbn, b.stock, b.id, l.language FROM books as b\n"+
