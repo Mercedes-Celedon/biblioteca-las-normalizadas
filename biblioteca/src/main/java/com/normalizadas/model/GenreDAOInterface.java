@@ -6,5 +6,5 @@ public interface GenreDAOInterface {
 
     List<Genre> getGenres(int id);
 
-    int findOrCreateGenre(String genre);
+    Genre findOrCreateGenre(String genre);
 }

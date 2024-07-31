@@ -16,8 +16,8 @@ public class BooksController {
 
     public BooksController(BookDAOInterface bookDAOInterface){
         this.bookDAOInterface = bookDAOInterface;
-        this.authorDAOInterface = authorDAOInterface;
-        this.genreDAOInterface = genreDAOInterface;
+        // this.authorDAOInterface = authorDAOInterface;
+        // this.genreDAOInterface = genreDAOInterface;
     }
 
     public List<Book> getBooksbyGenres(String genre){
@@ -33,14 +33,11 @@ public class BooksController {
     public int insertBook(String title, String description, String isbn, int stock, int id_language){
         return bookDAOInterface.insertBook(title, description, isbn, stock, id_language);
     }
-    public void addBookAuthor(int bookId, String name) throws SQLException{
-        int authorId = authorDAOInterface.findOrCreateAuthor(name);
-        bookDAOInterface.addBookGenre(bookId, authorId);
+    public void addBookAuthor(int bookId, int authorId) throws SQLException{
+        bookDAOInterface.addBookAuthor(bookId, authorId);
     }
     
-
-    public void addBookGenre(int bookId, String genre) throws SQLException{
-        int genreId = genreDAOInterface.findOrCreateGenre(genre);
+    public void addBookGenre(int bookId, int genreId) throws SQLException{
         bookDAOInterface.addBookGenre(bookId, genreId);
     }
     

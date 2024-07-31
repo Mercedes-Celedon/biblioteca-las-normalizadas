@@ -68,22 +68,22 @@ public class NewBook {
     //     }
     // }
 
-    // private int insertBook(String title, String description, String isbn, int stock, int id_language) throws SQLException {
-    //     try (PreparedStatement stmn = conn.prepareStatement("INSERT INTO books (title, description, isbn, stock, id_language) VALUES (?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)) {
-    //         stmn.setString(1, title);
-    //         stmn.setString(2, description);
-    //         stmn.setString(3, isbn);
-    //         stmn.setInt(4, stock);
-    //         stmn.setInt(5, id_language);
-    //         stmn.executeUpdate();
+    private int insertBook(String title, String description, String isbn, int stock, int id_language) throws SQLException {
+        try (PreparedStatement stmn = conn.prepareStatement("INSERT INTO books (title, description, isbn, stock, id_language) VALUES (?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)) {
+            stmn.setString(1, title);
+            stmn.setString(2, description);
+            stmn.setString(3, isbn);
+            stmn.setInt(4, stock);
+            stmn.setInt(5, id_language);
+            stmn.executeUpdate();
 
-    //         ResultSet rs = stmn.getGeneratedKeys();
-    //         if (rs.next()) {
-    //             return rs.getInt(1);
-    //         }
-    //     }
-    //     return 0;
-    // }
+            ResultSet rs = stmn.getGeneratedKeys();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        return 0;
+    }
 
     // private int findOrCreateAuthor(String name) throws SQLException {
     //     try (PreparedStatement stmn = conn.prepareStatement("SELECT id FROM authors WHERE NAME = ?")) {

@@ -1,11 +1,14 @@
 package com.normalizadas.view;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
 import com.normalizadas.config.DBManager;
+import com.normalizadas.controller.AuthorsController;
 import com.normalizadas.controller.BooksController;
 import com.normalizadas.controller.GenresController;
+import com.normalizadas.model.Author;
 import com.normalizadas.model.Book;
 import com.normalizadas.model.BookDAO;
 import com.normalizadas.model.Genre;
@@ -16,35 +19,33 @@ public class BookView {
 
     private BooksController booksController;
     private GenresController genresController;
+    private AuthorsController authorsController;
 
-    public BookView(BooksController booksController, GenresController genresController) {
+    public BookView(BooksController booksController, GenresController genresController, AuthorsController authorsController) {
         this.booksController = booksController;
         this.genresController = genresController;
+        this.authorsController = authorsController;
     }
 
-    public void showMainMenu() {
+    public void showMainMenu() throws SQLException {
         scanner = new Scanner(System.in);
-
-        int opc;
-
-        System.out.println("\nBienvenid@ a la biblioteca Divergente.");
-        System.out.println("\n¿Qué quieres hacer?");
-        System.out.println("1. Ver catálogo entero.");
-        System.out.println("2. Buscar un libro.");
-        System.out.println("3. Añadir un libro.");
-        System.out.println("4. Modificar un libro.\n");
-        System.out.println("5. Eliminar un libro.\n");
-        System.out.println("6. Salir.\n");
-
-        opc = scanner.nextInt();
-        scanner.close();
-
         boolean exit = false;
+        
+        while (!exit) {
+            System.out.println("\nBienvenid@ a la biblioteca Divergente.");
+            System.out.println("\n¿Qué quieres hacer?");
+            System.out.println("1. Ver catálogo entero.");
+            System.out.println("2. Buscar un libro.");
+            System.out.println("3. Añadir un libro.");
+            System.out.println("4. Modificar un libro.\n");
+            System.out.println("5. Eliminar un libro.\n");
+            System.out.println("6. Salir.\n");
+    
+            int opc = scanner.nextInt();
 
-        while (exit) {
             switch (opc) {
                 case 1:
-                    showBooks();
+                    prueba();
                     break;
                 case 2:
                     showSearchMenu();
@@ -60,13 +61,18 @@ public class BookView {
                     break;
                 case 6:
                     exit = true;
+                    scanner.close();
+                    break;
                 default:
                     System.out.println("No has elegido ninguna opción.");
             }
         }
+        
     }
-
-    public void showSearchMenu() {
+    public void prueba(){
+        System.out.println("prueba");
+    }
+    public void showSearchMenu() throws SQLException {
 
         scanner = new Scanner(System.in);
 
@@ -88,6 +94,7 @@ public class BookView {
                 break;
             case 3:
                 // searchByGenre();
+                showBooks();
                 break;
             default:
                 System.out.println("Ninguna opción elegida. Saliendo al menú inicial.");
@@ -95,7 +102,7 @@ public class BookView {
         }
     }
 
-    public void showDeleteMenu() {
+    public void showDeleteMenu() throws SQLException {
 
         scanner = new Scanner(System.in);
 
@@ -120,13 +127,12 @@ public class BookView {
         }
     }
 
-    public void showAddBook() {
+    public void showAddBook() throws SQLException {
         scanner = new Scanner(System.in);
 
-        scanner.nextLine();
+        
         System.out.println("Indica el título:");
         String title = scanner.nextLine();
-        try {
             if (booksController.bookExists(title)) {
                 System.out.print("Este título ya está registrado");
                 return;
@@ -151,25 +157,21 @@ public class BookView {
             System.out.print("Indica el autor o autores (en este caso separados por comas): ");
             String[] authors = scanner.nextLine().split(",");
 
-            for (String author : authors) {
-            booksController.addBookAuthor(bookId, author.trim());
+            for (String au : authors) {
+                Author author = authorsController.findOrCreateAuthor(au.trim());
+                int authorId = author.getId();
+                booksController.addBookAuthor(bookId, authorId);
             }
 
             System.out.print("Indica el género o géneros (en este caso separados por comas): ");
             String[] genres = scanner.nextLine().split(",");
 
-            for (String genre : genres) {
-            booksController.addBookGenre(bookId, genre.trim());
+            for (String ge : genres) {
+                Genre genre = genresController.findOrCreateGenre(ge.trim());
+                booksController.addBookGenre(bookId, genre.getId());
             }
             scanner.close();
             System.out.println("Libro añadido con éxito");
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        } finally {
-            DBManager.closeConnection();
-        }
-
     }
 
     public void showBooks() {

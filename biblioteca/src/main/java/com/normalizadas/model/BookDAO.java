@@ -105,7 +105,7 @@ public class BookDAO implements BookDAOInterface {
     public void addBookGenre(int bookId, int genreId) throws SQLException {
         // // TODO Auto-generated method stub
         // throw new UnsupportedOperationException("Unimplemented method 'addBookGenre'");
-        String sql = "INSERT INTO books_genres (id_book, genre) VALUES (?, ?)";
+        String sql = "INSERT INTO books_genres (id_book, id_genre) VALUES (?, ?)";
         try{
             conn = DBManager.getDbConnection();
             stmn = conn.prepareStatement(sql);
