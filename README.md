@@ -1,15 +1,14 @@
-
 # Biblioteca Divergente 📚
 
 ## Índice
 
 - [Proyecto 📝](#proyecto-)
-    - [Requisitos previos](#requisitos-previos-)
+  - [Requisitos previos](#requisitos-previos-)
 - [Diagramas](#diagrama-)
-    - [Diagrama de flujo](#diagrama-de-flujo-)
-    - [Diagrama de datos](#diagrama-de-datos-)
+  - [Diagrama de flujo](#diagrama-de-flujo-)
+  - [Diagrama de datos](#diagrama-de-datos-)
 - [Instalación 🛠️](#installation-)
-    - [Requerimientos](#requerimientos-)
+  - [Requerimientos](#requerimientos-)
 - [Estructura del proyecto](#estructura-del-proyecto-)
 - [Tecnologías](#tecnologias-)
 - [Uso](#uso-)
@@ -17,27 +16,25 @@
 - [Coders👩‍💻](#coders-)
 - [Demo](#demo-)
 
-
-## Proyecto 
+## Proyecto
 
 Desarrollo de un gestor de libros para una biblioteca ficticia, biblioteca Divergente, donde se puede acceder a la base de datos de la biblioteca para visualizar todo el catálogo disponible, buscar por autor, título o género, modificar o eliminar un libro, o añadir un libro nuevo a la base de datos.
 
-Se ha trabajado con metodologías ágiles, usando Trello para la organización y distribución de tareas a través de historias de usuario, que a su vez han sido referenciadas en los nombres de las ramas del proyecto. 
-
+Se ha trabajado con metodologías ágiles, usando Trello para la organización y distribución de tareas a través de historias de usuario, que a su vez han sido referenciadas en los nombres de las ramas del proyecto.
 
 ### Requisitos previos
 
 **Funcionalidades**
+
 - Poder ver una lista de todos los libros de la BBDD
-- Poder añadir un libro a la BBDD 
+- Poder añadir un libro a la BBDD
 - Poder editar un libro de la BBDD
 - Poder eliminar un libro de la BBDD
 - Poder buscar un libro por título
 - Poder buscar libros por autor
 - Poder buscar libros por género literario
 - La base de datos debe estar normalizada
-- Los libros deben tener título, autor o autores, una descripción de máximo 200 caracteres, un código ISBN y uno o varios géneros literarios; en este proyecto hemos añadido stock y lenguaje. 
-
+- Los libros deben tener título, autor o autores, una descripción de máximo 200 caracteres, un código ISBN y uno o varios géneros literarios; en este proyecto hemos añadido stock y lenguaje.
 
 ## Diagramas
 
@@ -51,19 +48,18 @@ En el proceso de normalizar la base de datos a través de tres formas normales, 
 
 [Ver diagrama de datos](https://drive.google.com/file/d/1Npe71pMS-Zj1ldXu07YRYapa7U5RKJG9/view)
 
-
-
 ## Instalación 🛠️
 
 ### Requerimientos
 
 - [Java](https://www.w3schools.com/java/java_intro.asp)
-    + [Extensión Java Pack VSC](vscjava.vscode-java-pack) o [IntelliJ](https://www.jetbrains.com/es-es/idea/)
+  - [Extensión Java Pack VSC](vscjava.vscode-java-pack) o [IntelliJ](https://www.jetbrains.com/es-es/idea/)
 - [Junit](https://junit.org/junit5/)
+- [PgAdmin](https://www.pgadmin.org/)
 - Base de datos
 
-
 1. Clona el repositorio:
+
 ```bash
  git clone https://github.com/Mercedes-Celedon/biblioteca-las-normalizadas
 ```
@@ -71,20 +67,21 @@ En el proceso de normalizar la base de datos a través de tres formas normales, 
 2. Instala Junit
 
 3. Crea tu base de datos y conectála al repo:
-```
-pon tu usuario y contraseña de pgAdmin o de tu BBDD en el archivo .env 
 
 ```
+pon tu usuario y contraseña de pgAdmin o de tu BBDD en el archivo .env
+
+```
+
 ```
 cambia el link de acceso a tu BBDD en config > DBManager
 ```
 
-
 ## Estructura del proyecto
 
-El desarrollo de este proyecto ha tenido dos procesos de construcción destacables: en el primer sprint creamos la base de datos, así como todas las funcionalidades del gestor. 
+El desarrollo de este proyecto ha tenido dos procesos de construcción destacables: en el primer sprint creamos la base de datos, así como todas las funcionalidades del gestor.
 
-En la segunda parte del desarrollo nos centramos en refactorizar el código para que el proyecto se adhiriese a los principios de MVC: model - view - controller. 
+En la segunda parte del desarrollo nos centramos en refactorizar el código para que el proyecto se adhiriese a los principios de MVC: model - view - controller.
 
 La estructura final del proyecto es la siguiente:
 
@@ -124,16 +121,16 @@ La estructura final del proyecto es la siguiente:
 ## Tecnologías
 
 - [Java](https://www.java.com)
-- [PgAdmin](https://www.pgadmin.org/) con [SQL](https://www.w3schools.com/sql/default.asp) para la creación de la base de datos
-
-
+- [PostgreSQL](https://www.postgresql.org/) con [SQL](https://www.w3schools.com/sql/default.asp) para la creación de la base de datos
 
 ## Uso
+
 El programa se inicia en la terminal una vez compilado.
 
 Para compilar:
 
 En terminal:
+
 ```
 1. javac App.java
 2. java App
@@ -156,7 +153,6 @@ El programa se iniciará imprimiendo el menú principal:
 
 Una vez se inicialice el menú, podemos seleccionar cada opción por su número de índice, momento en el que el programa conectará con la base de datos y podremos realizar la consulta pertinente.
 
-
 ## Contribución 🤝
 
 1. Haz un fork al repositorio.
@@ -165,8 +161,8 @@ Una vez se inicialice el menú, podemos seleccionar cada opción por su número 
 4. Haz push de tu rama: `git push origin feature/name`.
 5. Crea un pull request.
 
+## Coders👩‍💻
 
- ## Coders👩‍💻
 Las coders que hemos trabajado en este proyecto somos:
 
 - [Rossemary Castellanos](https://github.com/castellanorn)
@@ -176,4 +172,3 @@ Las coders que hemos trabajado en este proyecto somos:
 - [Cris Pérez](https://github.com/CrisZDE)
 
 ## Demo
-
