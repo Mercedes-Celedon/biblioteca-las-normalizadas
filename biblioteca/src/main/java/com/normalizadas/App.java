@@ -1,7 +1,10 @@
 package com.normalizadas;
 
+import com.normalizadas.controller.AuthorsController;
 import com.normalizadas.controller.BooksController;
 import com.normalizadas.controller.GenresController;
+import com.normalizadas.model.AuthorDAO;
+import com.normalizadas.model.AuthorDAOInterface;
 import com.normalizadas.model.BookDAO;
 import com.normalizadas.model.BookDAOInterface;
 import com.normalizadas.model.GenreDAO;
@@ -15,8 +18,10 @@ public class App {
         BooksController bookController = new BooksController(bookDao);
         GenreDAOInterface genreDao= new GenreDAO();
         GenresController genresController= new GenresController(genreDao);
-        BookView bookView = new BookView(bookController, genresController);
-        bookView.showBooks();
+        AuthorDAOInterface authorDAO = new AuthorDAO();
+        AuthorsController authorsController = new AuthorsController(authorDAO);
+        BookView bookView = new BookView(bookController, genresController, authorsController);
+        bookView.showMainMenu();
     }
  }
 

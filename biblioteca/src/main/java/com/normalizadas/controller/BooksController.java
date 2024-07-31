@@ -17,4 +17,9 @@ public class BooksController {
         List<Book> books = bookDAOInterface.getBooksbyGenres(genre);
         return books;
     }
+
+    public List<Book> getBooksbyAuthors(String author){
+        List<Book> books = bookDAOInterface.getBooksbyAuthors(author);
+        return books;
+    }
 }

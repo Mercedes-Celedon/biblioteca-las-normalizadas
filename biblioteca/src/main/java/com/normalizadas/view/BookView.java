@@ -3,8 +3,10 @@ package com.normalizadas.view;
 import java.util.List;
 import java.util.Scanner;
 
+import com.normalizadas.controller.AuthorsController;
 import com.normalizadas.controller.BooksController;
 import com.normalizadas.controller.GenresController;
+import com.normalizadas.model.Author;
 import com.normalizadas.model.Book;
 import com.normalizadas.model.Genre;
 
@@ -160,10 +162,12 @@ public class BookView {
     }
     private BooksController booksController;
     private GenresController genresController;
+    private AuthorsController authorsController;
     
-    public BookView (BooksController booksController, GenresController genresController){
+    public BookView (BooksController booksController, GenresController genresController, AuthorsController authorsController){
         this.booksController=booksController;
         this.genresController=genresController;
+        this.authorsController=authorsController;
     }
 
     public void showBooks(){
@@ -176,6 +180,25 @@ public class BookView {
             List<Genre> genres=genresController.getBooksbyGenres(book.getId());
             for (Genre g : genres) {
                 System.out.println(g.getGenre());
+            }
+            System.out.println(book.getTitle() +" - "+ book.getDescription() +" - "+book.getLanguage());
+            System.out.println(book.getIsbn());
+            System.out.println("-------------------");
+            
+        }
+        scanner.close();
+    } 
+
+    public void searchByAuthor (){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Escribe el Autor");
+        String author=scanner.next(); 
+        List<Book> books=booksController.getBooksbyAuthors(author);
+        
+        for (Book book : books) {
+            List<Author> authors=authorsController.getBooksbyAuthors(book.getId());
+            for (Author a: authors) {
+                System.out.println(a.getName());
             }
             System.out.println(book.getTitle() +" - "+ book.getDescription() +" - "+book.getLanguage());
             System.out.println(book.getIsbn());
