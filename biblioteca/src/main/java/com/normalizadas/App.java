@@ -1,54 +1,30 @@
 package com.normalizadas;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.Scanner;
-import com.normalizadas.crud.AllBooks;
-import com.normalizadas.crud.NewBook;
-import com.normalizadas.crud.SearchBooks;
+import com.normalizadas.controller.AuthorsController;
+import com.normalizadas.controller.BooksController;
+import com.normalizadas.controller.GenresController;
+import com.normalizadas.model.AuthorDAO;
+import com.normalizadas.model.AuthorDAOInterface;
+import com.normalizadas.model.BookDAO;
+import com.normalizadas.model.BookDAOInterface;
+import com.normalizadas.model.GenreDAO;
+import com.normalizadas.model.GenreDAOInterface;
+import com.normalizadas.view.BookView;
 
 public class App {
-    public static Scanner scanner = new Scanner(System.in);
-    private static Connection conn;
 
-    public static void main(String[] args) throws SQLException {
-
-        conn = new dbConnection().getDbConnection();
-        AllBooks allBooks;
-        NewBook newBook;
-        SearchBooks searchBooks;
-    
-        int opc;
-        do {
-            System.out.println("\n¿Qué quieres hacer?");
-            System.out.println("1. Ver catálogo entero.");
-            System.out.println("2. Buscar un libro.");
-            System.out.println("3. Añadir un libro.");
-            System.out.println("4. Salir.\n");
-
-            opc = scanner.nextInt();
-            
-
-            if (opc == 1) {
-                allBooks = new AllBooks(conn);
-                allBooks.showAll();
-
-            } else if (opc == 2) {
-                searchBooks = new SearchBooks(conn, scanner);
-                searchBooks.TypeOfFilters();
-
-            } else if (opc == 3) {
-                newBook = new NewBook(conn, scanner);
-                newBook.addBook();
-
-            } else if (opc == 4) {
-                break;
-            }
-
-        } while (opc != 4);
+    public static void main (String [] args){
+        BookDAOInterface bookDao = new BookDAO();
+        BooksController bookController = new BooksController(bookDao);
+        GenreDAOInterface genreDao= new GenreDAO();
+        GenresController genresController= new GenresController(genreDao);
+        AuthorDAOInterface authorDAO = new AuthorDAO();
+        AuthorsController authorsController = new AuthorsController(authorDAO);
+        BookView bookView = new BookView(bookController, genresController, authorsController);
+        bookView.showMainMenu();
     }
+ }
 
 
 
-}
 
