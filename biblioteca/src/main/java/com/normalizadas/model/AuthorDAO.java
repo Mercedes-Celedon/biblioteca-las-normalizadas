@@ -20,14 +20,16 @@ public class AuthorDAO implements AuthorDAOInterface{
         try{
             conn=DBManager.getDbConnection();
             stmn=conn.prepareStatement(sql,id);
+            stmn.setInt(1, id);
             ResultSet result = stmn.executeQuery();
             while (result.next()) {
                 Author author = new Author();
                 author.setId(result.getInt("id"));
                 author.setName(result.getString("name"));
+                authors.add(author);
             }
         }catch(Exception e){
-
+            System.out.println(e.getMessage());
         } finally {
             DBManager.closeConnection();
         }  
