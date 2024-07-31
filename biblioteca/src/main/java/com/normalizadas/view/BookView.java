@@ -50,6 +50,7 @@ public class BookView {
 
             switch (opc) {
                 case 1:
+                    showAllBooks();
                     break;
                 case 2:
                     showSearchMenu();
@@ -178,6 +179,11 @@ public class BookView {
         //scanner.close();
         System.out.println("Libro añadido con éxito");
     }
+  
+    public void showAllBooks(){
+        List<Book> books=booksController.getAllBooks();
+        printBook(books, true);
+    }
 
     public void askAuthorBook(){
         scanner.nextLine();
@@ -186,7 +192,7 @@ public class BookView {
         List<Book> books= booksController.getBooksbyAuthors(askAuthorFilter);
         printBook(books, true);//poner true si quieres el menú con descripción
     }
-
+      
     public void askTitleBook(){
         scanner.nextLine();
         System.out.print("Escribe el Titulo del libro: ");

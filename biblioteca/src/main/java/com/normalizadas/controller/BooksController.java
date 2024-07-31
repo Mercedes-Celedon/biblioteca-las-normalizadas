@@ -19,6 +19,10 @@ public class BooksController {
         // this.authorDAOInterface = authorDAOInterface;
         // this.genreDAOInterface = genreDAOInterface;
     }
+    public List<Book> getAllBooks(){
+        List<Book> books= bookDAOInterface.getAllBooks();
+        return books;
+    }
 
     public List<Book> getBooksbyGenres(String genre){
         List<Book> books = bookDAOInterface.getBooksbyGenres(genre);
