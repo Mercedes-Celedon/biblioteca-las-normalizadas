@@ -192,7 +192,7 @@ public class BookView {
     public void searchByAuthor (){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Escribe el Autor");
-        String author=scanner.next(); 
+        String author=scanner.nextLine(); 
         List<Book> books=booksController.getBooksbyAuthors(author);
         
         for (Book book : books) {
