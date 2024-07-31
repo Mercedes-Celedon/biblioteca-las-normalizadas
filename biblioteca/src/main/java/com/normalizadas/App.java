@@ -1,5 +1,7 @@
 package com.normalizadas;
 
+import java.sql.SQLException;
+
 import com.normalizadas.controller.AuthorsController;
 import com.normalizadas.controller.BooksController;
 import com.normalizadas.controller.GenresController;
@@ -13,17 +15,17 @@ import com.normalizadas.view.BookView;
 
 public class App {
 
-    public static void main (String [] args){
+    public static void main (String [] args) throws SQLException{
         BookDAOInterface bookDao = new BookDAO();
         BooksController bookController = new BooksController(bookDao);
         GenreDAOInterface genreDao= new GenreDAO();
         GenresController genresController= new GenresController(genreDao);
-        AuthorDAOInterface authorDAO = new AuthorDAO();
-        AuthorsController authorsController = new AuthorsController(authorDAO);
+        AuthorDAOInterface authorDao = new AuthorDAO();
+        AuthorsController authorsController = new AuthorsController(authorDao);
         BookView bookView = new BookView(bookController, genresController, authorsController);
         bookView.showMainMenu();
     }
- }
+}
 
 
 
