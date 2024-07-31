@@ -14,12 +14,12 @@ public class AuthorDAO implements AuthorDAOInterface{
 
     public List<Author> getAuthors(int id){
         List<Author> authors = new ArrayList<>();
-        String sql="SELECT name from authors\n" +
+        String sql="SELECT name, id from authors\n" +
                     "JOIN books_authors ON books_authors.id_author = authors.id\n" +
                     "WHERE books_authors.id_book = ?";
         try{
             conn=DBManager.getDbConnection();
-            stmn=conn.prepareStatement(sql,id);
+            stmn=conn.prepareStatement(sql);
             stmn.setInt(1, id);
             ResultSet result = stmn.executeQuery();
             while (result.next()) {
