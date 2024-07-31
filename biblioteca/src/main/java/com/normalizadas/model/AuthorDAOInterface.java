@@ -6,4 +6,5 @@ public interface AuthorDAOInterface {
 
     List<Author> getAuthors(int id);
     
+    Author findOrCreateAuthor(String name);
 } 
