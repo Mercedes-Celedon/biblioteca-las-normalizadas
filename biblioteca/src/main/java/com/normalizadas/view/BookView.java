@@ -18,30 +18,29 @@ public class BookView {
         scanner = new Scanner(System.in);
 
         int opc;
-
-        System.out.println("\nBienvenid@ a la biblioteca Divergente.");
-        System.out.println("\n¿Qué quieres hacer?");
-        System.out.println("1. Ver catálogo entero.");
-        System.out.println("2. Buscar un libro.");
-        System.out.println("3. Añadir un libro.");
-        System.out.println("4. Modificar un libro.\n");
-        System.out.println("5. Eliminar un libro.\n");
-        System.out.println("6. Salir.\n");
-
-        opc = scanner.nextInt();
-        scanner.close();
-
         boolean exit = false;
 
-        while (exit) {
+        while (!exit) {
+
+            System.out.println("\nBienvenid@ a la biblioteca Divergente.");
+            System.out.println("\n¿Qué quieres hacer?");
+            System.out.println("1. Ver catálogo entero.");
+            System.out.println("2. Buscar un libro.");
+            System.out.println("3. Añadir un libro.");
+            System.out.println("4. Modificar un libro.\n");
+            System.out.println("5. Eliminar un libro.\n");
+            System.out.println("6. Salir.\n");
+
+            opc = scanner.nextInt();
+            scanner.close();
+
             switch (opc) {
                 case 1:
                     // allBooks = new AllBooks(conn);
                     // allBooks.showAll();
                     break;
                 case 2:
-                    // searchBooks = new SearchBooks(conn, scanner);
-                    // searchBooks.TypeOfFilters();
+                    showSearchMenu();
                     break;
                 case 3:
                     // newBook = new NewBook(conn, scanner);
@@ -51,12 +50,12 @@ public class BookView {
                     // Método modificar libro
                     break;
                 case 5:
-                    // deleteBook();
+                    showDeleteMenu();
                     break;
                 case 6:
                     exit = true;
                 default:
-                    System.out.println("No has elegido ninguna opción.");
+                    System.out.println("No has elegido ninguna opción. Saliendo del programa.");
             }
         }
     }
@@ -71,23 +70,24 @@ public class BookView {
         System.out.println("3. Buscar por género.");
 
         int opc = scanner.nextInt();
-
-        scanner.close();
+        scanner.nextLine();
 
         switch (opc) {
             case 1:
                 // searchByTitle();
                 break;
             case 2:
-                // searchByAuthor();
+                searchByAuthor();
                 break;
             case 3:
-                // searchByGenre();
+                searchByGenres();
                 break;
             default:
                 System.out.println("Ninguna opción elegida. Saliendo al menú inicial.");
                 showMainMenu();
         }
+
+        scanner.close();
     }
 
     public void showDeleteMenu() {
@@ -101,6 +101,7 @@ public class BookView {
         System.out.println("2. No.");
 
         choice = scanner.nextInt();
+        scanner.close();
 
         switch (choice) {
             case 1:
@@ -122,8 +123,8 @@ public class BookView {
         System.out.println("Indica el título:");
         String title = scanner.nextLine();
         // if (bookExists(title)) {
-        //     System.out.print("Este título ya está registrado");
-        //     return;
+        // System.out.print("Este título ya está registrado");
+        // return;
         // }
         System.out.print("Añade una descripción (de menos de 200 caracteres):");
         String description = scanner.nextLine();
@@ -132,11 +133,11 @@ public class BookView {
         System.out.print("Indica el stock:");
         int stock = scanner.nextInt();
         scanner.nextLine();
-        System.out.println("Indica el idioma (escribe solo el número): "+
-                                                                "\n\t1. Español "+
-                                                                "\n\t2. Inglés "+
-                                                                "\n\t3. Francés "+
-                                                                "\n\t4. Catalán.");
+        System.out.println("Indica el idioma (escribe solo el número): " +
+                "\n\t1. Español " +
+                "\n\t2. Inglés " +
+                "\n\t3. Francés " +
+                "\n\t4. Catalán.");
         int id_language = scanner.nextInt();
         scanner.nextLine();
 
@@ -146,65 +147,67 @@ public class BookView {
         String[] authors = scanner.nextLine().split(",");
 
         // for (String author : authors) {
-        //     int id_author = findOrCreateAuthor(author.trim());
-        //     addBookAuthor(bookId, id_author);
+        // int id_author = findOrCreateAuthor(author.trim());
+        // addBookAuthor(bookId, id_author);
         // }
 
         System.out.print("Indica el género o géneros (en este caso separados por comas): ");
         String[] genres = scanner.nextLine().split(",");
-        
+
         // for (String genre : genres) {
-        //     int id_genre = findOrCreateGenre(genre.trim());
-        //     addBookGenre(bookId, id_genre);
+        // int id_genre = findOrCreateGenre(genre.trim());
+        // addBookGenre(bookId, id_genre);
         // }
         scanner.close();
         System.out.println("Libro añadido con éxito");
     }
+
     private BooksController booksController;
     private GenresController genresController;
     private AuthorsController authorsController;
-    
-    public BookView (BooksController booksController, GenresController genresController, AuthorsController authorsController){
-        this.booksController=booksController;
-        this.genresController=genresController;
-        this.authorsController=authorsController;
+
+    public BookView(BooksController booksController, GenresController genresController,
+            AuthorsController authorsController) {
+        this.booksController = booksController;
+        this.genresController = genresController;
+        this.authorsController = authorsController;
     }
 
-    public void showBooks(){
+    public void searchByGenres() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Escribe el género");
-        String genre=scanner.next(); 
-        List<Book> books=booksController.getBooksbyGenres(genre);
-        
+        String genre = scanner.next();
+        List<Book> books = booksController.getBooksbyGenres(genre);
+
         for (Book book : books) {
-            List<Genre> genres=genresController.getBooksbyGenres(book.getId());
+            List<Genre> genres = genresController.getBooksbyGenres(book.getId());
             for (Genre g : genres) {
                 System.out.println(g.getGenre());
             }
-            System.out.println(book.getTitle() +" - "+ book.getDescription() +" - "+book.getLanguage());
+            System.out.println(book.getTitle() + " - " + book.getDescription() + " - " + book.getLanguage());
             System.out.println(book.getIsbn());
             System.out.println("-------------------");
-            
+
         }
         scanner.close();
-    } 
+    }
 
-    public void searchByAuthor (){
+    public void searchByAuthor() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Escribe el Autor");
-        String author=scanner.nextLine(); 
-        List<Book> books=booksController.getBooksbyAuthors(author);
-        
+        String author = scanner.nextLine();
+        List<Book> books = booksController.getBooksbyAuthors(author);
+
         for (Book book : books) {
-            List<Author> authors=authorsController.getBooksbyAuthors(book.getId());
-            for (Author a: authors) {
+            List<Author> authors = authorsController.getBooksbyAuthors(book.getId());
+            for (Author a : authors) {
                 System.out.println(a.getName());
             }
-            System.out.println(book.getTitle() +" - "+ book.getDescription() +" - "+book.getLanguage());
+            System.out.println(book.getTitle() + " - " + book.getDescription() + " - " + book.getLanguage());
             System.out.println(book.getIsbn());
             System.out.println("-------------------");
-            
-           }
+
+        }
         scanner.close();
     }
 }

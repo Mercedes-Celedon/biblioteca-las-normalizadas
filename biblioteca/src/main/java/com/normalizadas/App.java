@@ -21,7 +21,7 @@ public class App {
         AuthorDAOInterface authorDAO = new AuthorDAO();
         AuthorsController authorsController = new AuthorsController(authorDAO);
         BookView bookView = new BookView(bookController, genresController, authorsController);
-        bookView.searchByAuthor();
+        bookView.showMainMenu();
     }
  }
 
