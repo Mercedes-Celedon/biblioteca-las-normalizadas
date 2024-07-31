@@ -67,4 +67,23 @@ public class AuthorDAO implements AuthorDAOInterface {
         }
         return author;
     }
+
+    /**
+     * TODO
+     * @param author
+     */
+    @Override
+    public void updateAuthor(Author author) {
+        String sql="UPDATE authors SET name = ? WHERE id = ?";
+        try{
+            conn=DBManager.getDbConnection();
+            stmn=conn.prepareStatement(sql);
+            stmn.setString(1, author.getName());
+            stmn.setInt(2, author.getId());
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        } finally {
+            DBManager.closeConnection();
+        }
+    }
 }

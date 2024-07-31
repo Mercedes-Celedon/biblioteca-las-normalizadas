@@ -55,11 +55,8 @@ public class BooksController {
         bookDAOInterface.addBookGenre(bookId, genreId);
     }
 
-    public Book updateBook(Book updatedBook, int id_language) {
-        Book book = updatedBook;
-        System.out.println(updatedBook);
-        //Book book = bookDAOInterface.updateBook(updatedBook, id_language);
-        return book;
+    public void updateBook(Book updatedBook, int id_language) {
+        bookDAOInterface.updateBook(updatedBook, id_language);;
     }
     
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.normalizadas.model.Author;
 import com.normalizadas.model.AuthorDAOInterface;
+import com.normalizadas.model.Book;
 
 public class AuthorsController {
     private AuthorDAOInterface authorDAOInterface;
@@ -21,6 +22,14 @@ public class AuthorsController {
     public Author findOrCreateAuthor(String name){
         Author author = authorDAOInterface.findOrCreateAuthor(name);
         return author;
+    }
+
+    /**
+     * TODO
+     * @param updatedAuthor
+     */
+    public void updateAuthor(Author updatedAuthor) {
+        authorDAOInterface.updateAuthor(updatedAuthor);
     }
 }
 

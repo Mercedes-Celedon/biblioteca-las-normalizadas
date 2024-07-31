@@ -2,6 +2,7 @@ package com.normalizadas.controller;
 
 import java.util.List;
 
+import com.normalizadas.model.Author;
 import com.normalizadas.model.Genre;
 import com.normalizadas.model.GenreDAOInterface;
 
@@ -21,5 +22,13 @@ public class GenresController {
     public Genre findOrCreateGenre(String name){
         Genre newGenre = genreDAOInterface.findOrCreateGenre(name);
         return newGenre;
+    }
+
+    /**
+     * TODO
+     * @param updatedGenre
+     */
+    public void updateGenre(Genre updatedGenre) {
+        genreDAOInterface.updateGenre(updatedGenre);
     }
 }
