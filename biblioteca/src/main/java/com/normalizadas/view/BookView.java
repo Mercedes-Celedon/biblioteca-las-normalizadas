@@ -175,7 +175,7 @@ public class BookView {
             Genre genre = genresController.findOrCreateGenre(ge.trim());
             booksController.addBookGenre(bookId, genre.getId());
         }
-        scanner.close();
+        //scanner.close();
         System.out.println("Libro añadido con éxito");
     }
     public void askTitleBook(){
