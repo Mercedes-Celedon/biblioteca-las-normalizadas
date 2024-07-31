@@ -12,6 +12,7 @@ public class GenresController {
         this.genreDAOInterface = genreDAOInterface;
     }
 
+    //Esta función creo que debería llamarse getGenresByBook o algo así porque en verdad retorna los géneros de un libro
     public List<Genre> getBooksbyGenres(int id){
         List<Genre> genres = genreDAOInterface.getGenres(id);
         return genres;

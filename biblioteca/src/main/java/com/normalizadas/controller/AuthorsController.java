@@ -12,6 +12,7 @@ public class AuthorsController {
         this.authorDAOInterface = authorDAOInterface;
     }
 
+    //Esta función creo que debería llamarse getAuthorsByBook o algo así porque en verdad retorna los autores de un libro
     public List<Author> getBooksbyAuthors(int id){
         List<Author> authors = authorDAOInterface.getAuthors(id);
         return authors;
