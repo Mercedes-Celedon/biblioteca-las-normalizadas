@@ -54,5 +54,12 @@ public class BooksController {
     public void addBookGenre(int bookId, int genreId) throws SQLException{
         bookDAOInterface.addBookGenre(bookId, genreId);
     }
+
+    public Book updateBook(Book updatedBook, int id_language) {
+        Book book = updatedBook;
+        System.out.println(updatedBook);
+        //Book book = bookDAOInterface.updateBook(updatedBook, id_language);
+        return book;
+    }
     
 }

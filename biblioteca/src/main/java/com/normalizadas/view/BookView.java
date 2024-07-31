@@ -1,22 +1,23 @@
 package com.normalizadas.view;
 
+import java.beans.beancontext.BeanContextChild;
 import java.util.ArrayList;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
-import com.normalizadas.config.DBManager;
+
 import com.normalizadas.controller.AuthorsController;
 import com.normalizadas.controller.BooksController;
 import com.normalizadas.controller.GenresController;
 import com.normalizadas.model.Author;
 import com.normalizadas.model.Book;
-import com.normalizadas.model.BookDAO;
 import com.normalizadas.model.Genre;
 
 public class BookView {
 
     private static Scanner scanner;
+
     private String askAuthorFilter;
     private String askGenreFilter;
     private String askTitleFilter;
@@ -59,7 +60,7 @@ public class BookView {
                     showAddBook();
                     break;
                 case 4:
-                    // Método modificar libro
+                    showUpdateMenu();
                     break;
                 case 5:
                     showDeleteMenu();
@@ -74,6 +75,13 @@ public class BookView {
         }
 
     }
+
+    public void showAllBooks(){
+        List<Book> books=booksController.getAllBooks();
+        printBook(books, true);
+    }
+
+
     public void showSearchMenu() throws SQLException {
 
         scanner = new Scanner(System.in);
@@ -100,32 +108,6 @@ public class BookView {
                 showMainMenu();
         }
 
-    }
-
-    public void showDeleteMenu() throws SQLException {
-
-        scanner = new Scanner(System.in);
-
-        int choice;
-
-        System.out.println("¿Quieres borrar este libro?");
-        System.out.println("1. Sí.");
-        System.out.println("2. No.");
-
-        choice = scanner.nextInt();
-        scanner.close();
-
-        switch (choice) {
-            case 1:
-                // deleteBook();
-                break;
-            case 2:
-                System.out.println("El libro no se ha eliminado. Volviendo al menú principal.");
-                showMainMenu();
-                break;
-            default:
-                System.out.println("Error. Volviendo al menú principal.");
-        }
     }
 
     public void showAddBook() throws SQLException {
@@ -165,7 +147,7 @@ public class BookView {
 
         System.out.print("Indica el género o géneros (en este caso separados por comas): ");
         String[] genres = scanner.nextLine().split(",");
-        
+
         // for (String genre : genres) {
         //     int id_genre = findOrCreateGenre(genre.trim());
         //     addBookGenre(bookId, id_genre);
@@ -179,10 +161,71 @@ public class BookView {
         //scanner.close();
         System.out.println("Libro añadido con éxito");
     }
-  
-    public void showAllBooks(){
-        List<Book> books=booksController.getAllBooks();
-        printBook(books, true);
+
+
+    /**
+     * Function Name: showUpdateMenu
+     * This function asks the user which book they want to modify, then gives them the different modification options
+     * and, depending on the choice, calls the different methods
+     */
+    public void showUpdateMenu(){
+        scanner = new Scanner(System.in);
+        System.out.println("Introduce el título del libro que quieres modificar:");
+        String title = scanner.nextLine();
+        // ¡Esto hay que cambiarlo cuando getBooks retorne un libro solo!!!!
+        List<Book> selectedBook = booksController.getBooksbyTitle(title);
+        Book book = selectedBook.get(0);
+        // Hasta aquí
+        System.out.println("Vas a modificar el libro -> " + book.getTitle() +
+                        "\nPor favor selecciona el número de la opción deseada:"+
+                        "\n1. Modificar características del libro (Título, Descripción, ISBN, Stock o Idioma" +
+                        "\n2. Corregir el nombre del autor." +
+                        "\n3. Corregir el género." +
+                        "\n\n¡Atención, no cambiar autores o géneros! si deseas hacerlo deberás eliminar el libro y "+
+                        "volver a introducirlo con los nuevos datos.");
+        int opc = 0;
+        opc = scanner.nextInt();
+        scanner.close();
+
+        switch (opc){
+            case 1:
+                updateBookInfo(book);
+                break;
+            case 2:
+                updateAuthor(authorsController.getBooksbyAuthors(book.getId()), book);
+                break;
+            case 3:
+                updateGenre(genresController.getBooksbyGenres(book.getId()), book);
+                break;
+            default:
+                System.out.println("Ninguna opción elegida. Saliendo al menú inicial.");
+        }
+    }
+
+    public void showDeleteMenu() throws SQLException {
+
+        scanner = new Scanner(System.in);
+
+        int choice;
+
+        System.out.println("¿Quieres borrar este libro?");
+        System.out.println("1. Sí.");
+        System.out.println("2. No.");
+
+        choice = scanner.nextInt();
+        scanner.close();
+
+        switch (choice) {
+            case 1:
+                // deleteBook();
+                break;
+            case 2:
+                System.out.println("El libro no se ha eliminado. Volviendo al menú principal.");
+                showMainMenu();
+                break;
+            default:
+                System.out.println("Error. Volviendo al menú principal.");
+        }
     }
 
     public void askAuthorBook(){
@@ -192,11 +235,10 @@ public class BookView {
         List<Book> books= booksController.getBooksbyAuthors(askAuthorFilter);
         printBook(books, true);//poner true si quieres el menú con descripción
     }
-      
     public void askTitleBook(){
         scanner.nextLine();
         System.out.print("Escribe el Titulo del libro: ");
-        askTitleFilter=scanner.nextLine(); 
+        String askTitleFilter=scanner.nextLine();
         List<Book> books= booksController.getBooksbyTitle(askTitleFilter);
         printBook(books, true);//poner true si quieres el menú con descripción
     }
@@ -204,7 +246,7 @@ public class BookView {
     public void askGenreBook(){
         scanner.nextLine();
         System.out.println("Escribe el género");
-        askGenreFilter=scanner.nextLine(); 
+        String askGenreFilter=scanner.nextLine();
         List<Book> books=booksController.getBooksbyGenres(askGenreFilter);
         printBook(books, false);//poner true si quieres el menú con descripción
     }
@@ -285,5 +327,86 @@ public class BookView {
                 System.out.printf("\n");
             }
         }
+    }
+
+    /**
+     * Function name: updateBookInfo
+     * @param book selected book
+     * Function that receives a book by parameter, asks the user what values of the book wants to modify and
+     * updates the object with the new data, finally calls the controller that modifies the book record in the database
+     */
+    public void updateBookInfo(Book book){
+        scanner = new Scanner(System.in);
+        scanner.nextLine();
+        String data;
+
+        book.setId(book.getId());
+        System.out.println("Si no quieres modificar algún dato, deja el campo en blanco y pulsa enter.");
+        System.out.print("\nTítulo actual-> " + book.getTitle() + "\nNuevo título-> ");
+        data = scanner.nextLine();
+        book.setTitle(!data.isEmpty() ? data : book.getTitle());
+
+        System.out.print("\nDescripción actual-> " + book.getDescription() + "\nNueva descripción-> ");
+        data = scanner.nextLine();
+        book.setDescription(!data.isEmpty() ? data : book.getDescription());
+
+        System.out.print("\nStock actual-> " + book.getStock() + "\nNuevo stock-> ");
+        data = scanner.nextLine();
+        book.setStock(!data.isEmpty() ? Integer.parseInt(data) : book.getStock());
+
+        System.out.print("\nISBN actual-> " + book.getIsbn() + "\nNuevo ISBN-> ");
+        data = scanner.nextLine();
+        book.setIsbn(!data.isEmpty() ? data : book.getIsbn());
+
+        System.out.print("\nIdioma actual-> " + book.getLanguage() + "\nNuevo idioma (Español, Inglés, Francés o Catalán)-> ");
+        data = scanner.nextLine();
+        book.setLanguage(!data.isEmpty() ? data : book.getLanguage());
+
+        scanner.close();
+        booksController.updateBook(book, getIdLanguage(book.getLanguage()));
+    }
+
+    /**
+     * Function name: updateAuthor
+     * @param authors list of authors from the selected book
+     * @param book selected book
+     * Function that receives a book and its authors by parameter, asks the user the new name of the authors
+     * and calls the controller that modifies each author record in the database
+     */
+    public void updateAuthor(List<Author> authors, Book book){
+        scanner = new Scanner(System.in);
+        for(Author author : authors) {
+            System.out.println("Nombre actual del autor -> " + author.getName());
+            System.out.print("Autor corregido -> ");
+            String newName = scanner.nextLine();
+
+        }
+    }
+
+    /**
+     * Function name: updateGenre
+     * @param genres list of genres from the selected book
+     * @param book selected book
+     * Function that receives a book and its genres by parameter, asks the user the new name of the genres
+     * and calls the controller that modifies each genre record in the database
+     */
+    public void updateGenre(List<Genre> genres, Book book){
+        scanner = new Scanner(System.in);
+        for(Genre genre : genres) {
+            System.out.println("Nombre actual del genero -> " + genre.getGenre());
+            System.out.print("Genero corregido -> ");
+            String newGenre = scanner.nextLine();
+
+        }
+    }
+
+    public int getIdLanguage(String language){
+        return switch (language) {
+            case "Español" -> 1;
+            case "Inglés" -> 2;
+            case "Francés" -> 3;
+            case "Catalán" -> 4;
+            default -> 0;
+        };
     }
 }
