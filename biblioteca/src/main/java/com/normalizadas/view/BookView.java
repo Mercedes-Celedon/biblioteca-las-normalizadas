@@ -289,14 +289,12 @@ public class BookView {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Escribe el título del libro:");
         String title = scanner.nextLine();
-        List<Book> books = booksController.getBooksbyTitle(title);
+        Book book = booksController.getBooksbyTitle(title);
 
-        for (Book book : books) {
-            System.out.println(book.getTitle() + " - " + book.getDescription() + " - " + book.getLanguage());
-            System.out.println(book.getIsbn());
-            System.out.println("-------------------");
-            scanner.close();
-        }
+        System.out.println(book.getTitle() + " - " + book.getDescription() + " - " + book.getLanguage());
+        System.out.println(book.getIsbn());
+        System.out.println("-------------------");
+        scanner.close();
 
     }
 }
