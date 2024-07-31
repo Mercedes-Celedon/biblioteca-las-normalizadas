@@ -1,11 +1,9 @@
 package com.normalizadas.view;
 
-import java.beans.beancontext.BeanContextChild;
 import java.util.ArrayList;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
-
 
 import com.normalizadas.controller.AuthorsController;
 import com.normalizadas.controller.BooksController;
@@ -186,7 +184,7 @@ public class BookView {
         int opc = 0;
         opc = scanner.nextInt();
         scanner.close();
-
+        System.out.println("Si no quieres modificar algún dato, deja el campo en blanco y pulsa enter.");
         switch (opc){
             case 1:
                 updateBookInfo(book);
@@ -341,7 +339,6 @@ public class BookView {
         String data;
 
         book.setId(book.getId());
-        System.out.println("Si no quieres modificar algún dato, deja el campo en blanco y pulsa enter.");
         System.out.print("\nTítulo actual-> " + book.getTitle() + "\nNuevo título-> ");
         data = scanner.nextLine();
         book.setTitle(!data.isEmpty() ? data : book.getTitle());
@@ -378,8 +375,8 @@ public class BookView {
         for(Author author : authors) {
             System.out.println("Nombre actual del autor -> " + author.getName());
             System.out.print("Autor corregido -> ");
-            String newName = scanner.nextLine();
-
+            author.setName(scanner.nextLine());
+            authorsController.updateAuthor(author);
         }
     }
 
@@ -395,11 +392,17 @@ public class BookView {
         for(Genre genre : genres) {
             System.out.println("Nombre actual del genero -> " + genre.getGenre());
             System.out.print("Genero corregido -> ");
-            String newGenre = scanner.nextLine();
-
+            genre.setGenre(scanner.nextLine());
+            genresController.updateGenre(genre);
         }
     }
 
+    /**
+     * Function name: getIdLanguage
+     * @param language language name
+     * @return (int) the id of the language
+     * Gets the name of a language by parameter and returns its id
+     */
     public int getIdLanguage(String language){
         return switch (language) {
             case "Español" -> 1;

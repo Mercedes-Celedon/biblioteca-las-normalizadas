@@ -212,6 +212,28 @@ public class BookDAO implements BookDAOInterface {
 
     }
 
-
-    
+    /**
+     * TODO
+     * @param book
+     * @param id_language
+     */
+    @Override
+    public void updateBook(Book book, int id_language) {
+        String sql="UPDATE books SET title = ?, description = ?, isbn = ?, " +
+                "stock = ?, id_language = ? WHERE id = ?";
+        try{
+            conn=DBManager.getDbConnection();
+            stmn=conn.prepareStatement(sql);
+            stmn.setString(1, book.getTitle());
+            stmn.setString(2, book.getDescription());
+            stmn.setString(3, book.getIsbn());
+            stmn.setInt(4, book.getStock());
+            stmn.setInt(5, id_language);
+            stmn.setInt(6, book.getId());
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        } finally {
+            DBManager.closeConnection();
+        }
+    }
 }
