@@ -1,21 +1,25 @@
 package com.normalizadas;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.Scanner;
-
-import com.normalizadas.config.DBManager;
-
+import com.normalizadas.controller.BooksController;
+import com.normalizadas.controller.GenresController;
+import com.normalizadas.model.BookDAO;
+import com.normalizadas.model.BookDAOInterface;
+import com.normalizadas.model.GenreDAO;
+import com.normalizadas.model.GenreDAOInterface;
+import com.normalizadas.view.BookView;
 
 public class App {
-    private static Scanner scanner = new Scanner(System.in);
-    private static Connection conn;
 
-    public static void main(String[] args) throws SQLException {
-
- 
-
-
+    public static void main (String [] args){
+        BookDAOInterface bookDao = new BookDAO();
+        BooksController bookController = new BooksController(bookDao);
+        GenreDAOInterface genreDao= new GenreDAO();
+        GenresController genresController= new GenresController(genreDao);
+        BookView bookView = new BookView(bookController, genresController);
+        bookView.showBooks();
     }
-}
+ }
+
+
+
 
