@@ -48,11 +48,8 @@ public class BookView {
 
             switch (opc) {
                 case 1:
-                    prueba();
                     break;
                 case 2:
-                    showSearchMenu();
-                    showSearchMenu();
                     showSearchMenu();
                     break;
                 case 3:
@@ -62,7 +59,6 @@ public class BookView {
                     // Método modificar libro
                     break;
                 case 5:
-                    showDeleteMenu();
                     showDeleteMenu();
                     break;
                 case 6:
@@ -75,11 +71,6 @@ public class BookView {
         }
 
     }
-
-    public void prueba() {
-        System.out.println("prueba");
-    }
-
     public void showSearchMenu() throws SQLException {
 
         scanner = new Scanner(System.in);
@@ -91,7 +82,6 @@ public class BookView {
 
         int opcFilter = scanner.nextInt();
         
-        scanner.nextLine();
         switch (opcFilter) {
             case 1:
                 // searchByTitle();
@@ -108,7 +98,6 @@ public class BookView {
                 showMainMenu();
         }
 
-        scanner.close();
     }
 
     public void showDeleteMenu() throws SQLException {
