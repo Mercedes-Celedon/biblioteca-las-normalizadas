@@ -18,6 +18,8 @@ public class BookView {
 
     private static Scanner scanner;
     private String askGenreFilter;
+    private String askAuthorFilter;
+    private String askTitleFilter;
 
     private BooksController booksController;
     private GenresController genresController;
@@ -84,13 +86,12 @@ public class BookView {
         
         switch (opcFilter) {
             case 1:
-                // searchByTitle();
+                askTitleBook();
                 break;
             case 2:
-                searchByAuthor();
+                askAuthorBook();
                 break;
             case 3:
-                // searchByGenre();
                 askGenreBook();
                 break;
             default:
@@ -177,7 +178,21 @@ public class BookView {
         scanner.close();
         System.out.println("Libro añadido con éxito");
     }
+    public void askTitleBook(){
+        scanner.nextLine();
+        System.out.print("Escribe el Titulo del libro: ");
+        askTitleFilter=scanner.nextLine(); 
+        List<Book> books= booksController.getBooksbyTitle(askTitleFilter);
+        printBook(books, true);//poner true si quieres el menú con descripción
+    }
 
+    public void askAuthorBook(){
+        scanner.nextLine();
+        System.out.print("Escribe el autor: ");
+        askAuthorFilter=scanner.nextLine(); 
+        List<Book> books= booksController.getBooksbyAuthors(askAuthorFilter);
+        printBook(books, true);//poner true si quieres el menú con descripción
+    }
 
     public void askGenreBook(){
         scanner.nextLine();
@@ -185,7 +200,6 @@ public class BookView {
         askGenreFilter=scanner.nextLine(); 
         List<Book> books=booksController.getBooksbyGenres(askGenreFilter);
         printBook(books, false);//poner true si quieres el menú con descripción
-        
     }
 
     public void printBook(List<Book> books, boolean printDescription){
@@ -264,37 +278,5 @@ public class BookView {
                 System.out.printf("\n");
             }
         }
-    }
-
-    public void searchByAuthor() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Escribe el Autor");
-        String author = scanner.nextLine();
-        List<Book> books = booksController.getBooksbyAuthors(author);
-
-        for (Book book : books) {
-            List<Author> authors = authorsController.getBooksbyAuthors(book.getId());
-            for (Author a : authors) {
-                System.out.println(a.getName());
-            }
-            System.out.println(book.getTitle() + " - " + book.getDescription() + " - " + book.getLanguage());
-            System.out.println(book.getIsbn());
-            System.out.println("-------------------");
-
-        }
-        scanner.close();
-    }
-
-    public void searchByTitle() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Escribe el título del libro:");
-        String title = scanner.nextLine();
-        Book book = booksController.getBooksbyTitle(title);
-
-        System.out.println(book.getTitle() + " - " + book.getDescription() + " - " + book.getLanguage());
-        System.out.println(book.getIsbn());
-        System.out.println("-------------------");
-        scanner.close();
-
     }
 }
