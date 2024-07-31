@@ -17,6 +17,7 @@ import com.normalizadas.model.Genre;
 public class BookView {
 
     private static Scanner scanner;
+    private String askAuthorFilter;
     private String askGenreFilter;
     private String askTitleFilter;
 
@@ -89,7 +90,7 @@ public class BookView {
                 askTitleBook();
                 break;
             case 2:
-                //askAuthorBook();
+                askAuthorBook();
                 break;
             case 3:
                 askGenreBook();
@@ -178,10 +179,20 @@ public class BookView {
         //scanner.close();
         System.out.println("Libro añadido con éxito");
     }
+  
     public void showAllBooks(){
         List<Book> books=booksController.getAllBooks();
         printBook(books, true);
     }
+
+    public void askAuthorBook(){
+        scanner.nextLine();
+        System.out.print("Escribe el nombre del autor: ");
+        askAuthorFilter=scanner.nextLine(); 
+        List<Book> books= booksController.getBooksbyAuthors(askAuthorFilter);
+        printBook(books, true);//poner true si quieres el menú con descripción
+    }
+      
     public void askTitleBook(){
         scanner.nextLine();
         System.out.print("Escribe el Titulo del libro: ");
