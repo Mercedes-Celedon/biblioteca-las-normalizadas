@@ -18,7 +18,6 @@ public class BookView {
 
     private static Scanner scanner;
     private String askGenreFilter;
-    private String askAuthorFilter;
     private String askTitleFilter;
 
     private BooksController booksController;
@@ -89,7 +88,7 @@ public class BookView {
                 askTitleBook();
                 break;
             case 2:
-                askAuthorBook();
+                //askAuthorBook();
                 break;
             case 3:
                 askGenreBook();
@@ -183,14 +182,6 @@ public class BookView {
         System.out.print("Escribe el Titulo del libro: ");
         askTitleFilter=scanner.nextLine(); 
         List<Book> books= booksController.getBooksbyTitle(askTitleFilter);
-        printBook(books, true);//poner true si quieres el menú con descripción
-    }
-
-    public void askAuthorBook(){
-        scanner.nextLine();
-        System.out.print("Escribe el autor: ");
-        askAuthorFilter=scanner.nextLine(); 
-        List<Book> books= booksController.getBooksbyAuthors(askAuthorFilter);
         printBook(books, true);//poner true si quieres el menú con descripción
     }
 
