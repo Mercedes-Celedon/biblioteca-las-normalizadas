@@ -8,18 +8,18 @@ import java.util.List;
 
 import com.normalizadas.config.DBManager;
 
-public class BookDAO implements BookDAOInterface{
+public class BookDAO implements BookDAOInterface {
     private Connection conn;
     private PreparedStatement stmn;
 
-    public List<Book> getBooksbyGenres(String genre){
+    public List<Book> getBooksbyGenres(String genre) {
         List<Book> books = new ArrayList<>();
-        String sql= "SELECT ge.genre, b.title, b.description, b.isbn, b.stock, b.id, l.language FROM books as b\n"+
-                "JOIN books_genres as ba ON b.id=ba.id_book\n"+
-                "JOIN genres as ge ON ba.id_genre=ge.id\n"+
-                "JOIN languages as l ON l.id=b.id_language\n"+                
+        String sql = "SELECT ge.genre, b.title, b.description, b.isbn, b.stock, b.id, l.language FROM books as b\n" +
+                "JOIN books_genres as ba ON b.id=ba.id_book\n" +
+                "JOIN genres as ge ON ba.id_genre=ge.id\n" +
+                "JOIN languages as l ON l.id=b.id_language\n" +
                 "WHERE ge.genre = ?";
-        try{
+        try {
             conn = DBManager.getDbConnection();
             stmn = conn.prepareStatement(sql);
             stmn.setString(1, genre);
@@ -35,23 +35,23 @@ public class BookDAO implements BookDAOInterface{
                 books.add(book);
             }
 
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
-        }finally{
+        } finally {
             DBManager.closeConnection();
         }
         return books;
 
     }
 
-    public List<Book> getBooksbyAuthors(String author){
+    public List<Book> getBooksbyAuthors(String author) {
         List<Book> books = new ArrayList<>();
-        String sql= "SELECT b.title, b.description, b.isbn, b.stock, b.id, l.language FROM books as b\n"+
-                "JOIN books_authors as ba ON b.id=ba.id_book\n"+
-                "JOIN authors as au ON ba.id_author=au.id\n"+
-                "JOIN languages as l ON l.id=b.id_language\n"+                
-                "WHERE au.author = ?";
-        try{
+        String sql = "SELECT b.title, b.description, b.isbn, b.stock, b.id, l.language FROM books as b\n" +
+                "JOIN books_authors as ba ON b.id=ba.id_book\n" +
+                "JOIN authors as au ON ba.id_author=au.id\n" +
+                "JOIN languages as l ON l.id=b.id_language\n" +
+                "WHERE au.name = ?";
+        try {
             conn = DBManager.getDbConnection();
             stmn = conn.prepareStatement(sql);
             stmn.setString(1, author);
@@ -70,9 +70,9 @@ public class BookDAO implements BookDAOInterface{
                 }
             }
 
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
-        }finally{
+        } finally {
             DBManager.closeConnection();
         }
         return books;
