@@ -30,8 +30,8 @@ public class BooksController {
         return books;
     }
 
-    public List<Book> getBooksbyTitle(String title){
-        List<Book> books = bookDAOInterface.getBooksbyTitle(title);
+    public Book getBooksbyTitle(String title){
+        Book books = bookDAOInterface.getBooksbyTitle(title);
         return books;
     }
 
