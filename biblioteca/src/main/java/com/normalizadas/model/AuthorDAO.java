@@ -8,11 +8,11 @@ import java.util.List;
 
 import com.normalizadas.config.DBManager;
 
-public class AuthorDAO implements AuthorDAOInterface{
+public class AuthorDAO implements AuthorDAOInterface {
     private Connection conn;
     private PreparedStatement stmn;
 
-    public List<Author> getAuthors(int id){
+    public List<Author> getAuthors(int id) {
         List<Author> authors = new ArrayList<>();
         String sql="SELECT name, id from authors\n" +
                     "JOIN books_authors ON books_authors.id_author = authors.id\n" +
@@ -28,7 +28,7 @@ public class AuthorDAO implements AuthorDAOInterface{
                 author.setName(result.getString("name"));
                 authors.add(author);
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
             DBManager.closeConnection();

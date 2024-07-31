@@ -30,6 +30,11 @@ public class BooksController {
         return books;
     }
 
+    public List<Book> getBooksbyTitle(String title){
+        List<Book> books = bookDAOInterface.getBooksbyTitle(title);
+        return books;
+    }
+
     public boolean bookExists(String title) {
         boolean bookExists = bookDAOInterface.bookExists(title);
         return bookExists;
