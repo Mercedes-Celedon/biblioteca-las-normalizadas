@@ -23,7 +23,7 @@ public class App {
         AuthorDAOInterface authorDao = new AuthorDAO();
         AuthorsController authorsController = new AuthorsController(authorDao);
         BookView bookView = new BookView(bookController, genresController, authorsController);
-        bookView.searchByTitle();
+        bookView.showMainMenu();
     }
 }
 
