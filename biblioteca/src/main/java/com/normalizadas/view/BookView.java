@@ -177,8 +177,8 @@ public class BookView {
 
     public void printBook(List<Book> books, boolean printDescription){
         if (printDescription){
-            System.out.printf("| %-20s | %-20s | %-15s | %-50s | %-15s | %-6s | %-12s \n","Titulo","Autor","Genero","Descripción","ISBN","Stock", "Idioma" );
-        System.out.println("=".repeat(160));
+            System.out.printf("| %-28s | %-25s | %-35s | %-15s | %-5s | %-12s | %-25s |\n","Titulo","Autor","Genero","ISBN","Stock", "Idioma", "Descripción" );
+        System.out.println("=".repeat(165));
         for (Book book : books) {
             List<Genre> genres=genresController.getBooksbyGenres(book.getId());
             List<String> data = new ArrayList<>();
@@ -192,10 +192,10 @@ public class BookView {
             String language = book.getLanguage();
             String isbn = book.getIsbn();
             int stock = book.getStock();
-            System.out.printf("| %-20s | %-20s | %-15s | ", title, "author", genresString);
-            printFormatDescription(description, 50);
-            System.out.printf(" | %-15s | %-6d | %-12s |\n", isbn, stock, language);
-            System.out.println("=".repeat(160));
+            System.out.printf("| %-28s | %-25s | %-35s | %-15s | %-5s | %-12s |", title, "author", genresString, isbn, stock, language);
+            printFormatDescription(description, 25);
+            System.out.print("\n");
+            System.out.println("-".repeat(165));
            }
         }
         
@@ -206,20 +206,20 @@ public class BookView {
         boolean firstLine = true;
         for (int i = 0; i < length; i += lineWidth) {
             if (!firstLine) {
-                System.out.printf("| %-20s | %-20s | %-15s | ", "", "", "");
+                System.out.printf("| %-28s | %-25s | %-35s | %-15s | %-5s | %-12s | ", "", "", "", "","","");
             }
     
             if (i + lineWidth < length) {
-                System.out.printf("%-50s", description.substring(i, i + lineWidth));
+                System.out.printf("%-25s", description.substring(i, i + lineWidth));
             } else {
-                System.out.printf("%-50s", description.substring(i));
+                System.out.printf("%-25s", description.substring(i));
             }
     
             firstLine = false;
     
             // Check if it's the last part of the description to avoid extra lines
             if (i + lineWidth < length - 1) {
-                System.out.printf(" |\n");
+                System.out.printf("\n");
             }
         }
     }
