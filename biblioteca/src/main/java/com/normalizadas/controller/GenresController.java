@@ -16,4 +16,9 @@ public class GenresController {
         List<Genre> genres = genreDAOInterface.getGenres(id);
         return genres;
     }
+
+    public Genre findOrCreateGenre(String name){
+        Genre newGenre = genreDAOInterface.findOrCreateGenre(name);
+        return newGenre;
+    }
 }

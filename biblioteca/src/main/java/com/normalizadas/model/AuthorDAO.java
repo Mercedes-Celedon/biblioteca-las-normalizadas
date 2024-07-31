@@ -32,7 +32,39 @@ public class AuthorDAO implements AuthorDAOInterface {
             System.out.println(e.getMessage());
         } finally {
             DBManager.closeConnection();
-        }
+        }  
         return authors;
+    }
+
+    public Author findOrCreateAuthor(String name)  {
+        String sql = "SELECT id FROM authors WHERE name = ?";
+        Author author = new Author();
+        try {
+            conn=DBManager.getDbConnection();
+            stmn=conn.prepareStatement(sql);
+            stmn.setString(1, name);
+            ResultSet rs = stmn.executeQuery();
+            if (rs.next()) {
+                author.setId(rs.getInt("id"));
+                author.setName(name);
+            }else {
+                sql = "INSERT INTO authors (name) VALUES (?)";
+                stmn=conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+                stmn.setString(1, name);
+                stmn.executeUpdate();
+                rs = stmn.getGeneratedKeys();
+                if (rs.next()) {
+                    author.setId(rs.getInt(1));
+                    System.out.println(rs.getInt(1));
+                    author.setName(name);
+                }
+            }
+            
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        } finally {
+            DBManager.closeConnection();
+        }
+        return author;
     }
 }
