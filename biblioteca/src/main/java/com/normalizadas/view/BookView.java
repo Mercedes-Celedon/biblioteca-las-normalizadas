@@ -188,7 +188,26 @@ public class BookView {
             System.out.println(book.getTitle() + " - " + book.getDescription() + " - " + book.getLanguage());
             System.out.println(book.getIsbn());
             System.out.println("-------------------");
+            
+        }
+        scanner.close();
+    } 
 
+    public void searchByAuthor (){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Escribe el Autor");
+        String author=scanner.next(); 
+        List<Book> books=booksController.getBooksbyAuthors(author);
+        
+        for (Book book : books) {
+            List<Author> authors=authorsController.getBooksbyAuthors(book.getId());
+            for (Author a: authors) {
+                System.out.println(a.getName());
+            }
+            System.out.println(book.getTitle() +" - "+ book.getDescription() +" - "+book.getLanguage());
+            System.out.println(book.getIsbn());
+            System.out.println("-------------------");
+            
         }
         scanner.close();
     }

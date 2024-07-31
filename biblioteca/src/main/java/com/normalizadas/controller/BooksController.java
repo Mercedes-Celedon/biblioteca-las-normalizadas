@@ -25,6 +25,11 @@ public class BooksController {
         return books;
     }
 
+    public List<Book> getBooksbyAuthors(String author){
+        List<Book> books = bookDAOInterface.getBooksbyAuthors(author);
+        return books;
+    }
+
     public boolean bookExists(String title) {
         boolean bookExists = bookDAOInterface.bookExists(title);
         return bookExists;
