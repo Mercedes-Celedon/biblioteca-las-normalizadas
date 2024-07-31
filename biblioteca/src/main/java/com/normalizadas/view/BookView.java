@@ -49,6 +49,7 @@ public class BookView {
 
             switch (opc) {
                 case 1:
+                    showAllBooks();
                     break;
                 case 2:
                     showSearchMenu();
@@ -176,6 +177,10 @@ public class BookView {
         }
         //scanner.close();
         System.out.println("Libro añadido con éxito");
+    }
+    public void showAllBooks(){
+        List<Book> books=booksController.getAllBooks();
+        printBook(books, true);
     }
     public void askTitleBook(){
         scanner.nextLine();

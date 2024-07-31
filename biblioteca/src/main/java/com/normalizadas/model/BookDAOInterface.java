@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface BookDAOInterface {
+    List<Book> getAllBooks();
     List<Book> getBooksbyGenres(String genre);
     List<Book> getBooksbyAuthors(String author);
     List<Book> getBooksbyTitles(String title);
