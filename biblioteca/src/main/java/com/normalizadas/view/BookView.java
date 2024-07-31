@@ -158,6 +158,8 @@ public class BookView {
         scanner.close();
         System.out.println("Libro añadido con éxito");
     }
+
+    
     private BooksController booksController;
     private GenresController genresController;
     

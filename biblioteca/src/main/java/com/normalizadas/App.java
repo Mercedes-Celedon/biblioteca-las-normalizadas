@@ -16,7 +16,8 @@ public class App {
         GenreDAOInterface genreDao= new GenreDAO();
         GenresController genresController= new GenresController(genreDao);
         BookView bookView = new BookView(bookController, genresController);
-        bookView.showBooks();
+        //bookView.showBooks();
+        bookView.showDeleteMenu();
     }
  }
 

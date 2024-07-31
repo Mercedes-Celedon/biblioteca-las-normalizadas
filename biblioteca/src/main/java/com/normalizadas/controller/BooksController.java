@@ -17,4 +17,8 @@ public class BooksController {
         List<Book> books = bookDAOInterface.getBooksbyGenres(genre);
         return books;
     }
+
+    public void deleteBook(int id) {
+        bookDAOInterface.deleteBook(id);
+    }
 }
