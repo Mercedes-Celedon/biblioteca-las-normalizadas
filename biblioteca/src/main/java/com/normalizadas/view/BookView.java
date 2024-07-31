@@ -37,9 +37,9 @@ public class BookView {
             System.out.println("1. Ver catálogo entero.");
             System.out.println("2. Buscar un libro.");
             System.out.println("3. Añadir un libro.");
-            System.out.println("4. Modificar un libro.\n");
-            System.out.println("5. Eliminar un libro.\n");
-            System.out.println("6. Salir.\n");
+            System.out.println("4. Modificar un libro.");
+            System.out.println("5. Eliminar un libro.");
+            System.out.println("6. Salir.");
     
             int opc = scanner.nextInt();
 
