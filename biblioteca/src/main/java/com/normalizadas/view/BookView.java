@@ -189,45 +189,55 @@ public class BookView {
     }
 
     public void printBook(List<Book> books, boolean printDescription){
-        if (printDescription){
+        if (printDescription){//esta opción es para el menú con descripción. importante que pases el parametro como true en tu función
             System.out.printf("| %-28s | %-25s | %-35s | %-15s | %-5s | %-12s | %-25s |\n","Titulo","Autor","Genero","ISBN","Stock", "Idioma", "Descripción" );
-        System.out.println("=".repeat(165));
-        for (Book book : books) {
-            List<Genre> genres=genresController.getBooksbyGenres(book.getId());
-            List<String> data = new ArrayList<>();
-            for (Genre g : genres) {
-                //System.out.println(g.getGenre());
-                data.add(g.getGenre());
+            System.out.println("=".repeat(165));
+            for (Book book : books) {
+                List<Genre> genres=genresController.getBooksbyGenres(book.getId());
+                List<String> data = new ArrayList<>();
+                for (Genre g : genres) {
+                    data.add(g.getGenre());
+                }
+                List<Author> authors = authorsController.getBooksbyAuthors(book.getId());
+                List<String> dataAuthor = new ArrayList<>();
+                for (Author auth : authors) {
+                    dataAuthor.add(auth.getName());
+                }
+                String genresString = String.join(", ", data);
+                String authorList = String.join(", ", dataAuthor);
+                String title = book.getTitle();
+                String description = book.getDescription();
+                String language = book.getLanguage();
+                String isbn = book.getIsbn();
+                int stock = book.getStock();
+                System.out.printf("| %-28s | %-25s | %-35s | %-15s | %-5s | %-12s |", title, authorList, genresString, isbn, stock, language);
+                printFormatDescription(description, 25);
+                System.out.print("\n");
+                System.out.println("-".repeat(165));
             }
-            String genresString = String.join(", ", data);
-            String title = book.getTitle();
-            String description = book.getDescription();
-            String language = book.getLanguage();
-            String isbn = book.getIsbn();
-            int stock = book.getStock();
-            System.out.printf("| %-28s | %-25s | %-35s | %-15s | %-5s | %-12s |", title, "author", genresString, isbn, stock, language);
-            printFormatDescription(description, 25);
-            System.out.print("\n");
-            System.out.println("-".repeat(165));
-           }
         }else{
             System.out.printf("| %-32s | %-25s | %-35s | %-15s | %-5s | %-12s |\n","Titulo","Autor","Genero","ISBN","Stock", "Idioma");
-        System.out.println("=".repeat(142));
-        for (Book book : books) {
-            List<Genre> genres=genresController.getBooksbyGenres(book.getId());
-            List<String> data = new ArrayList<>();
-            for (Genre g : genres) {
-                //System.out.println(g.getGenre());
-                data.add(g.getGenre());
-            }
-            String genresString = String.join(", ", data);
-            String title = book.getTitle();
-            String language = book.getLanguage();
-            String isbn = book.getIsbn();
-            int stock = book.getStock();
-            System.out.printf("| %-32s | %-25s | %-35s | %-15s | %-5s | %-12s |", title, "author", genresString, isbn, stock, language);
-            System.out.print("\n");
-            System.out.println("-".repeat(142));
+            System.out.println("=".repeat(142));
+            for (Book book : books) {
+                List<Genre> genres=genresController.getBooksbyGenres(book.getId());
+                List<String> data = new ArrayList<>();
+                for (Genre g : genres) {
+                    data.add(g.getGenre());
+                }
+                List<Author> authors = authorsController.getBooksbyAuthors(book.getId());
+                List<String> dataAuthor = new ArrayList<>();
+                for (Author auth : authors) {
+                    dataAuthor.add(auth.getName());
+                }
+                String genresString = String.join(", ", data);
+                String authorList = String.join(", ", dataAuthor);
+                String title = book.getTitle();
+                String language = book.getLanguage();
+                String isbn = book.getIsbn();
+                int stock = book.getStock();
+                System.out.printf("| %-32s | %-25s | %-35s | %-15s | %-5s | %-12s |", title, authorList, genresString, isbn, stock, language);
+                System.out.print("\n");
+                System.out.println("-".repeat(142));
            }
         }
 
