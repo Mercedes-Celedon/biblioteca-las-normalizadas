@@ -17,6 +17,7 @@ import com.normalizadas.model.Genre;
 public class BookView {
 
     private static Scanner scanner;
+    private String askGenreFilter;
 
     private BooksController booksController;
     private GenresController genresController;
@@ -43,7 +44,6 @@ public class BookView {
             System.out.println("5. Eliminar un libro.");
             System.out.println("6. Salir.");
 
-            opc = scanner.nextInt();
             int opc = scanner.nextInt();
 
             switch (opc) {
@@ -90,12 +90,9 @@ public class BookView {
         System.out.println("3. Buscar por género.");
 
         int opcFilter = scanner.nextInt();
-
-        switch (opcFilter) {
-        int opc = scanner.nextInt();
+        
         scanner.nextLine();
-
-        switch (opc) {
+        switch (opcFilter) {
             case 1:
                 // searchByTitle();
                 break;
@@ -104,7 +101,7 @@ public class BookView {
                 break;
             case 3:
                 // searchByGenre();
-                showBooks();
+                askGenreBook();
                 break;
             default:
                 System.out.println("Ninguna opción elegida. Saliendo al menú inicial.");
@@ -195,8 +192,6 @@ public class BookView {
 
     public void askGenreBook(){
         scanner.nextLine();
-    public void showBooks() {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Escribe el género");
         askGenreFilter=scanner.nextLine(); 
         List<Book> books=booksController.getBooksbyGenres(askGenreFilter);
@@ -229,22 +224,47 @@ public class BookView {
         }else{
             System.out.printf("| %-32s | %-25s | %-35s | %-15s | %-5s | %-12s |\n","Titulo","Autor","Genero","ISBN","Stock", "Idioma");
         System.out.println("=".repeat(142));
-        String genre = scanner.next();
-        List<Book> books = booksController.getBooksbyGenres(genre);
-
         for (Book book : books) {
             List<Genre> genres=genresController.getBooksbyGenres(book.getId());
             List<String> data = new ArrayList<>();
-            List<Genre> genres = genresController.getBooksbyGenres(book.getId());
             for (Genre g : genres) {
-                System.out.println(g.getGenre());
+                //System.out.println(g.getGenre());
+                data.add(g.getGenre());
             }
-            System.out.println(book.getTitle() + " - " + book.getDescription() + " - " + book.getLanguage());
-            System.out.println(book.getIsbn());
-            System.out.println("-------------------");
-
+            String genresString = String.join(", ", data);
+            String title = book.getTitle();
+            String language = book.getLanguage();
+            String isbn = book.getIsbn();
+            int stock = book.getStock();
+            System.out.printf("| %-32s | %-25s | %-35s | %-15s | %-5s | %-12s |", title, "author", genresString, isbn, stock, language);
+            System.out.print("\n");
+            System.out.println("-".repeat(142));
+           }
         }
-        scanner.close();
+
+    }
+
+    private void printFormatDescription(String description, int lineWidth) {
+        int length = description.length();
+        boolean firstLine = true;
+        for (int i = 0; i < length; i += lineWidth) {
+            if (!firstLine) {
+                System.out.printf("| %-28s | %-25s | %-35s | %-15s | %-5s | %-12s | ", "", "", "", "","","");
+            }
+    
+            if (i + lineWidth < length) {
+                System.out.printf("%-25s", description.substring(i, i + lineWidth));
+            } else {
+                System.out.printf("%-25s", description.substring(i));
+            }
+    
+            firstLine = false;
+    
+            // Check if it's the last part of the description to avoid extra lines
+            if (i + lineWidth < length - 1) {
+                System.out.printf("\n");
+            }
+        }
     }
 
     public void searchByAuthor() {
