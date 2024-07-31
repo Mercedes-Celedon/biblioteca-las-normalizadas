@@ -1,5 +1,6 @@
 package com.normalizadas.view;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -10,36 +11,42 @@ import com.normalizadas.model.Genre;
 
 public class BookView {
 
-    private static Scanner scanner;
+    private static Scanner scanner = new Scanner(System.in);
+    private  String askGenreFilter;
+    private BooksController booksController;
+    private GenresController genresController;
+    
+    public BookView (BooksController booksController, GenresController genresController){
+        this.booksController=booksController;
+        this.genresController=genresController;
+    }
 
     public void showMainMenu() {
-        scanner = new Scanner(System.in);
+        //scanner = new Scanner(System.in);
 
         int opc;
 
-        System.out.println("\nBienvenid@ a la biblioteca Divergente.");
-        System.out.println("\n¿Qué quieres hacer?");
-        System.out.println("1. Ver catálogo entero.");
-        System.out.println("2. Buscar un libro.");
-        System.out.println("3. Añadir un libro.");
-        System.out.println("4. Modificar un libro.\n");
-        System.out.println("5. Eliminar un libro.\n");
-        System.out.println("6. Salir.\n");
-
-        opc = scanner.nextInt();
-        scanner.close();
+        
+        //scanner.close()();
 
         boolean exit = false;
 
-        while (exit) {
+        while (!exit) {
+            System.out.println("\nBienvenid@ a la biblioteca Divergente.");
+            System.out.println("\n¿Qué quieres hacer?");
+            System.out.println("1. Ver catálogo entero.");
+            System.out.println("2. Buscar un libro.");
+            System.out.println("3. Añadir un libro.");
+            System.out.println("4. Modificar un libro.");
+            System.out.println("5. Eliminar un libro.");
+            System.out.println("6. Salir.");
+
+            opc = scanner.nextInt();
             switch (opc) {
                 case 1:
-                    // allBooks = new AllBooks(conn);
-                    // allBooks.showAll();
                     break;
                 case 2:
-                    // searchBooks = new SearchBooks(conn, scanner);
-                    // searchBooks.TypeOfFilters();
+                    showSearchMenu();
                     break;
                 case 3:
                     // newBook = new NewBook(conn, scanner);
@@ -53,26 +60,22 @@ public class BookView {
                     break;
                 case 6:
                     exit = true;
+                    
                 default:
                     System.out.println("No has elegido ninguna opción.");
             }
         }
     }
-
     public void showSearchMenu() {
-
-        scanner = new Scanner(System.in);
-
         System.out.println("\n¿Selecciona una opción de búsqueda con el número: ");
         System.out.println("1. Buscar por título.");
         System.out.println("2. Buscar por autor.");
         System.out.println("3. Buscar por género.");
+        System.out.println("4. Salir de búsqueda");
 
-        int opc = scanner.nextInt();
+        int opcFilter = scanner.nextInt();
 
-        scanner.close();
-
-        switch (opc) {
+        switch (opcFilter) {
             case 1:
                 // searchByTitle();
                 break;
@@ -80,7 +83,10 @@ public class BookView {
                 // searchByAuthor();
                 break;
             case 3:
-                // searchByGenre();
+                askGenreBook();
+                break;
+            case 4:
+                showMainMenu();
                 break;
             default:
                 System.out.println("Ninguna opción elegida. Saliendo al menú inicial.");
@@ -155,33 +161,66 @@ public class BookView {
         //     int id_genre = findOrCreateGenre(genre.trim());
         //     addBookGenre(bookId, id_genre);
         // }
-        scanner.close();
+        //scanner.close()();
         System.out.println("Libro añadido con éxito");
     }
-    private BooksController booksController;
-    private GenresController genresController;
-    
-    public BookView (BooksController booksController, GenresController genresController){
-        this.booksController=booksController;
-        this.genresController=genresController;
+
+
+    public void askGenreBook(){
+        scanner.nextLine();
+        System.out.println("Escribe el género");
+        askGenreFilter=scanner.nextLine(); 
+        List<Book> books=booksController.getBooksbyGenres(askGenreFilter);
+        printBook(books, true);
+        
     }
 
-    public void showBooks(){
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Escribe el género");
-        String genre=scanner.next(); 
-        List<Book> books=booksController.getBooksbyGenres(genre);
-        
+    public void printBook(List<Book> books, boolean printDescription){
+        if (printDescription){
+            System.out.printf("| %-20s | %-20s | %-15s | %-50s | %-15s | %-6s | %-12s \n","Titulo","Autor","Genero","Descripción","ISBN","Stock", "Idioma" );
+        System.out.println("=".repeat(160));
         for (Book book : books) {
             List<Genre> genres=genresController.getBooksbyGenres(book.getId());
+            List<String> data = new ArrayList<>();
             for (Genre g : genres) {
-                System.out.println(g.getGenre());
+                //System.out.println(g.getGenre());
+                data.add(g.getGenre());
             }
-            System.out.println(book.getTitle() +" - "+ book.getDescription() +" - "+book.getLanguage());
-            System.out.println(book.getIsbn());
-            System.out.println("-------------------");
-            
+            String genresString = String.join(", ", data);
+            String title = book.getTitle();
+            String description = book.getDescription();
+            String language = book.getLanguage();
+            String isbn = book.getIsbn();
+            int stock = book.getStock();
+            System.out.printf("| %-20s | %-20s | %-15s | ", title, "author", genresString);
+            printFormatDescription(description, 50);
+            System.out.printf(" | %-15s | %-6d | %-12s |\n", isbn, stock, language);
+            System.out.println("=".repeat(160));
            }
-        scanner.close();
+        }
+        
+    }
+
+    private void printFormatDescription(String description, int lineWidth) {
+        int length = description.length();
+        boolean firstLine = true;
+        for (int i = 0; i < length; i += lineWidth) {
+            if (!firstLine) {
+                System.out.printf("| %-20s | %-20s | %-15s | ", "", "", "");
+            }
+    
+            if (i + lineWidth < length) {
+                System.out.printf("%-50s", description.substring(i, i + lineWidth));
+            } else {
+                System.out.printf("%-50s", description.substring(i));
+            }
+    
+            firstLine = false;
+    
+            // Check if it's the last part of the description to avoid extra lines
+            if (i + lineWidth < length - 1) {
+                System.out.printf(" |\n");
+            }
+        }
     }
 }

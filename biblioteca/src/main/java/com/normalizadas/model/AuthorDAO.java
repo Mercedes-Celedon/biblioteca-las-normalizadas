@@ -25,6 +25,7 @@ public class AuthorDAO implements AuthorDAOInterface{
                 Author author = new Author();
                 author.setId(result.getInt("id"));
                 author.setName(result.getString("name"));
+                authors.add(author);
             }
         }catch(Exception e){
 
