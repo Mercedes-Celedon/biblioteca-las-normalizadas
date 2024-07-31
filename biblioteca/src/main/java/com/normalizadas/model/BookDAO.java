@@ -17,7 +17,7 @@ import com.normalizadas.config.DBManager;
 public class BookDAO implements BookDAOInterface {
 
     private Connection conn;
-
+    private PreparedStatement stmn;
 
     public void deleteBook(int id) {
 
@@ -53,16 +53,14 @@ public class BookDAO implements BookDAOInterface {
         }
     }
 
-    private PreparedStatement stmn;
-
-    public List<Book> getBooksbyGenres(String genre){
+    public List<Book> getBooksbyGenres(String genre) {
         List<Book> books = new ArrayList<>();
-        String sql= "SELECT ge.genre, b.title, b.description, b.isbn, b.stock, b.id, l.language FROM books as b\n"+
-                "JOIN books_genres as ba ON b.id=ba.id_book\n"+
-                "JOIN genres as ge ON ba.id_genre=ge.id\n"+
-                "JOIN languages as l ON l.id=b.id_language\n"+                
+        String sql = "SELECT ge.genre, b.title, b.description, b.isbn, b.stock, b.id, l.language FROM books as b\n" +
+                "JOIN books_genres as ba ON b.id=ba.id_book\n" +
+                "JOIN genres as ge ON ba.id_genre=ge.id\n" +
+                "JOIN languages as l ON l.id=b.id_language\n" +
                 "WHERE ge.genre = ?";
-        try{
+        try {
             conn = DBManager.getDbConnection();
             stmn = conn.prepareStatement(sql);
             stmn.setString(1, genre);
@@ -78,12 +76,12 @@ public class BookDAO implements BookDAOInterface {
                 books.add(book);
             }
 
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
-        }finally{
+        } finally {
             DBManager.closeConnection();
         }
         return books;
-   
+
     }
 }
