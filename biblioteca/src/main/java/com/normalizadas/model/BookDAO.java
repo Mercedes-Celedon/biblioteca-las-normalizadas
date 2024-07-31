@@ -15,10 +15,10 @@ public class BookDAO implements BookDAOInterface {
 
     public List<Book> getBooksbyGenres(String genre) {
         List<Book> books = new ArrayList<>();
-        String sql = "SELECT ge.genre, b.title, b.description, b.isbn, b.stock, b.id, l.language FROM books as b\n" +
-                "JOIN books_genres as ba ON b.id=ba.id_book\n" +
-                "JOIN genres as ge ON ba.id_genre=ge.id\n" +
-                "JOIN languages as l ON l.id=b.id_language\n" +
+        String sql= "SELECT b.title, b.description, b.isbn, b.stock, b.id, l.language FROM books as b\n"+
+                "JOIN books_genres as ba ON b.id=ba.id_book\n"+
+                "JOIN genres as ge ON ba.id_genre=ge.id\n"+
+                "JOIN languages as l ON l.id=b.id_language\n"+                
                 "WHERE ge.genre = ?";
         try {
             conn = DBManager.getDbConnection();
@@ -153,8 +153,8 @@ public class BookDAO implements BookDAOInterface {
         }
     }
 
-    public List<Book> getBooksbyTitle(String title) {
-        List<Book> books = new ArrayList<>();
+    public Book getBooksbyTitle(String title) {
+        Book book = new Book();
         String sql = "SELECT b.title, b.description, b.isbn, b.stock, b.id, l.language FROM books as b\n" +
                 "JOIN books_authors as ba ON b.id=ba.id_book\n" +
                 "JOIN authors as au ON ba.id_author=au.id\n" +
@@ -166,14 +166,12 @@ public class BookDAO implements BookDAOInterface {
             stmn.setString(1, title);
             ResultSet result = stmn.executeQuery();
             while (result.next()) {
-                Book book = new Book();
                 book.setId(result.getInt("id"));
                 book.setTitle(result.getString("title"));
                 book.setDescription(result.getString("description"));
                 book.setIsbn(result.getString("isbn"));
                 book.setStock(result.getInt("stock"));
                 book.setLanguage(result.getString("language"));
-                books.add(book);
             }
 
         } catch (Exception e) {
@@ -181,7 +179,7 @@ public class BookDAO implements BookDAOInterface {
         } finally {
             DBManager.closeConnection();
         }
-        return books;
+        return book;
 
     }
 

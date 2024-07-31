@@ -1,5 +1,6 @@
 package com.normalizadas.view;
 
+import java.util.ArrayList;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
@@ -16,6 +17,7 @@ import com.normalizadas.model.Genre;
 public class BookView {
 
     private static Scanner scanner;
+    private String askGenreFilter;
 
     private BooksController booksController;
     private GenresController genresController;
@@ -46,10 +48,8 @@ public class BookView {
 
             switch (opc) {
                 case 1:
-                    prueba();
                     break;
                 case 2:
-                    showSearchMenu();
                     showSearchMenu();
                     break;
                 case 3:
@@ -59,7 +59,6 @@ public class BookView {
                     // Método modificar libro
                     break;
                 case 5:
-                    showDeleteMenu();
                     showDeleteMenu();
                     break;
                 case 6:
@@ -72,11 +71,6 @@ public class BookView {
         }
 
     }
-
-    public void prueba() {
-        System.out.println("prueba");
-    }
-
     public void showSearchMenu() throws SQLException {
 
         scanner = new Scanner(System.in);
@@ -86,10 +80,9 @@ public class BookView {
         System.out.println("2. Buscar por autor.");
         System.out.println("3. Buscar por género.");
 
-        int opc = scanner.nextInt();
-        scanner.nextLine();
-
-        switch (opc) {
+        int opcFilter = scanner.nextInt();
+        
+        switch (opcFilter) {
             case 1:
                 // searchByTitle();
                 break;
@@ -98,14 +91,13 @@ public class BookView {
                 break;
             case 3:
                 // searchByGenre();
-                showBooks();
+                askGenreBook();
                 break;
             default:
                 System.out.println("Ninguna opción elegida. Saliendo al menú inicial.");
                 showMainMenu();
         }
 
-        scanner.close();
     }
 
     public void showDeleteMenu() throws SQLException {
@@ -171,6 +163,12 @@ public class BookView {
 
         System.out.print("Indica el género o géneros (en este caso separados por comas): ");
         String[] genres = scanner.nextLine().split(",");
+        
+        // for (String genre : genres) {
+        //     int id_genre = findOrCreateGenre(genre.trim());
+        //     addBookGenre(bookId, id_genre);
+        // }
+        //scanner.close()();
 
         for (String ge : genres) {
             Genre genre = genresController.findOrCreateGenre(ge.trim());
@@ -180,23 +178,82 @@ public class BookView {
         System.out.println("Libro añadido con éxito");
     }
 
-    public void showBooks() {
-        Scanner scanner = new Scanner(System.in);
+
+    public void askGenreBook(){
+        scanner.nextLine();
         System.out.println("Escribe el género");
-        String genre = scanner.next();
-        List<Book> books = booksController.getBooksbyGenres(genre);
+        askGenreFilter=scanner.nextLine(); 
+        List<Book> books=booksController.getBooksbyGenres(askGenreFilter);
+        printBook(books, false);//poner true si quieres el menú con descripción
+        
+    }
 
+    public void printBook(List<Book> books, boolean printDescription){
+        if (printDescription){
+            System.out.printf("| %-28s | %-25s | %-35s | %-15s | %-5s | %-12s | %-25s |\n","Titulo","Autor","Genero","ISBN","Stock", "Idioma", "Descripción" );
+        System.out.println("=".repeat(165));
         for (Book book : books) {
-            List<Genre> genres = genresController.getBooksbyGenres(book.getId());
+            List<Genre> genres=genresController.getBooksbyGenres(book.getId());
+            List<String> data = new ArrayList<>();
             for (Genre g : genres) {
-                System.out.println(g.getGenre());
+                //System.out.println(g.getGenre());
+                data.add(g.getGenre());
             }
-            System.out.println(book.getTitle() + " - " + book.getDescription() + " - " + book.getLanguage());
-            System.out.println(book.getIsbn());
-            System.out.println("-------------------");
-
+            String genresString = String.join(", ", data);
+            String title = book.getTitle();
+            String description = book.getDescription();
+            String language = book.getLanguage();
+            String isbn = book.getIsbn();
+            int stock = book.getStock();
+            System.out.printf("| %-28s | %-25s | %-35s | %-15s | %-5s | %-12s |", title, "author", genresString, isbn, stock, language);
+            printFormatDescription(description, 25);
+            System.out.print("\n");
+            System.out.println("-".repeat(165));
+           }
+        }else{
+            System.out.printf("| %-32s | %-25s | %-35s | %-15s | %-5s | %-12s |\n","Titulo","Autor","Genero","ISBN","Stock", "Idioma");
+        System.out.println("=".repeat(142));
+        for (Book book : books) {
+            List<Genre> genres=genresController.getBooksbyGenres(book.getId());
+            List<String> data = new ArrayList<>();
+            for (Genre g : genres) {
+                //System.out.println(g.getGenre());
+                data.add(g.getGenre());
+            }
+            String genresString = String.join(", ", data);
+            String title = book.getTitle();
+            String language = book.getLanguage();
+            String isbn = book.getIsbn();
+            int stock = book.getStock();
+            System.out.printf("| %-32s | %-25s | %-35s | %-15s | %-5s | %-12s |", title, "author", genresString, isbn, stock, language);
+            System.out.print("\n");
+            System.out.println("-".repeat(142));
+           }
         }
-        scanner.close();
+
+    }
+
+    private void printFormatDescription(String description, int lineWidth) {
+        int length = description.length();
+        boolean firstLine = true;
+        for (int i = 0; i < length; i += lineWidth) {
+            if (!firstLine) {
+                System.out.printf("| %-28s | %-25s | %-35s | %-15s | %-5s | %-12s | ", "", "", "", "","","");
+            }
+    
+            if (i + lineWidth < length) {
+                System.out.printf("%-25s", description.substring(i, i + lineWidth));
+            } else {
+                System.out.printf("%-25s", description.substring(i));
+            }
+    
+            firstLine = false;
+    
+            // Check if it's the last part of the description to avoid extra lines
+            if (i + lineWidth < length - 1) {
+                System.out.printf("\n");
+            }
+        }
     }
 
     public void searchByAuthor() {
@@ -222,14 +279,12 @@ public class BookView {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Escribe el título del libro:");
         String title = scanner.nextLine();
-        List<Book> books = booksController.getBooksbyTitle(title);
+        Book book = booksController.getBooksbyTitle(title);
 
-        for (Book book : books) {
-            System.out.println(book.getTitle() + " - " + book.getDescription() + " - " + book.getLanguage());
-            System.out.println(book.getIsbn());
-            System.out.println("-------------------");
-            scanner.close();
-        }
+        System.out.println(book.getTitle() + " - " + book.getDescription() + " - " + book.getLanguage());
+        System.out.println(book.getIsbn());
+        System.out.println("-------------------");
+        scanner.close();
 
     }
 }
