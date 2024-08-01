@@ -35,7 +35,8 @@ public class AuthorDAO implements AuthorDAOInterface {
         }  
         return authors;
     }
-
+    
+    
     public Author findOrCreateAuthor(String name)  {
         String sql = "SELECT id FROM authors WHERE name = ?";
         Author author = new Author();
