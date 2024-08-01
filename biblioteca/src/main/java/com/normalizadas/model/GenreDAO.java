@@ -35,4 +35,56 @@ public class GenreDAO implements GenreDAOInterface{
         }  
         return genres;        
     }
+
+    public Genre findOrCreateGenre(String genre)  {
+        String sql = "SELECT id FROM genres WHERE genre = ?";
+        Genre newGenre = new Genre();
+        try {
+            conn=DBManager.getDbConnection();
+            stmn=conn.prepareStatement(sql);
+            stmn.setString(1, genre);
+            ResultSet rs = stmn.executeQuery();
+            if (rs.next()) {
+                newGenre.setId(rs.getInt("id"));
+                newGenre.setGenre(genre);
+            }else {
+                sql = "INSERT INTO genres (genre) VALUES (?)";
+            stmn=conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            stmn.setString(1, genre);
+            stmn.executeUpdate();
+            rs = stmn.getGeneratedKeys();
+            if (rs.next()) {
+                newGenre.setId(rs.getInt(1));
+                newGenre.setGenre(genre);
+            }
+            }
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        } finally {
+            DBManager.closeConnection();
+        }
+        return newGenre;
+    }
+
+    /**
+     * TODO
+     * @param genre
+     * @return
+     */
+    @Override
+    public void updateGenre(Genre genre) {
+        String sql="UPDATE genres SET genre = ? WHERE id = ?";
+        try{
+            conn=DBManager.getDbConnection();
+            stmn=conn.prepareStatement(sql);
+            stmn.setString(1, genre.getGenre());
+            stmn.setInt(2, genre.getId());
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        } finally {
+            DBManager.closeConnection();
+        }
+    }
+
+
 }
