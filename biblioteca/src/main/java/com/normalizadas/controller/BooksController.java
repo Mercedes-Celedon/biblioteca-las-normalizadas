@@ -39,9 +39,12 @@ public class BooksController {
     }
 
     /**
-     * TODO
+     * Function name: getBooksByAuthors
      * @param author
-     * @return
+     * @return books
+     * Function that receives the author name as a parameter,
+     * and calls the interfaceDAO for generates a list of books 
+     * according to the author searched in the database
      */
     public List<Book> getBooksbyAuthors(String author){
         List<Book> books = bookDAOInterface.getBooksbyAuthors(author);
