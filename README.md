@@ -20,7 +20,7 @@
 
 Desarrollo de un gestor de libros para una biblioteca ficticia, biblioteca Divergente, donde se puede acceder a la base de datos de la biblioteca para visualizar todo el catálogo disponible, buscar por autor, título o género, modificar o eliminar un libro, o añadir un libro nuevo a la base de datos.
 
-Se ha trabajado con metodologías ágiles, usando Trello para la organización y distribución de tareas a través de historias de usuario, que a su vez han sido referenciadas en los nombres de las ramas del proyecto.
+Se ha trabajado con metodologías ágiles, usando Trello para la organización y distribución de tareas a través de historias de usuario, que a su vez han sido referenciadas en los nombres de las ramas del proyecto en el gitflow. 
 
 ### Requisitos previos
 
@@ -40,7 +40,9 @@ Se ha trabajado con metodologías ágiles, usando Trello para la organización y
 
 ### Diagrama de flujo
 
-[Ver diagrama de flujo]()
+Para comprender la lógica y las funcionalidades de nuestro programa hemos hecho un diagrama de flujo.
+
+[Ver diagrama de flujo](https://www.figma.com/board/44gcSRoeA8imM1DUC5gwBL/Flowchart-Biblioteca?node-id=0-1&t=gOx76jMIQOuqngEP-0)
 
 ### Diagrama de datos
 
