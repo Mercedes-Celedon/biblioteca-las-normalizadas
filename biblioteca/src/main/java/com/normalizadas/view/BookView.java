@@ -70,6 +70,7 @@ public class BookView {
                     showDeleteMenu();
                     break;
                 case 6:
+                    System.out.println("Saliendo del programa.");
                     exit = true;
                     break;
                 default:
