@@ -12,28 +12,31 @@ public class BooksController {
 
     /**
      * TODO
+     * 
      * @param bookDAOInterface
-     * Constructor
+     *                         Constructor
      */
-    public BooksController(BookDAOInterface bookDAOInterface){
+    public BooksController(BookDAOInterface bookDAOInterface) {
         this.bookDAOInterface = bookDAOInterface;
     }
 
     /**
      * TODO
+     * 
      * @return
      */
-    public List<Book> getAllBooks(){
-        List<Book> books= bookDAOInterface.getAllBooks();
+    public List<Book> getAllBooks() {
+        List<Book> books = bookDAOInterface.getAllBooks();
         return books;
     }
 
     /**
      * TODO
+     * 
      * @param genre
      * @return
      */
-    public List<Book> getBooksbyGenres(String genre){
+    public List<Book> getBooksbyGenres(String genre) {
         List<Book> books = bookDAOInterface.getBooksbyGenres(genre);
         return books;
     }
@@ -46,26 +49,31 @@ public class BooksController {
      * and calls the interfaceDAO for generates a list of books 
      * according to the author searched in the database
      */
-    public List<Book> getBooksbyAuthors(String author){
+    public List<Book> getBooksbyAuthors(String author) {
         List<Book> books = bookDAOInterface.getBooksbyAuthors(author);
         return books;
     }
 
     /**
      * TODO
+     * 
      * @param title
      * @return
+     * 
+     *         Calls the class BookDAO and returns a book object with the data from
+     *         the database.
      */
-    public Book getBookbyTitle(String title){
+    public Book getBookbyTitle(String title) {
         Book book = bookDAOInterface.getBookbyTitle(title);
         return book;
     }
 
     /**
      * Function name: bookExists
+     * 
      * @param title
-     * @return boolean 
-     *  TODO
+     * @return boolean (if books exists or not)
+     *                  Calls BookDAO and returns a boolean               
      */
     public boolean bookExists(String title) {
         boolean bookExists = bookDAOInterface.bookExists(title);
@@ -74,53 +82,59 @@ public class BooksController {
 
     /**
      * Function name: insertBook
+     * 
      * @param title
      * @param description
      * @param isbn
      * @param stock
      * @param id_language
-     * @return
-     * TODO
+     * @return int (book's id)
+     *                 Calls BookDAO and returns an int  
      */
-    public int insertBook(String title, String description, String isbn, int stock, int id_language){
+    public int insertBook(String title, String description, String isbn, int stock, int id_language) {
         return bookDAOInterface.insertBook(title, description, isbn, stock, id_language);
     }
 
     /**
      * Function name:addBookAuthor
+     * 
      * @param bookId
      * @param authorId
      * @throws SQLException
-     * TODO
+     *                      TODO
      */
-    public void addBookAuthor(int bookId, int authorId) throws SQLException{
+    public void addBookAuthor(int bookId, int authorId) throws SQLException {
         bookDAOInterface.addBookAuthor(bookId, authorId);
     }
+
     /**
      * Function name:addBookGenre
+     * 
      * @param bookId
      * @param genreId
      * @throws SQLException
-     * TODO
+     *                      TODO
      */
-    public void addBookGenre(int bookId, int genreId) throws SQLException{
+    public void addBookGenre(int bookId, int genreId) throws SQLException {
         bookDAOInterface.addBookGenre(bookId, genreId);
     }
 
     /**
-     * TODO
-     * @param updatedBook
-     * @param id_language
-     * @return
+     * Function name: updateBook
+     * @param updatedBook the book to update
+     * @param id_language book language
+     * @return (String) message
+     * Gets a book and its language by parameter and returns a message with the update result
      */
     public String updateBook(Book updatedBook, int id_language) {
         return bookDAOInterface.updateBook(updatedBook, id_language);
     }
 
-
     /**
-     * TODO
+     * Function name: deleteBook
+     * 
      * @param id
+     *           Calls the method deleteBook from BookDAOInterface
      */
     public void deleteBook(int id) {
         bookDAOInterface.deleteBook(id);

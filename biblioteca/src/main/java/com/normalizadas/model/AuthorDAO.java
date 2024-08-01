@@ -42,9 +42,12 @@ public class AuthorDAO implements AuthorDAOInterface {
     }
 
     /**
-     * TODO
+     * Function name: findOrCreateAuthor
      * @param name
-     * @return
+     * @return Author   (author's id)
+     *                  The function send a query to find if the author 
+     *                  is in the database already, and if it is, returns it's id
+     *                  If it is not in the database, it updates it.
      */
     public Author findOrCreateAuthor(String name)  {
         String sql = "SELECT id FROM authors WHERE name = ?";
@@ -79,8 +82,10 @@ public class AuthorDAO implements AuthorDAOInterface {
     }
 
     /**
-     * TODO
-     * @param author
+     * Function name: updateAuthor
+     * @param author an author object
+     * @return String - a success or error message
+     * Gets by parameter an author that has already the data updated and executes the query that updates the bd entry.
      */
     @Override
     public String updateAuthor(Author author) {
