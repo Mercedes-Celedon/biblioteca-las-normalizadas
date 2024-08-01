@@ -6,19 +6,55 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.normalizadas.config.DBManager;
 
+
 public class BookDAO implements BookDAOInterface {
+
     private Connection conn;
     private PreparedStatement stmn;
 
-    public List<Book> getAllBooks(){
-        List<Book> books= new ArrayList<>();
-        String sql= "SELECT b.title, b.description, b.isbn, b.stock, b.id, l.language FROM books as b\n" +
-                "JOIN languages as l ON b.id_language=l.id\n"+
+    public void deleteBook(int id) {
+
+        try {
+            conn = DBManager.getDbConnection();
+            String deleteBooksAuthors = "DELETE FROM books_authors WHERE id_book = ?";
+            try (PreparedStatement stmn = conn.prepareStatement(deleteBooksAuthors)) {
+                stmn.setInt(1, id);
+                stmn.executeUpdate();
+            }
+
+            String deleteBooksGenres = "DELETE FROM books_genres WHERE id_book = ?";
+            try (PreparedStatement stmn = conn.prepareStatement(deleteBooksGenres)) {
+                stmn.setInt(1, id);
+                stmn.executeUpdate();
+            }
+
+            String deleteBooks = "DELETE FROM books WHERE id = ?";
+            try (PreparedStatement stmn = conn.prepareStatement(deleteBooks)) {
+                stmn.setInt(1, id);
+                int row = stmn.executeUpdate();
+                if (row == 0) {
+                    System.out.println("No se ha podido borrar el registro.");
+                } else {
+                    System.out.println("Se ha borrado correctamente.");
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Conexión fallida. " + e.getMessage());
+
+        } finally {
+            DBManager.closeConnection();
+        }
+    }
+
+    public List<Book> getAllBooks() {
+        List<Book> books = new ArrayList<>();
+        String sql = "SELECT b.title, b.description, b.isbn, b.stock, b.id, l.language FROM books as b\n" +
+                "JOIN languages as l ON b.id_language=l.id\n" +
                 "ORDER BY b.id ASC";
-        try{
+        try {
             conn = DBManager.getDbConnection();
             stmn = conn.prepareStatement(sql);
             ResultSet result = stmn.executeQuery();
@@ -32,7 +68,7 @@ public class BookDAO implements BookDAOInterface {
                 book.setLanguage(result.getString("language"));
                 books.add(book);
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
             DBManager.closeConnection();
@@ -42,10 +78,10 @@ public class BookDAO implements BookDAOInterface {
 
     public List<Book> getBooksbyGenres(String genre) {
         List<Book> books = new ArrayList<>();
-        String sql= "SELECT b.title, b.description, b.isbn, b.stock, b.id, l.language FROM books as b\n"+
-                "JOIN books_genres as ba ON b.id=ba.id_book\n"+
-                "JOIN genres as ge ON ba.id_genre=ge.id\n"+
-                "JOIN languages as l ON l.id=b.id_language\n"+                
+        String sql = "SELECT b.title, b.description, b.isbn, b.stock, b.id, l.language FROM books as b\n" +
+                "JOIN books_genres as ba ON b.id=ba.id_book\n" +
+                "JOIN genres as ge ON ba.id_genre=ge.id\n" +
+                "JOIN languages as l ON l.id=b.id_language\n" +
                 "WHERE ge.genre = ?";
         try {
             conn = DBManager.getDbConnection();
@@ -107,7 +143,6 @@ public class BookDAO implements BookDAOInterface {
 
     }
 
-
     public boolean bookExists(String title) {
         String sql = "SELECT id FROM books WHERE title = ?";
         try {
@@ -151,15 +186,16 @@ public class BookDAO implements BookDAOInterface {
     @Override
     public void addBookAuthor(int bookId, int authorId) throws SQLException {
         // // TODO Auto-generated method stub
-        //throw new UnsupportedOperationException("Unimplemented method 'addBookAuthor'");
+        // throw new UnsupportedOperationException("Unimplemented method
+        // 'addBookAuthor'");
         String sql = "INSERT INTO books_authors (id_book, id_author) VALUES (?, ?)";
-        try{
+        try {
             conn = DBManager.getDbConnection();
             stmn = conn.prepareStatement(sql);
             stmn.setInt(1, bookId);
             stmn.setInt(2, authorId);
             stmn.executeUpdate();
-        }finally{
+        } finally {
             DBManager.closeConnection();
         }
     }
@@ -167,15 +203,16 @@ public class BookDAO implements BookDAOInterface {
     @Override
     public void addBookGenre(int bookId, int genreId) throws SQLException {
         // // TODO Auto-generated method stub
-        // throw new UnsupportedOperationException("Unimplemented method 'addBookGenre'");
+        // throw new UnsupportedOperationException("Unimplemented method
+        // 'addBookGenre'");
         String sql = "INSERT INTO books_genres (id_book, id_genre) VALUES (?, ?)";
-        try{
+        try {
             conn = DBManager.getDbConnection();
             stmn = conn.prepareStatement(sql);
             stmn.setInt(1, bookId);
             stmn.setInt(2, genreId);
             stmn.executeUpdate();
-        }finally{
+        } finally {
             DBManager.closeConnection();
         }
     }
@@ -212,23 +249,24 @@ public class BookDAO implements BookDAOInterface {
 
     /**
      * TODO
+     * 
      * @param book
      * @param id_language
      */
     @Override
     public void updateBook(Book book, int id_language) {
-        String sql="UPDATE books SET title = ?, description = ?, isbn = ?, " +
+        String sql = "UPDATE books SET title = ?, description = ?, isbn = ?, " +
                 "stock = ?, id_language = ? WHERE id = ?";
-        try{
-            conn=DBManager.getDbConnection();
-            stmn=conn.prepareStatement(sql);
+        try {
+            conn = DBManager.getDbConnection();
+            stmn = conn.prepareStatement(sql);
             stmn.setString(1, book.getTitle());
             stmn.setString(2, book.getDescription());
             stmn.setString(3, book.getIsbn());
             stmn.setInt(4, book.getStock());
             stmn.setInt(5, id_language);
             stmn.setInt(6, book.getId());
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
             DBManager.closeConnection();

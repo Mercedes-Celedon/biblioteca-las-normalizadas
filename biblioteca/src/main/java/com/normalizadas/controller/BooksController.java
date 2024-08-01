@@ -35,8 +35,8 @@ public class BooksController {
     }
 
     public Book getBookbyTitle(String title){
-        Book books = bookDAOInterface.getBooksbyTitles(title);
-        return books;
+        Book book = bookDAOInterface.getBookbyTitle(title);
+        return book;
     }
 
     public boolean bookExists(String title) {
@@ -59,4 +59,8 @@ public class BooksController {
         bookDAOInterface.updateBook(updatedBook, id_language);;
     }
     
+
+    public void deleteBook(int id) {
+        bookDAOInterface.deleteBook(id);
+    }
 }

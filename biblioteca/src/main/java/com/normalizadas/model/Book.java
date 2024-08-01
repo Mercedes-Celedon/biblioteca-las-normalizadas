@@ -8,7 +8,8 @@ public class Book {
     private String language;
     private String isbn;
 
-    public Book(){}
+    public Book() {
+    }
 
     public Book(String title, String description, int stock, String isbn, String language ){
         this.title = title;
