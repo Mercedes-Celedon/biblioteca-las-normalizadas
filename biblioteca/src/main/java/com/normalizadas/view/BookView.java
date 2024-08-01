@@ -104,7 +104,7 @@ public class BookView {
 
         switch (choice) {
             case 1:
-                // deleteBook();
+                booksController.deleteBook(id);
                 break;
             case 2:
                 System.out.println("El libro no se ha eliminado. Volviendo al menú principal.");
