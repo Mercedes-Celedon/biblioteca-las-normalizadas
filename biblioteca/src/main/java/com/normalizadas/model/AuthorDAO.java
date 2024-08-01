@@ -12,6 +12,11 @@ public class AuthorDAO implements AuthorDAOInterface {
     private Connection conn;
     private PreparedStatement stmn;
 
+    /**
+     * TODO
+     * @param id
+     * @return
+     */
     public List<Author> getAuthors(int id) {
         List<Author> authors = new ArrayList<>();
         String sql="SELECT name, id from authors\n" +
@@ -35,8 +40,12 @@ public class AuthorDAO implements AuthorDAOInterface {
         }  
         return authors;
     }
-    
-    
+
+    /**
+     * TODO
+     * @param name
+     * @return
+     */
     public Author findOrCreateAuthor(String name)  {
         String sql = "SELECT id FROM authors WHERE name = ?";
         Author author = new Author();

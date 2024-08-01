@@ -27,6 +27,10 @@ public class BookView {
         this.authorsController = authorsController;
     }
 
+    /**
+     * TODO
+     * @throws SQLException
+     */
     public void showMainMenu() throws SQLException {
         scanner = new Scanner(System.in);
         boolean exit = false;
@@ -69,11 +73,18 @@ public class BookView {
         scanner.close();
     }
 
+    /**
+     * TODO
+     */
     public void showAllBooks() {
         List<Book> books = booksController.getAllBooks();
         printBook(books, true);
     }
 
+    /**
+     * TODO
+     * @throws SQLException
+     */
     public void showSearchMenu() throws SQLException {
 
         System.out.println("\n¿Selecciona una opción de búsqueda con el número: ");
@@ -101,10 +112,8 @@ public class BookView {
     }
 
     /**
-     * Function name: showAddBook()
+     * TODO
      * @throws SQLException
-     *  This function requests the data of the new book from the user,
-     *  then it calls he corresponding functions to update the database
      */
     public void showAddBook() throws SQLException {
         scanner.nextLine();
@@ -142,7 +151,6 @@ public class BookView {
 
         System.out.print("Indica el género o géneros (en este caso separados por comas): ");
         String[] genres = scanner.nextLine().split(",");
-
         for (String ge : genres) {
             Genre genre = genresController.findOrCreateGenre(ge.trim());
             booksController.addBookGenre(bookId, genre.getId());
@@ -162,6 +170,7 @@ public class BookView {
         System.out.println("Introduce el título del libro que quieres modificar:");
         String title = scanner.nextLine();
         Book book = booksController.getBookbyTitle(title);
+        System.out.print(book);
         System.out.println("Vas a modificar el libro -> " + book.getTitle() +
                 "\nPor favor selecciona el número de la opción deseada:" +
                 "\n1. Modificar características del libro (Título, Descripción, ISBN, Stock o Idioma" +
@@ -175,13 +184,13 @@ public class BookView {
         System.out.println("Si no quieres modificar algún dato, deja el campo en blanco y pulsa enter.");
         switch (opc) {
             case 1:
-                System.out.println(updateBookInfo(book));
+                updateBookInfo(book);
                 break;
             case 2:
-                System.out.println(updateAuthor(authorsController.getBooksbyAuthors(book.getId()), book));
+                updateAuthor(authorsController.getAuthorsByBook(book.getId()), book);
                 break;
             case 3:
-                System.out.println(updateGenre(genresController.getBooksbyGenres(book.getId()), book));
+                updateGenre(genresController.getGenresByBook(book.getId()), book);
                 break;
             default:
                 System.out.println("Ninguna opción elegida. Saliendo al menú inicial.");
@@ -190,14 +199,8 @@ public class BookView {
     }
 
     /**
-     * Function name: showDeleteMenu
-     * 
+     * TODO
      * @throws SQLException
-     * 
-     *    This function asks user to add the title of the book
-     *    they want to delete, then asks again if they are sure
-     *    they want to delete it; in the case of yes, it calls the
-     *    pertinent method
      */
     public void showDeleteMenu() throws SQLException {
         scanner.nextLine();
@@ -225,14 +228,20 @@ public class BookView {
         }
     }
 
+    /**
+     * TODO
+     */
     public void askAuthorBook() {
         scanner.nextLine();
         System.out.print("Escribe el nombre del autor: ");
         String askAuthorFilter = scanner.nextLine();
         List<Book> books = booksController.getBooksbyAuthors(askAuthorFilter);
-        printBook(books, true);// poner true si quieres el menú con descripción
+        printBook(books, true);
     }
 
+    /**
+     *
+     */
     public void askTitleBook() {
         scanner.nextLine();
         System.out.print("Escribe el Titulo del libro: ");
@@ -240,30 +249,38 @@ public class BookView {
         Book book = booksController.getBookbyTitle(askTitleFilter);
         List<Book> books = new ArrayList<>();
         books.add(book);
-        printBook(books, true);// poner true si quieres el menú con descripción
+        printBook(books, true);
     }
 
+    /**
+     *
+     */
     public void askGenreBook() {
         scanner.nextLine();
         System.out.println("Escribe el género");
         String askGenreFilter = scanner.nextLine();
         List<Book> books = booksController.getBooksbyGenres(askGenreFilter);
-        printBook(books, false);// poner true si quieres el menú con descripción
+        printBook(books, false);
     }
 
+    /**
+     * Function name: printBook
+     * @param books List<Book>
+     * @param printDescription boolean
+     * Function that receives a list of books and a boolean by parameter and print the books with format
+     */
     public void printBook(List<Book> books, boolean printDescription) {
-        if (printDescription) {// esta opción es para el menú con descripción. importante que pases el
-                               // parametro como true en tu función
+        if (printDescription) {
             System.out.printf("| %-28s | %-25s | %-35s | %-15s | %-5s | %-12s | %-25s |\n", "Titulo", "Autor", "Genero",
                     "ISBN", "Stock", "Idioma", "Descripción");
             System.out.println("=".repeat(165));
             for (Book book : books) {
-                List<Genre> genres = genresController.getBooksbyGenres(book.getId());
+                List<Genre> genres = genresController.getGenresByBook(book.getId());
                 List<String> data = new ArrayList<>();
                 for (Genre g : genres) {
                     data.add(g.getGenre());
                 }
-                List<Author> authors = authorsController.getBooksbyAuthors(book.getId());
+                List<Author> authors = authorsController.getAuthorsByBook(book.getId());
                 List<String> dataAuthor = new ArrayList<>();
                 for (Author auth : authors) {
                     dataAuthor.add(auth.getName());
@@ -286,12 +303,12 @@ public class BookView {
                     "Stock", "Idioma");
             System.out.println("=".repeat(142));
             for (Book book : books) {
-                List<Genre> genres = genresController.getBooksbyGenres(book.getId());
+                List<Genre> genres = genresController.getGenresByBook(book.getId());
                 List<String> data = new ArrayList<>();
                 for (Genre g : genres) {
                     data.add(g.getGenre());
                 }
-                List<Author> authors = authorsController.getBooksbyAuthors(book.getId());
+                List<Author> authors = authorsController.getAuthorsByBook(book.getId());
                 List<String> dataAuthor = new ArrayList<>();
                 for (Author auth : authors) {
                     dataAuthor.add(auth.getName());
@@ -311,6 +328,12 @@ public class BookView {
 
     }
 
+    /**
+     *  Function name: printFormatDescription
+     * @param description
+     * @param lineWidth
+     * Function that receives a description of type string and the width for adaptation
+     */
     private void printFormatDescription(String description, int lineWidth) {
         int length = description.length();
         boolean firstLine = true;
@@ -326,8 +349,6 @@ public class BookView {
             }
 
             firstLine = false;
-
-            // Check if it's the last part of the description to avoid extra lines
             if (i + lineWidth < length - 1) {
                 System.out.printf("\n");
             }
@@ -336,15 +357,13 @@ public class BookView {
 
     /**
      * Function name: updateBookInfo
-     * 
      * @param book selected book
-     * @return (String) message that says if the update was successful
      * Function that receives a book by parameter, asks the user what
      * values of the book wants to modify and
      * updates the object with the new data, finally calls the
      * controller that modifies the book record in the database
      */
-    public String updateBookInfo(Book book) {
+    public void updateBookInfo(Book book) {
         String data;
         book.setId(book.getId());
         System.out.print("\nTítulo actual-> " + book.getTitle() + "\nNuevo título-> ");
@@ -368,63 +387,52 @@ public class BookView {
         data = scanner.nextLine();
         book.setLanguage(!data.isEmpty() ? data : book.getLanguage());
 
-        return booksController.updateBook(book, getIdLanguage(book.getLanguage()));
+        booksController.updateBook(book, getIdLanguage(book.getLanguage()));
     }
 
     /**
      * Function name: updateAuthor
-     * 
      * @param authors list of authors from the selected book
-     * @return (String) message that says if the update was successful
+     * @param book    selected book
      * Function that receives a book and its authors by parameter,
      * asks the user the new name of the authors
      * and calls the controller that modifies each author record in
      * the database
      */
-    public String updateAuthor(List<Author> authors, Book book) {
-        String message = "";
+    public void updateAuthor(List<Author> authors, Book book) {
+
         for (Author author : authors) {
             System.out.println("Nombre actual del autor -> " + author.getName());
             System.out.print("Autor corregido -> ");
-            String newName = scanner.nextLine();
-            if (!newName.isEmpty()){
-                author.setName(newName);
-                message += authorsController.updateAuthor(author);
-            }
+            author.setName(scanner.nextLine());
+            authorsController.updateAuthor(author);
         }
-        return message;
     }
 
     /**
      * Function name: updateGenre
-     * 
      * @param genres list of genres from the selected book
-     * @return (String) message that says if the update was successful
+     * @param book   selected book
      * Function that receives a book and its genres by parameter, asks
      * the user the new name of the genres
      * and calls the controller that modifies each genre record in the
      * database
      */
-    public String updateGenre(List<Genre> genres, Book book) {
-        String message = "";
+    public void updateGenre(List<Genre> genres, Book book) {
+
         for (Genre genre : genres) {
             System.out.println("Nombre actual del genero -> " + genre.getGenre());
             System.out.print("Genero corregido -> ");
-            String newName = scanner.nextLine();
-            if (!newName.isEmpty()){
-                genre.setGenre(newName);
-                message += genresController.updateGenre(genre);
-            }
+            genre.setGenre(scanner.nextLine());
+            genresController.updateGenre(genre);
         }
-        return message;
     }
 
     /**
      * Function name: getIdLanguage
-     * 
      * @param language language name
      * @return (int) the id of the language
-     *         Gets the name of a language by parameter and returns its id
+     * Gets the name of a language by parameter and returns its id
      */
     public int getIdLanguage(String language) {
         return switch (language) {
