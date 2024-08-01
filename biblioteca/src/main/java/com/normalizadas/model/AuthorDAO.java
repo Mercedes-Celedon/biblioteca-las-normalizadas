@@ -82,8 +82,10 @@ public class AuthorDAO implements AuthorDAOInterface {
     }
 
     /**
-     * TODO
-     * @param author
+     * Function name: updateAuthor
+     * @param author an author object
+     * @return String - a success or error message
+     * Gets by parameter an author that has already the data updated and executes the query that updates the bd entry.
      */
     @Override
     public String updateAuthor(Author author) {

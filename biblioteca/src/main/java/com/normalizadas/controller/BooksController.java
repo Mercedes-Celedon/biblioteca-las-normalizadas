@@ -105,10 +105,11 @@ public class BooksController {
     }
 
     /**
-     * TODO
-     * @param updatedBook
-     * @param id_language
-     * @return
+     * Function name: updateBook
+     * @param updatedBook the book to update
+     * @param id_language book language
+     * @return (String) message
+     * Gets a book and its language by parameter and returns a message with the update result
      */
     public String updateBook(Book updatedBook, int id_language) {
         return bookDAOInterface.updateBook(updatedBook, id_language);

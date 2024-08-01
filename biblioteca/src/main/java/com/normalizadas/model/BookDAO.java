@@ -297,10 +297,12 @@ public class BookDAO implements BookDAOInterface {
     }
 
     /**
-     * TODO
-     * 
-     * @param book
-     * @param id_language
+     * Function name: updateGenre
+     * @param book a book
+     * @param id_language the language id of the book
+     * @return String - a success or error message
+     * Gets by parameter a book that has already the data updated and its language and executes the query that updates
+     * the bd entry.
      */
     @Override
     public String updateBook(Book book, int id_language) {

@@ -37,8 +37,10 @@ public class AuthorsController {
     }
 
     /**
-     * TODO
-     * @param updatedAuthor
+     * Function name: updateAuthor
+     * @param updatedAuthor The author to update
+     * @return (String) message
+     * Gets an author by parameter and returns a message with the update result
      */
     public String updateAuthor(Author updatedAuthor) {
         return authorDAOInterface.updateAuthor(updatedAuthor);
