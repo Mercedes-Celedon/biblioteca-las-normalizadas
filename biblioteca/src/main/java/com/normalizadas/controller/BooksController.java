@@ -11,19 +11,20 @@ public class BooksController {
     private BookDAOInterface bookDAOInterface;
 
     /**
-     * TODO
-     * 
-     * @param bookDAOInterface
-     *                         Constructor
+     * Function name: BooksController
+     *
+     * @param bookDAOInterface Book Model
+     *                         Constructor of the books controller
      */
     public BooksController(BookDAOInterface bookDAOInterface) {
         this.bookDAOInterface = bookDAOInterface;
     }
 
     /**
-     * TODO
-     * 
-     * @return
+     * Function name: BooksController
+     *
+     * @return List<Book>
+     * Returns all books on the db
      */
     public List<Book> getAllBooks() {
         List<Book> books = bookDAOInterface.getAllBooks();
@@ -31,10 +32,11 @@ public class BooksController {
     }
 
     /**
-     * TODO
-     * 
-     * @param genre
-     * @return
+     * Function name: getBooksbyGenres
+     *
+     * @param genre genre name
+     * @return List<Book>
+     * Gets by parameter a genre and returns all books that have said genre
      */
     public List<Book> getBooksbyGenres(String genre) {
         List<Book> books = bookDAOInterface.getBooksbyGenres(genre);
@@ -43,10 +45,11 @@ public class BooksController {
 
     /**
      * Function name: getBooksByAuthors
-     * @param author
-     * @return books
+     *
+     * @param author author name
+     * @return List<Book>
      * Function that receives the author name as a parameter,
-     * and calls the interfaceDAO for generates a list of books 
+     * and calls the interfaceDAO for generates a list of books
      * according to the author searched in the database
      */
     public List<Book> getBooksbyAuthors(String author) {
@@ -55,13 +58,12 @@ public class BooksController {
     }
 
     /**
-     * TODO
-     * 
-     * @param title
-     * @return
-     * 
-     *         Calls the class BookDAO and returns a book object with the data from
-     *         the database.
+     * Function name: getBookbyTitle
+     *
+     * @param title book title
+     * @return      Book
+     *              Calls the class BookDAO and returns a book object with the data from
+     *              the database.
      */
     public Book getBookbyTitle(String title) {
         Book book = bookDAOInterface.getBookbyTitle(title);
@@ -70,10 +72,10 @@ public class BooksController {
 
     /**
      * Function name: bookExists
-     * 
-     * @param title
-     * @return boolean (if books exists or not)
-     *                  Calls BookDAO and returns a boolean               
+     *
+     * @param title book title
+     * @return      boolean (if books exists or not)
+     *              Calls BookDAO and returns a boolean that indicates if the book exists
      */
     public boolean bookExists(String title) {
         boolean bookExists = bookDAOInterface.bookExists(title);
@@ -82,14 +84,14 @@ public class BooksController {
 
     /**
      * Function name: insertBook
-     * 
-     * @param title
-     * @param description
-     * @param isbn
-     * @param stock
-     * @param id_language
-     * @return int (book's id)
-     *                 Calls BookDAO and returns an int  
+     *
+     * @param title         book title
+     * @param description   book description
+     * @param isbn          book isbn
+     * @param stock         quantity in stock
+     * @param id_language   book language id
+     * @return int          (book's id)
+     *                      Calls BookDAO and returns an int
      */
     public int insertBook(String title, String description, String isbn, int stock, int id_language) {
         return bookDAOInterface.insertBook(title, description, isbn, stock, id_language);
@@ -97,11 +99,10 @@ public class BooksController {
 
     /**
      * Function name:addBookAuthor
-     * 
-     * @param bookId
-     * @param authorId
-     * @throws SQLException
-     *                      TODO
+     *
+     * @param bookId    book id
+     * @param authorId  author id
+     *                  sends the id of a book and an author to the model that inserts them in the associative table
      */
     public void addBookAuthor(int bookId, int authorId) throws SQLException {
         bookDAOInterface.addBookAuthor(bookId, authorId);
@@ -109,11 +110,10 @@ public class BooksController {
 
     /**
      * Function name:addBookGenre
-     * 
-     * @param bookId
-     * @param genreId
-     * @throws SQLException
-     *                      TODO
+     *
+     * @param bookId    book id
+     * @param genreId   genre id
+     *                  sends the id of a book and a genre to the model that inserts them in the associative table
      */
     public void addBookGenre(int bookId, int genreId) throws SQLException {
         bookDAOInterface.addBookGenre(bookId, genreId);
@@ -121,10 +121,11 @@ public class BooksController {
 
     /**
      * Function name: updateBook
-     * @param updatedBook the book to update
-     * @param id_language book language
-     * @return (String) message
-     * Gets a book and its language by parameter and returns a message with the update result
+     *
+     * @param updatedBook   the book to update
+     * @param id_language   book language
+     * @return (String)     message
+     *                      Gets a book and its language by parameter and returns a message with the update result
      */
     public String updateBook(Book updatedBook, int id_language) {
         return bookDAOInterface.updateBook(updatedBook, id_language);
@@ -132,9 +133,9 @@ public class BooksController {
 
     /**
      * Function name: deleteBook
-     * 
-     * @param id
-     *           Calls the method deleteBook from BookDAOInterface
+     *
+     * @param id    book id
+     *              Calls the method deleteBook from BookDAOInterface
      */
     public void deleteBook(int id) {
         bookDAOInterface.deleteBook(id);

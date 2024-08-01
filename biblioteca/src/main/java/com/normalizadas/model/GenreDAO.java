@@ -13,9 +13,10 @@ public class GenreDAO implements GenreDAOInterface{
     private PreparedStatement stmn;
 
     /**
-     * TODO
-     * @param id
-     * @return
+     * Function name: getGenres
+     * @param id             book id
+     * @return List<Genre> - List of genres
+     *                       Gets the id of book and returns all of its genres
      */
     public List<Genre> getGenres(int id){
         List<Genre> genres = new ArrayList<>();
@@ -43,10 +44,10 @@ public class GenreDAO implements GenreDAOInterface{
 
     /**
      * Function name: findOrCreateGenre
-     * @param name
+     * @param genre     genre name
      * @return Genre   (genre's id)
      *                  The function send a query to find if the genre (or genres) 
-     *                  is in the database already, and if it is, returns it's id
+     *                  is in the database already, and if it is, returns its id
      *                  If it is not in the database, it updates it.
      */
     public Genre findOrCreateGenre(String genre)  {
@@ -81,9 +82,10 @@ public class GenreDAO implements GenreDAOInterface{
 
     /**
      * Function name: updateGenre
-     * @param genre a genre object
+     * @param genre     a genre object
      * @return String - a success or error message
-     * Gets by parameter a genre that has already the data updated and executes the query that updates the bd entry.
+     *                  Gets by parameter a genre that has already the data updated and executes the query
+     *                  that updates the bd entry.
      */
     @Override
     public String updateGenre(Genre genre) {
