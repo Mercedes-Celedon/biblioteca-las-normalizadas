@@ -28,8 +28,14 @@ public class BookView {
     }
 
     /**
-     * TODO
+     * Function name: showMainMenu
+     * 
      * @throws SQLException
+     * 
+     *                      This function initiates the first scanner and prints the
+     *                      menu with the different options of the program to choose
+     *                      from
+     * 
      */
     public void showMainMenu() throws SQLException {
         scanner = new Scanner(System.in);
@@ -83,6 +89,7 @@ public class BookView {
 
     /**
      * TODO
+     * 
      * @throws SQLException
      */
     public void showSearchMenu() throws SQLException {
@@ -113,6 +120,7 @@ public class BookView {
 
     /**
      * TODO
+     * 
      * @throws SQLException
      */
     public void showAddBook() throws SQLException {
@@ -198,8 +206,14 @@ public class BookView {
     }
 
     /**
-     * TODO
+     * Function name: showDeleteMenu
+     * 
      * @throws SQLException
+     * 
+     *                      This function asks the user to introduce the book title
+     *                      they want to delete, then asks to confirm they want to
+     *                      delete it; if the choice is yes, it calls the pertinent
+     *                      method
      */
     public void showDeleteMenu() throws SQLException {
         scanner.nextLine();
@@ -264,9 +278,11 @@ public class BookView {
 
     /**
      * Function name: printBook
-     * @param books List<Book>
+     * 
+     * @param books            List<Book>
      * @param printDescription boolean
-     * Function that receives a list of books and a boolean by parameter and print the books with format
+     *                         Function that receives a list of books and a boolean
+     *                         by parameter and print the books with format
      */
     public void printBook(List<Book> books, boolean printDescription) {
         if (printDescription) {
@@ -328,10 +344,12 @@ public class BookView {
     }
 
     /**
-     *  Function name: printFormatDescription
+     * Function name: printFormatDescription
+     * 
      * @param description
      * @param lineWidth
-     * Function that receives a description of type string and the width for adaptation
+     *                    Function that receives a description of type string and
+     *                    the width for adaptation
      */
     private void printFormatDescription(String description, int lineWidth) {
         int length = description.length();
@@ -356,11 +374,12 @@ public class BookView {
 
     /**
      * Function name: updateBookInfo
+     * 
      * @param book selected book
-     * Function that receives a book by parameter, asks the user what
-     * values of the book wants to modify and
-     * updates the object with the new data, finally calls the
-     * controller that modifies the book record in the database
+     *             Function that receives a book by parameter, asks the user what
+     *             values of the book wants to modify and
+     *             updates the object with the new data, finally calls the
+     *             controller that modifies the book record in the database
      */
     public void updateBookInfo(Book book) {
         String data;
@@ -391,12 +410,13 @@ public class BookView {
 
     /**
      * Function name: updateAuthor
+     * 
      * @param authors list of authors from the selected book
      * @param book    selected book
-     * Function that receives a book and its authors by parameter,
-     * asks the user the new name of the authors
-     * and calls the controller that modifies each author record in
-     * the database
+     *                Function that receives a book and its authors by parameter,
+     *                asks the user the new name of the authors
+     *                and calls the controller that modifies each author record in
+     *                the database
      */
     public void updateAuthor(List<Author> authors, Book book) {
 
@@ -410,12 +430,13 @@ public class BookView {
 
     /**
      * Function name: updateGenre
+     * 
      * @param genres list of genres from the selected book
      * @param book   selected book
-     * Function that receives a book and its genres by parameter, asks
-     * the user the new name of the genres
-     * and calls the controller that modifies each genre record in the
-     * database
+     *               Function that receives a book and its genres by parameter, asks
+     *               the user the new name of the genres
+     *               and calls the controller that modifies each genre record in the
+     *               database
      */
     public void updateGenre(List<Genre> genres, Book book) {
 
@@ -429,9 +450,10 @@ public class BookView {
 
     /**
      * Function name: getIdLanguage
+     * 
      * @param language language name
      * @return (int) the id of the language
-     * Gets the name of a language by parameter and returns its id
+     *         Gets the name of a language by parameter and returns its id
      */
     public int getIdLanguage(String language) {
         return switch (language) {
