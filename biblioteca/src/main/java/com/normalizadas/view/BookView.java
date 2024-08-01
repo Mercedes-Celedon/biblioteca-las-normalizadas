@@ -251,7 +251,14 @@ public class BookView {
     }
 
     /**
-     * TODO
+     * Function name: askAuthorBook
+     * @param askAuthorFilter author name of the book to search
+     * @param books List<Book>
+     * Function that receives the author name as a parameter,
+     * asks the user for the name of the author of the book
+     * and calls the controller that generates a list of books 
+     * according to the author searched in the database
+     * then call the printBook function to print a table with the book
      */
     public void askAuthorBook() {
         scanner.nextLine();
