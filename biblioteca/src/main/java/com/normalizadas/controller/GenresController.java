@@ -2,23 +2,36 @@ package com.normalizadas.controller;
 
 import java.util.List;
 
-import com.normalizadas.model.Author;
 import com.normalizadas.model.Genre;
 import com.normalizadas.model.GenreDAOInterface;
 
 public class GenresController {
     private GenreDAOInterface genreDAOInterface;
 
+    /**
+     * TODO
+     * @param genreDAOInterface
+     * constructor
+     */
     public GenresController(GenreDAOInterface genreDAOInterface){
         this.genreDAOInterface = genreDAOInterface;
     }
 
-    //Esta función creo que debería llamarse getGenresByBook o algo así porque en verdad retorna los géneros de un libro
-    public List<Genre> getBooksbyGenres(int id){
+    /**
+     * TODO
+     * @param id
+     * @return
+     */
+    public List<Genre> getGenresByBook(int id){
         List<Genre> genres = genreDAOInterface.getGenres(id);
         return genres;
     }
 
+    /**
+     * TODO
+     * @param name
+     * @return
+     */
     public Genre findOrCreateGenre(String name){
         Genre newGenre = genreDAOInterface.findOrCreateGenre(name);
         return newGenre;

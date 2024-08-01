@@ -15,6 +15,10 @@ public class DBManager {
   private static final String password = dotenv.get("DB_PASSWORD");
   private static Connection conn;
 
+  /**
+   *
+   * @return
+   */
   public static Connection getDbConnection() {
 
     try {
@@ -26,6 +30,9 @@ public class DBManager {
 
   }
 
+  /**
+   *
+   */
   public static void closeConnection() {
     try {
       conn.close();

@@ -14,6 +14,10 @@ public class BookDAO implements BookDAOInterface {
     private Connection conn;
     private PreparedStatement stmn;
 
+    /**
+     * TODO
+     * @param id
+     */
     public void deleteBook(int id) {
 
         try {
@@ -49,6 +53,10 @@ public class BookDAO implements BookDAOInterface {
         }
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public List<Book> getAllBooks() {
         List<Book> books = new ArrayList<>();
         String sql = "SELECT b.title, b.description, b.isbn, b.stock, b.id, l.language FROM books as b\n" +
@@ -76,6 +84,11 @@ public class BookDAO implements BookDAOInterface {
         return books;
     }
 
+    /**
+     * TODO
+     * @param genre
+     * @return
+     */
     public List<Book> getBooksbyGenres(String genre) {
         List<Book> books = new ArrayList<>();
         String sql = "SELECT b.title, b.description, b.isbn, b.stock, b.id, l.language FROM books as b\n" +
@@ -108,6 +121,11 @@ public class BookDAO implements BookDAOInterface {
 
     }
 
+    /**
+     * TODO
+     * @param author
+     * @return
+     */
     public List<Book> getBooksbyAuthors(String author) {
         List<Book> books = new ArrayList<>();
         String sql = "SELECT b.title, b.description, b.isbn, b.stock, b.id, l.language FROM books as b\n" +
@@ -143,6 +161,12 @@ public class BookDAO implements BookDAOInterface {
 
     }
 
+    /**
+     * Function name: bookExists
+     * @param title book's title
+     * @return boolean 
+     * The function sends a query to the database, and it returns if the searched book exists or not
+     */
     public boolean bookExists(String title) {
         String sql = "SELECT id FROM books WHERE title = ?";
         try {
@@ -159,6 +183,16 @@ public class BookDAO implements BookDAOInterface {
         return false;
     }
 
+    /**
+     * @param title
+     * @param description
+     * @param isbn
+     * @param stock
+     * @param id_language
+     * @return int  book id
+     * This function updates the books table of the database
+     * then returns the corresponding id
+     */
     public int insertBook(String title, String description, String isbn, int stock, int id_language) {
         String sql = "INSERT INTO books (title, description, isbn, stock, id_language) VALUES (?, ?, ?, ?, ?)";
         try {
@@ -183,11 +217,15 @@ public class BookDAO implements BookDAOInterface {
         return 0;
     }
 
+    /**
+     * Function name addBookAuthor
+     * @param bookId
+     * @param authorId
+     * The function updates the associative table with the corresponding ids
+     */
     @Override
     public void addBookAuthor(int bookId, int authorId) throws SQLException {
-        // // TODO Auto-generated method stub
-        // throw new UnsupportedOperationException("Unimplemented method
-        // 'addBookAuthor'");
+
         String sql = "INSERT INTO books_authors (id_book, id_author) VALUES (?, ?)";
         try {
             conn = DBManager.getDbConnection();
@@ -200,6 +238,12 @@ public class BookDAO implements BookDAOInterface {
         }
     }
 
+    /**
+     * Function name addBookAuthor
+     * @param bookId
+     * @param genreId
+     * The function updates the associative table with the corresponding ids
+     */
     @Override
     public void addBookGenre(int bookId, int genreId) throws SQLException {
         // // TODO Auto-generated method stub
@@ -217,7 +261,11 @@ public class BookDAO implements BookDAOInterface {
         }
     }
 
-    
+    /**
+     * TODO
+     * @param title
+     * @return
+     */
     public Book getBookbyTitle(String title) {
         Book book = new Book();
         String sql = "SELECT b.title, b.description, b.isbn, b.stock, b.id, l.language FROM books as b\n" +

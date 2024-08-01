@@ -12,6 +12,11 @@ public class GenreDAO implements GenreDAOInterface{
     private Connection conn;
     private PreparedStatement stmn;
 
+    /**
+     * TODO
+     * @param id
+     * @return
+     */
     public List<Genre> getGenres(int id){
         List<Genre> genres = new ArrayList<>();
         String sql="SELECT genre, id from genres\n" + //
@@ -36,6 +41,11 @@ public class GenreDAO implements GenreDAOInterface{
         return genres;        
     }
 
+    /**
+     * TODO
+     * @param genre
+     * @return
+     */
     public Genre findOrCreateGenre(String genre)  {
         String sql = "SELECT id FROM genres WHERE genre = ?";
         Genre newGenre = new Genre();
