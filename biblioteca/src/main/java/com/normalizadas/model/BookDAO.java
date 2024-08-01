@@ -8,15 +8,19 @@ import java.util.ArrayList;
 import java.util.List;
 import com.normalizadas.config.DBManager;
 
-
 public class BookDAO implements BookDAOInterface {
 
     private Connection conn;
     private PreparedStatement stmn;
 
     /**
-     * TODO
+     * Function name: deleteBook
+     * 
      * @param id
+     * 
+     *           This function deletes a book first from the table books_authors,
+     *           then from the table books_genres and finally from the main table
+     *           books
      */
     public void deleteBook(int id) {
 
@@ -55,6 +59,7 @@ public class BookDAO implements BookDAOInterface {
 
     /**
      * TODO
+     * 
      * @return
      */
     public List<Book> getAllBooks() {
@@ -86,6 +91,7 @@ public class BookDAO implements BookDAOInterface {
 
     /**
      * TODO
+     * 
      * @param genre
      * @return
      */
@@ -123,6 +129,7 @@ public class BookDAO implements BookDAOInterface {
 
     /**
      * TODO
+     * 
      * @param author
      * @return
      */
@@ -163,9 +170,11 @@ public class BookDAO implements BookDAOInterface {
 
     /**
      * Function name: bookExists
+     * 
      * @param title book's title
-     * @return boolean 
-     * The function sends a query to the database, and it returns if the searched book exists or not
+     * @return boolean
+     *         The function sends a query to the database, and it returns if the
+     *         searched book exists or not
      */
     public boolean bookExists(String title) {
         String sql = "SELECT id FROM books WHERE title = ?";
@@ -189,9 +198,9 @@ public class BookDAO implements BookDAOInterface {
      * @param isbn
      * @param stock
      * @param id_language
-     * @return int  book id
-     * This function updates the books table of the database
-     * then returns the corresponding id
+     * @return int book id
+     *         This function updates the books table of the database
+     *         then returns the corresponding id
      */
     public int insertBook(String title, String description, String isbn, int stock, int id_language) {
         String sql = "INSERT INTO books (title, description, isbn, stock, id_language) VALUES (?, ?, ?, ?, ?)";
@@ -219,9 +228,11 @@ public class BookDAO implements BookDAOInterface {
 
     /**
      * Function name addBookAuthor
+     * 
      * @param bookId
      * @param authorId
-     * The function updates the associative table with the corresponding ids
+     *                 The function updates the associative table with the
+     *                 corresponding ids
      */
     @Override
     public void addBookAuthor(int bookId, int authorId) throws SQLException {
@@ -240,9 +251,11 @@ public class BookDAO implements BookDAOInterface {
 
     /**
      * Function name addBookAuthor
+     * 
      * @param bookId
      * @param genreId
-     * The function updates the associative table with the corresponding ids
+     *                The function updates the associative table with the
+     *                corresponding ids
      */
     @Override
     public void addBookGenre(int bookId, int genreId) throws SQLException {
@@ -262,9 +275,13 @@ public class BookDAO implements BookDAOInterface {
     }
 
     /**
-     * TODO
+     * Function name: getBookbyTitle
+     * 
      * @param title
      * @return
+     * 
+     *         The function sends a query to the data base and returns the data of
+     *         the book if the book (title) exists
      */
     public Book getBookbyTitle(String title) {
         Book book = new Book();
@@ -317,7 +334,8 @@ public class BookDAO implements BookDAOInterface {
             stmn.setInt(5, id_language);
             stmn.setInt(6, book.getId());
             int execution = stmn.executeUpdate();
-            message = (execution == 0) ? "\nNo se ha podido modificar el libro" : "\nEl libro se ha actualizado correctamente";
+            message = (execution == 0) ? "\nNo se ha podido modificar el libro"
+                    : "\nEl libro se ha actualizado correctamente";
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
