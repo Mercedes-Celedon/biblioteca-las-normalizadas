@@ -65,4 +65,26 @@ public class GenreDAO implements GenreDAOInterface{
         }
         return newGenre;
     }
+
+    /**
+     * TODO
+     * @param genre
+     * @return
+     */
+    @Override
+    public void updateGenre(Genre genre) {
+        String sql="UPDATE genres SET genre = ? WHERE id = ?";
+        try{
+            conn=DBManager.getDbConnection();
+            stmn=conn.prepareStatement(sql);
+            stmn.setString(1, genre.getGenre());
+            stmn.setInt(2, genre.getId());
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        } finally {
+            DBManager.closeConnection();
+        }
+    }
+
+
 }
