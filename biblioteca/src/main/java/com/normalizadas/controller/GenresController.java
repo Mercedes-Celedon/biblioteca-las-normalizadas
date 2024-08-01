@@ -2,7 +2,6 @@ package com.normalizadas.controller;
 
 import java.util.List;
 
-import com.normalizadas.model.Author;
 import com.normalizadas.model.Genre;
 import com.normalizadas.model.GenreDAOInterface;
 

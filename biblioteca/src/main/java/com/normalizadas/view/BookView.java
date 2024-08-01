@@ -107,6 +107,11 @@ public class BookView {
 
     }
 
+    /**
+     * Function name: showAddBook()
+     * This function requests the data of the new book from the user
+     * @throws SQLException
+     */
     public void showAddBook() throws SQLException {
         scanner = new Scanner(System.in);
 
@@ -144,12 +149,6 @@ public class BookView {
 
         System.out.print("Indica el género o géneros (en este caso separados por comas): ");
         String[] genres = scanner.nextLine().split(",");
-
-        // for (String genre : genres) {
-        // int id_genre = findOrCreateGenre(genre.trim());
-        // addBookGenre(bookId, id_genre);
-        // }
-        // scanner.close()();
 
         for (String ge : genres) {
             Genre genre = genresController.findOrCreateGenre(ge.trim());
