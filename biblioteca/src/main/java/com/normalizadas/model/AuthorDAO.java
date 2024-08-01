@@ -73,17 +73,22 @@ public class AuthorDAO implements AuthorDAOInterface {
      * @param author
      */
     @Override
-    public void updateAuthor(Author author) {
+    public String updateAuthor(Author author) {
+        String message = "";
         String sql="UPDATE authors SET name = ? WHERE id = ?";
         try{
             conn=DBManager.getDbConnection();
             stmn=conn.prepareStatement(sql);
             stmn.setString(1, author.getName());
             stmn.setInt(2, author.getId());
+            int execution = stmn.executeUpdate();
+            message = (execution == 0) ? "\nNo se ha podido modificar el autor" : "\nEl autor " + author.getName() +
+                    " se ha actualizado correctamente";
         }catch(Exception e){
             System.out.println(e.getMessage());
         } finally {
             DBManager.closeConnection();
         }
+        return message;
     }
 }

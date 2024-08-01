@@ -27,7 +27,7 @@ public class GenresController {
      * TODO
      * @param updatedGenre
      */
-    public void updateGenre(Genre updatedGenre) {
-        genreDAOInterface.updateGenre(updatedGenre);
+    public String updateGenre(Genre updatedGenre) {
+        return genreDAOInterface.updateGenre(updatedGenre);
     }
 }
