@@ -27,6 +27,10 @@ public class BookView {
         this.authorsController = authorsController;
     }
 
+    /**
+     * TODO
+     * @throws SQLException
+     */
     public void showMainMenu() throws SQLException {
         scanner = new Scanner(System.in);
         boolean exit = false;
@@ -69,11 +73,18 @@ public class BookView {
         scanner.close();
     }
 
+    /**
+     * TODO
+     */
     public void showAllBooks() {
         List<Book> books = booksController.getAllBooks();
         printBook(books, true);
     }
 
+    /**
+     * TODO
+     * @throws SQLException
+     */
     public void showSearchMenu() throws SQLException {
 
         System.out.println("\n¿Selecciona una opción de búsqueda con el número: ");
@@ -100,6 +111,10 @@ public class BookView {
 
     }
 
+    /**
+     * TODO
+     * @throws SQLException
+     */
     public void showAddBook() throws SQLException {
         scanner.nextLine();
         System.out.println("Indica el título:");
@@ -171,10 +186,10 @@ public class BookView {
                 updateBookInfo(book);
                 break;
             case 2:
-                updateAuthor(authorsController.getBooksbyAuthors(book.getId()), book);
+                updateAuthor(authorsController.getAuthorsByBook(book.getId()), book);
                 break;
             case 3:
-                updateGenre(genresController.getBooksbyGenres(book.getId()), book);
+                updateGenre(genresController.getGenresByBook(book.getId()), book);
                 break;
             default:
                 System.out.println("Ninguna opción elegida. Saliendo al menú inicial.");
@@ -182,6 +197,10 @@ public class BookView {
 
     }
 
+    /**
+     * TODO
+     * @throws SQLException
+     */
     public void showDeleteMenu() throws SQLException {
         scanner.nextLine();
         System.out.println("Introduce el título del libro que quieres eliminar:");
@@ -208,6 +227,9 @@ public class BookView {
         }
     }
 
+    /**
+     * TODO
+     */
     public void askAuthorBook() {
         scanner.nextLine();
         System.out.print("Escribe el nombre del autor: ");
@@ -216,6 +238,9 @@ public class BookView {
         printBook(books, true);
     }
 
+    /**
+     *
+     */
     public void askTitleBook() {
         scanner.nextLine();
         System.out.print("Escribe el Titulo del libro: ");
@@ -226,6 +251,9 @@ public class BookView {
         printBook(books, true);
     }
 
+    /**
+     *
+     */
     public void askGenreBook() {
         scanner.nextLine();
         System.out.println("Escribe el género");
@@ -236,11 +264,9 @@ public class BookView {
 
     /**
      * Function name: printBook
-     * 
      * @param books List<Book>
-     * @param printDescription boolean 
-     * 
-     * Function that recibe a list of books and a boolean by parameter and print the books with format
+     * @param printDescription boolean
+     * Function that receives a list of books and a boolean by parameter and print the books with format
      */
     public void printBook(List<Book> books, boolean printDescription) {
         if (printDescription) {
@@ -248,12 +274,12 @@ public class BookView {
                     "ISBN", "Stock", "Idioma", "Descripción");
             System.out.println("=".repeat(165));
             for (Book book : books) {
-                List<Genre> genres = genresController.getBooksbyGenres(book.getId());
+                List<Genre> genres = genresController.getGenresByBook(book.getId());
                 List<String> data = new ArrayList<>();
                 for (Genre g : genres) {
                     data.add(g.getGenre());
                 }
-                List<Author> authors = authorsController.getBooksbyAuthors(book.getId());
+                List<Author> authors = authorsController.getAuthorsByBook(book.getId());
                 List<String> dataAuthor = new ArrayList<>();
                 for (Author auth : authors) {
                     dataAuthor.add(auth.getName());
@@ -276,12 +302,12 @@ public class BookView {
                     "Stock", "Idioma");
             System.out.println("=".repeat(142));
             for (Book book : books) {
-                List<Genre> genres = genresController.getBooksbyGenres(book.getId());
+                List<Genre> genres = genresController.getGenresByBook(book.getId());
                 List<String> data = new ArrayList<>();
                 for (Genre g : genres) {
                     data.add(g.getGenre());
                 }
-                List<Author> authors = authorsController.getBooksbyAuthors(book.getId());
+                List<Author> authors = authorsController.getAuthorsByBook(book.getId());
                 List<String> dataAuthor = new ArrayList<>();
                 for (Author auth : authors) {
                     dataAuthor.add(auth.getName());
@@ -303,11 +329,9 @@ public class BookView {
 
     /**
      *  Function name: printFormatDescription
-     * 
      * @param description
      * @param lineWidth
-     * 
-     * Function that recive a description of type string and the whidth for adaptation
+     * Function that receives a description of type string and the width for adaptation
      */
     private void printFormatDescription(String description, int lineWidth) {
         int length = description.length();
@@ -332,12 +356,11 @@ public class BookView {
 
     /**
      * Function name: updateBookInfo
-     * 
      * @param book selected book
-     *             Function that receives a book by parameter, asks the user what
-     *             values of the book wants to modify and
-     *             updates the object with the new data, finally calls the
-     *             controller that modifies the book record in the database
+     * Function that receives a book by parameter, asks the user what
+     * values of the book wants to modify and
+     * updates the object with the new data, finally calls the
+     * controller that modifies the book record in the database
      */
     public void updateBookInfo(Book book) {
         String data;
@@ -368,13 +391,12 @@ public class BookView {
 
     /**
      * Function name: updateAuthor
-     * 
      * @param authors list of authors from the selected book
      * @param book    selected book
-     *                Function that receives a book and its authors by parameter,
-     *                asks the user the new name of the authors
-     *                and calls the controller that modifies each author record in
-     *                the database
+     * Function that receives a book and its authors by parameter,
+     * asks the user the new name of the authors
+     * and calls the controller that modifies each author record in
+     * the database
      */
     public void updateAuthor(List<Author> authors, Book book) {
 
@@ -388,13 +410,12 @@ public class BookView {
 
     /**
      * Function name: updateGenre
-     * 
      * @param genres list of genres from the selected book
      * @param book   selected book
-     *               Function that receives a book and its genres by parameter, asks
-     *               the user the new name of the genres
-     *               and calls the controller that modifies each genre record in the
-     *               database
+     * Function that receives a book and its genres by parameter, asks
+     * the user the new name of the genres
+     * and calls the controller that modifies each genre record in the
+     * database
      */
     public void updateGenre(List<Genre> genres, Book book) {
 
@@ -408,10 +429,9 @@ public class BookView {
 
     /**
      * Function name: getIdLanguage
-     * 
      * @param language language name
      * @return (int) the id of the language
-     *         Gets the name of a language by parameter and returns its id
+     * Gets the name of a language by parameter and returns its id
      */
     public int getIdLanguage(String language) {
         return switch (language) {

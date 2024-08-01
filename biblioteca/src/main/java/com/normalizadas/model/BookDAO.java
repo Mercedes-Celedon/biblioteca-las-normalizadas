@@ -14,6 +14,10 @@ public class BookDAO implements BookDAOInterface {
     private Connection conn;
     private PreparedStatement stmn;
 
+    /**
+     * TODO
+     * @param id
+     */
     public void deleteBook(int id) {
 
         try {
@@ -49,6 +53,10 @@ public class BookDAO implements BookDAOInterface {
         }
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public List<Book> getAllBooks() {
         List<Book> books = new ArrayList<>();
         String sql = "SELECT b.title, b.description, b.isbn, b.stock, b.id, l.language FROM books as b\n" +
@@ -76,6 +84,11 @@ public class BookDAO implements BookDAOInterface {
         return books;
     }
 
+    /**
+     * TODO
+     * @param genre
+     * @return
+     */
     public List<Book> getBooksbyGenres(String genre) {
         List<Book> books = new ArrayList<>();
         String sql = "SELECT b.title, b.description, b.isbn, b.stock, b.id, l.language FROM books as b\n" +
@@ -108,6 +121,11 @@ public class BookDAO implements BookDAOInterface {
 
     }
 
+    /**
+     * TODO
+     * @param author
+     * @return
+     */
     public List<Book> getBooksbyAuthors(String author) {
         List<Book> books = new ArrayList<>();
         String sql = "SELECT b.title, b.description, b.isbn, b.stock, b.id, l.language FROM books as b\n" +
@@ -147,8 +165,7 @@ public class BookDAO implements BookDAOInterface {
      * Function name: bookExists
      * @param title book's title
      * @return boolean 
-     *              The fuction sends a query to the database 
-     *              and it returns if the book serched exists or not
+     * The function sends a query to the database, and it returns if the searched book exists or not
      */
     public boolean bookExists(String title) {
         String sql = "SELECT id FROM books WHERE title = ?";
@@ -171,10 +188,10 @@ public class BookDAO implements BookDAOInterface {
      * @param description
      * @param isbn
      * @param stock
-     * @param id_languaje
+     * @param id_language
      * @return int  book id
-     *              This function updates the books's table of the database 
-     *              then returns the corresponding id
+     * This function updates the books table of the database
+     * then returns the corresponding id
      */
     public int insertBook(String title, String description, String isbn, int stock, int id_language) {
         String sql = "INSERT INTO books (title, description, isbn, stock, id_language) VALUES (?, ?, ?, ?, ?)";
@@ -221,7 +238,7 @@ public class BookDAO implements BookDAOInterface {
         }
     }
 
-        /**
+    /**
      * Function name addBookAuthor
      * @param bookId
      * @param genreId
@@ -244,7 +261,11 @@ public class BookDAO implements BookDAOInterface {
         }
     }
 
-    
+    /**
+     * TODO
+     * @param title
+     * @return
+     */
     public Book getBookbyTitle(String title) {
         Book book = new Book();
         String sql = "SELECT b.title, b.description, b.isbn, b.stock, b.id, l.language FROM books as b\n" +
