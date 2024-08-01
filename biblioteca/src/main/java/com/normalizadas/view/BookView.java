@@ -21,7 +21,7 @@ public class BookView {
     private AuthorsController authorsController;
 
     public BookView(BooksController booksController, GenresController genresController,
-            AuthorsController authorsController) {
+                    AuthorsController authorsController) {
         this.booksController = booksController;
         this.genresController = genresController;
         this.authorsController = authorsController;
@@ -29,13 +29,9 @@ public class BookView {
 
     /**
      * Function name: showMainMenu
-     * 
-     * @throws SQLException
-     * 
-     *                      This function initiates the first scanner and prints the
-     *                      menu with the different options of the program to choose
-     *                      from
-     * 
+     * This function initiates the scanner and prints the main
+     * menu with the different options of the program to choose
+     * from
      */
     public void showMainMenu() throws SQLException {
         scanner = new Scanner(System.in);
@@ -81,7 +77,8 @@ public class BookView {
     }
 
     /**
-     * TODO
+     * Function name: showAllBooks
+     * Gets all books and calls the function that prints them
      */
     public void showAllBooks() {
         List<Book> books = booksController.getAllBooks();
@@ -89,9 +86,8 @@ public class BookView {
     }
 
     /**
-     * TODO
-     * 
-     * @throws SQLException
+     * Function name: showAllBooks
+     * Shows the search submenu and calls the function of the option chosen by the user
      */
     public void showSearchMenu() throws SQLException {
 
@@ -121,8 +117,7 @@ public class BookView {
 
     /**
      * Function name: showAddBook
-     * @throws SQLException
-     * The function asks the user for the data of the new book 
+     * The function asks the user for the data of the new book
      * and calls the corresponding functions to update the database
      */
     public void showAddBook() throws SQLException {
@@ -152,7 +147,6 @@ public class BookView {
 
         System.out.print("Indica el autor o autores (en este caso separados por comas): ");
         String[] authors = scanner.nextLine().split(",");
-
         for (String au : authors) {
             Author author = authorsController.findOrCreateAuthor(au.trim());
             int authorId = author.getId();
@@ -165,15 +159,14 @@ public class BookView {
             Genre genre = genresController.findOrCreateGenre(ge.trim());
             booksController.addBookGenre(bookId, genre.getId());
         }
-        
+
         System.out.println("Libro añadido con éxito");
     }
 
     /**
      * Function Name: showUpdateMenu
      * This function asks the user which book they want to modify, if it exists then gives them
-     * the different modification options
-     * and, depending on the choice, calls the different methods
+     * the different modification options and, depending on the choice, calls the different methods
      */
     public void showUpdateMenu() {
         scanner.nextLine();
@@ -213,13 +206,8 @@ public class BookView {
 
     /**
      * Function name: showDeleteMenu
-     * 
-     * @throws SQLException
-     * 
-     *                      This function asks the user to introduce the book title
-     *                      they want to delete, then asks to confirm they want to
-     *                      delete it; if the choice is yes, it calls the pertinent
-     *                      method
+     * This function asks the user to introduce the book title they want to delete, then asks to confirm they want to
+     * delete it; if the choice is yes, it calls the pertinent method
      */
     public void showDeleteMenu() throws SQLException {
         scanner.nextLine();
@@ -252,7 +240,10 @@ public class BookView {
     }
 
     /**
-     * TODO
+     * Function name: askAuthorBook
+     * Function that receives the author name as a parameter, asks the user for the name of the author of the book
+     * and calls the controller that generates a list of books according to the author searched in the database
+     * then call the printBook function to print a table with the book
      */
     public void askAuthorBook() {
         scanner.nextLine();
@@ -263,7 +254,9 @@ public class BookView {
     }
 
     /**
-     *
+     * Function name: askTitleBook
+     * Asks the user for the title of the book he wants to search for and if it exists,
+     * passes it to the function that prints it, if not it shows an information message.
      */
     public void askTitleBook() {
         scanner.nextLine();
@@ -280,7 +273,9 @@ public class BookView {
     }
 
     /**
-     *
+     * Function name: askGenreBook
+     * Asks the user for the genre of books he wants to search for and if it exists,
+     * passes the list of books to the function that prints them.
      */
     public void askGenreBook() {
         scanner.nextLine();
@@ -292,17 +287,16 @@ public class BookView {
 
     /**
      * Function name: printBook
-     * 
-     * @param books            List<Book>
-     * @param printDescription boolean
+     *
+     * @param books            list of books
+     * @param printDescription should print description?
      *                         Function that receives a list of books and a boolean
      *                         by parameter and print the books with format
      */
     public void printBook(List<Book> books, boolean printDescription) {
         if (printDescription) {
-            System.out.printf("| %-28s | %-25s | %-35s | %-15s | %-5s | %-12s | %-25s |\n", "Titulo", "Autor", "Genero",
-                    "ISBN", "Stock", "Idioma", "Descripción");
-            System.out.println("=".repeat(165));
+            System.out.printf("| %-15s | %-15s | %-18s | %-15s | %-5s | %-10s | %-50s |\n", "Titulo", "Autor", "Genero", "ISBN", "Stock", "Idioma", "Descripción");
+            System.out.println("=".repeat(150));
             for (Book book : books) {
                 List<Genre> genres = genresController.getGenresByBook(book.getId());
                 List<String> data = new ArrayList<>();
@@ -321,16 +315,11 @@ public class BookView {
                 String language = book.getLanguage();
                 String isbn = book.getIsbn();
                 int stock = book.getStock();
-                System.out.printf("| %-28s | %-25s | %-35s | %-15s | %-5s | %-12s |", title, authorList, genresString,
-                        isbn, stock, language);
-                printFormatDescription(description, 25);
-                System.out.print("\n");
-                System.out.println("-".repeat(165));
+                printTableFormat(title, authorList, genresString, isbn, stock, language, description);
             }
         } else {
-            System.out.printf("| %-32s | %-25s | %-35s | %-15s | %-5s | %-12s |\n", "Titulo", "Autor", "Genero", "ISBN",
-                    "Stock", "Idioma");
-            System.out.println("=".repeat(142));
+            System.out.printf("| %-15s | %-15s | %-18s | %-15s | %-5s | %-10s |\n", "Titulo", "Autor", "Genero", "ISBN", "Stock", "Idioma");
+            System.out.println("=".repeat(150));
             for (Book book : books) {
                 List<Genre> genres = genresController.getGenresByBook(book.getId());
                 List<String> data = new ArrayList<>();
@@ -348,47 +337,73 @@ public class BookView {
                 String language = book.getLanguage();
                 String isbn = book.getIsbn();
                 int stock = book.getStock();
-                System.out.printf("| %-32s | %-25s | %-35s | %-15s | %-5s | %-12s |", title, authorList, genresString,
-                        isbn, stock, language);
-                System.out.print("\n");
-                System.out.println("-".repeat(142));
+
+                printTableFormat(title, authorList, genresString, isbn, stock, language, "");
             }
         }
-
     }
 
     /**
-     * Function name: printFormatDescription
-     * 
-     * @param description
-     * @param lineWidth
-     *                    Function that receives a description of type string and
-     *                    the width for adaptation
+     * Function name: printTableFormat
+     *
+     * @param title       book title
+     * @param author      book author
+     * @param genre       book genre
+     * @param isbn        book isbn
+     * @param stock       quantity in stock
+     * @param language    book language
+     * @param description book description
+     *                    Prints a formated table
      */
-    private void printFormatDescription(String description, int lineWidth) {
-        int length = description.length();
-        boolean firstLine = true;
-        for (int i = 0; i < length; i += lineWidth) {
-            if (!firstLine) {
-                System.out.printf("| %-28s | %-25s | %-35s | %-15s | %-5s | %-12s | ", "", "", "", "", "", "");
-            }
+    private void printTableFormat(String title, String author, String genre, String isbn, int stock, String language, String description) {
+        String[] titleLines = splitIntoLines(title, 15);
+        String[] authorLines = splitIntoLines(author, 15);
+        String[] genreLines = splitIntoLines(genre, 15);
+        String[] descriptionLines = splitIntoLines(description, 50);
 
-            if (i + lineWidth < length) {
-                System.out.printf("%-25s", description.substring(i, i + lineWidth));
+        int maxLines = Math.max(titleLines.length, Math.max(authorLines.length, genreLines.length));
+
+        for (int i = 0; i < maxLines; i++) {
+            String titlePart = i < titleLines.length ? titleLines[i] : "";
+            String authorPart = i < authorLines.length ? authorLines[i] : "";
+            String genrePart = i < genreLines.length ? genreLines[i] : "";
+
+            if (i == 0) {
+                System.out.printf("| %-15s | %-15s | %-18s | %-15s | %-5s | %-10s |\n", titlePart, authorPart, genrePart, isbn, stock, language);
             } else {
-                System.out.printf("%-25s", description.substring(i));
-            }
-
-            firstLine = false;
-            if (i + lineWidth < length - 1) {
-                System.out.printf("\n");
+                System.out.printf("| %-15s | %-15s | %-18s | %-15s | %-5s | %-10s |\n", titlePart, authorPart, genrePart, "", "", "");
             }
         }
+        for (String line : descriptionLines) {
+            System.out.printf("| %-15s | %-15s | %-18s | %-15s | %-5s | %-10s | %-50s |\n", "", "", "", "", "", "", line);
+        }
+        System.out.println("=".repeat(150));
     }
+
+    /**
+     * Function name: splitIntoLines
+     *
+     * @param text      the text to format
+     * @param lineWidth the width of the column
+     *                  Function that receives a text and a width to return the text adapted to that width
+     */
+    private String[] splitIntoLines(String text, int lineWidth) {
+        int length = text.length();
+        int lines = (length + lineWidth - 1) / lineWidth;
+        String[] result = new String[lines];
+
+        for (int i = 0; i < lines; i++) {
+            int start = i * lineWidth;
+            int end = Math.min(start + lineWidth, length);
+            result[i] = text.substring(start, end);
+        }
+        return result;
+    }
+
 
     /**
      * Function name: updateBookInfo
-     * 
+     *
      * @param book selected book
      *             Function that receives a book by parameter, asks the user what
      *             values of the book wants to modify and
@@ -424,7 +439,7 @@ public class BookView {
 
     /**
      * Function name: updateAuthor
-     * 
+     *
      * @param authors list of authors from the selected book
      * @param book    selected book
      *                Function that receives a book and its authors by parameter,
@@ -444,7 +459,7 @@ public class BookView {
 
     /**
      * Function name: updateGenre
-     * 
+     *
      * @param genres list of genres from the selected book
      * @param book   selected book
      *               Function that receives a book and its genres by parameter, asks
@@ -464,10 +479,10 @@ public class BookView {
 
     /**
      * Function name: getIdLanguage
-     * 
+     *
      * @param language language name
      * @return (int) the id of the language
-     *         Gets the name of a language by parameter and returns its id
+     * Gets the name of a language by parameter and returns its id
      */
     public int getIdLanguage(String language) {
         return switch (language) {
