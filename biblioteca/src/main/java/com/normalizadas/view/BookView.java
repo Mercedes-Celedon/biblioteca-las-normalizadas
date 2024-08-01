@@ -16,10 +16,6 @@ public class BookView {
 
     private static Scanner scanner;
 
-    private String askAuthorFilter;
-    private String askGenreFilter;
-    private String askTitleFilter;
-
     private BooksController booksController;
     private GenresController genresController;
     private AuthorsController authorsController;
@@ -65,13 +61,12 @@ public class BookView {
                     break;
                 case 6:
                     exit = true;
-                    scanner.close();
                     break;
                 default:
                     System.out.println("No has elegido ninguna opción. Saliendo del programa.");
             }
         }
-
+        scanner.close();
     }
 
     public void showAllBooks() {
@@ -80,8 +75,6 @@ public class BookView {
     }
 
     public void showSearchMenu() throws SQLException {
-
-        scanner = new Scanner(System.in);
 
         System.out.println("\n¿Selecciona una opción de búsqueda con el número: ");
         System.out.println("1. Buscar por título.");
@@ -108,8 +101,7 @@ public class BookView {
     }
 
     public void showAddBook() throws SQLException {
-        scanner = new Scanner(System.in);
-
+        scanner.nextLine();
         System.out.println("Indica el título:");
         String title = scanner.nextLine();
         if (booksController.bookExists(title)) {
@@ -155,7 +147,7 @@ public class BookView {
             Genre genre = genresController.findOrCreateGenre(ge.trim());
             booksController.addBookGenre(bookId, genre.getId());
         }
-        // scanner.close();
+        //
         System.out.println("Libro añadido con éxito");
     }
 
@@ -166,10 +158,11 @@ public class BookView {
      * and, depending on the choice, calls the different methods
      */
     public void showUpdateMenu() {
-        scanner = new Scanner(System.in);
+        scanner.nextLine();
         System.out.println("Introduce el título del libro que quieres modificar:");
         String title = scanner.nextLine();
         Book book = booksController.getBookbyTitle(title);
+        System.out.print(book);
         System.out.println("Vas a modificar el libro -> " + book.getTitle() +
                 "\nPor favor selecciona el número de la opción deseada:" +
                 "\n1. Modificar características del libro (Título, Descripción, ISBN, Stock o Idioma" +
@@ -179,7 +172,7 @@ public class BookView {
                 "volver a introducirlo con los nuevos datos.");
         int opc = 0;
         opc = scanner.nextInt();
-        scanner.close();
+        scanner.nextLine();
         System.out.println("Si no quieres modificar algún dato, deja el campo en blanco y pulsa enter.");
         switch (opc) {
             case 1:
@@ -194,11 +187,11 @@ public class BookView {
             default:
                 System.out.println("Ninguna opción elegida. Saliendo al menú inicial.");
         }
+
     }
 
     public void showDeleteMenu() throws SQLException {
-
-        scanner = new Scanner(System.in);
+        scanner.nextLine();
         System.out.println("Introduce el título del libro que quieres eliminar:");
         String title = scanner.nextLine();
         Book book = booksController.getBookbyTitle(title);
@@ -208,7 +201,7 @@ public class BookView {
         System.out.println("2. No.");
 
         int choice = scanner.nextInt();
-        scanner.close();
+        scanner.nextLine();
 
         switch (choice) {
             case 1:
@@ -226,7 +219,7 @@ public class BookView {
     public void askAuthorBook() {
         scanner.nextLine();
         System.out.print("Escribe el nombre del autor: ");
-        askAuthorFilter = scanner.nextLine();
+        String askAuthorFilter = scanner.nextLine();
         List<Book> books = booksController.getBooksbyAuthors(askAuthorFilter);
         printBook(books, true);// poner true si quieres el menú con descripción
     }
@@ -342,10 +335,7 @@ public class BookView {
      *             controller that modifies the book record in the database
      */
     public void updateBookInfo(Book book) {
-        scanner = new Scanner(System.in);
-        scanner.nextLine();
         String data;
-
         book.setId(book.getId());
         System.out.print("\nTítulo actual-> " + book.getTitle() + "\nNuevo título-> ");
         data = scanner.nextLine();
@@ -368,7 +358,6 @@ public class BookView {
         data = scanner.nextLine();
         book.setLanguage(!data.isEmpty() ? data : book.getLanguage());
 
-        scanner.close();
         booksController.updateBook(book, getIdLanguage(book.getLanguage()));
     }
 
@@ -383,7 +372,7 @@ public class BookView {
      *                the database
      */
     public void updateAuthor(List<Author> authors, Book book) {
-        scanner = new Scanner(System.in);
+
         for (Author author : authors) {
             System.out.println("Nombre actual del autor -> " + author.getName());
             System.out.print("Autor corregido -> ");
@@ -403,7 +392,7 @@ public class BookView {
      *               database
      */
     public void updateGenre(List<Genre> genres, Book book) {
-        scanner = new Scanner(System.in);
+
         for (Genre genre : genres) {
             System.out.println("Nombre actual del genero -> " + genre.getGenre());
             System.out.print("Genero corregido -> ");
