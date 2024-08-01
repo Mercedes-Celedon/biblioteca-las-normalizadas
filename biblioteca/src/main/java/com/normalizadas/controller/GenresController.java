@@ -39,8 +39,10 @@ public class GenresController {
     }
 
     /**
-     * TODO
-     * @param updatedGenre
+     * Function name: updateGenre
+     * @param updatedGenre The genre to update
+     * @return (String) message
+     * Gets a genre by parameter and returns a message with the update result
      */
     public String updateGenre(Genre updatedGenre) {
         return genreDAOInterface.updateGenre(updatedGenre);

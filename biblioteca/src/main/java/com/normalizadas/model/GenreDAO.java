@@ -80,9 +80,10 @@ public class GenreDAO implements GenreDAOInterface{
     }
 
     /**
-     * TODO
-     * @param genre
-     * @return
+     * Function name: updateGenre
+     * @param genre a genre object
+     * @return String - a success or error message
+     * Gets by parameter a genre that has already the data updated and executes the query that updates the bd entry.
      */
     @Override
     public String updateGenre(Genre genre) {
