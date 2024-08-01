@@ -112,8 +112,10 @@ public class BookView {
     }
 
     /**
-     * TODO
+     * Function name: showAddBook
      * @throws SQLException
+     * The function asks the user for the data of the new book 
+     * and calls the corresponding functions to update the database
      */
     public void showAddBook() throws SQLException {
         scanner.nextLine();
