@@ -254,7 +254,8 @@ public class BookDAO implements BookDAOInterface {
      * @param id_language
      */
     @Override
-    public void updateBook(Book book, int id_language) {
+    public String updateBook(Book book, int id_language) {
+        String message = "";
         String sql = "UPDATE books SET title = ?, description = ?, isbn = ?, " +
                 "stock = ?, id_language = ? WHERE id = ?";
         try {
@@ -266,10 +267,13 @@ public class BookDAO implements BookDAOInterface {
             stmn.setInt(4, book.getStock());
             stmn.setInt(5, id_language);
             stmn.setInt(6, book.getId());
+            int execution = stmn.executeUpdate();
+            message = (execution == 0) ? "\nNo se ha podido modificar el libro" : "\nEl libro se ha actualizado correctamente";
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
             DBManager.closeConnection();
         }
+        return message;
     }
 }
