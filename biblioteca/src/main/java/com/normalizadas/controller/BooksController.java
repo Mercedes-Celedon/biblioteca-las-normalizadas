@@ -20,8 +20,8 @@ public class BooksController {
     }
 
     /**
-     * TODO
-     * @return
+     * Function name: getAllBooks
+     * @return List<Book>
      */
     public List<Book> getAllBooks(){
         List<Book> books= bookDAOInterface.getAllBooks();
