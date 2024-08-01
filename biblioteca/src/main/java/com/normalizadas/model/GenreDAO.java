@@ -72,18 +72,23 @@ public class GenreDAO implements GenreDAOInterface{
      * @return
      */
     @Override
-    public void updateGenre(Genre genre) {
+    public String updateGenre(Genre genre) {
+        String message = "";
         String sql="UPDATE genres SET genre = ? WHERE id = ?";
         try{
             conn=DBManager.getDbConnection();
             stmn=conn.prepareStatement(sql);
             stmn.setString(1, genre.getGenre());
             stmn.setInt(2, genre.getId());
+            int execution = stmn.executeUpdate();
+            message = (execution == 0) ? "\nNo se ha podido modificar el género" : "\nEl género " + genre.getGenre() +
+                    " se ha actualizado correctamente";
         }catch(Exception e){
             System.out.println(e.getMessage());
         } finally {
             DBManager.closeConnection();
         }
+        return message;
     }
 
 

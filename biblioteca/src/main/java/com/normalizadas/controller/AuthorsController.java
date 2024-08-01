@@ -28,8 +28,8 @@ public class AuthorsController {
      * TODO
      * @param updatedAuthor
      */
-    public void updateAuthor(Author updatedAuthor) {
-        authorDAOInterface.updateAuthor(updatedAuthor);
+    public String updateAuthor(Author updatedAuthor) {
+        return authorDAOInterface.updateAuthor(updatedAuthor);
     }
 }
 
