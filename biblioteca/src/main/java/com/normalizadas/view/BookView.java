@@ -452,8 +452,11 @@ public class BookView {
         for (Author author : authors) {
             System.out.println("Nombre actual del autor -> " + author.getName());
             System.out.print("Autor corregido -> ");
-            author.setName(scanner.nextLine());
-            authorsController.updateAuthor(author);
+            String name = scanner.nextLine();
+            if (!name.isEmpty()) {
+                author.setName(name);
+                authorsController.updateAuthor(author);
+            }
         }
     }
 
@@ -468,12 +471,14 @@ public class BookView {
      *               database
      */
     public void updateGenre(List<Genre> genres, Book book) {
-
         for (Genre genre : genres) {
             System.out.println("Nombre actual del genero -> " + genre.getGenre());
             System.out.print("Genero corregido -> ");
-            genre.setGenre(scanner.nextLine());
-            genresController.updateGenre(genre);
+            String genreName = scanner.nextLine();
+            if (!genreName.isEmpty()) {
+                genre.setGenre(genreName);
+                genresController.updateGenre(genre);
+            }
         }
     }
 
