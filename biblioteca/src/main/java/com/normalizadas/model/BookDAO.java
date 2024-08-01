@@ -128,10 +128,12 @@ public class BookDAO implements BookDAOInterface {
     }
 
     /**
-     * TODO
-     * 
+     * Function name: getBooksByAuthors
      * @param author
-     * @return
+     * @return books
+     * Function that receives the author name as a parameter,
+     * and generates a list of books by connecting to the database,
+     * brings all the data associated with the search for the book by author.
      */
     public List<Book> getBooksbyAuthors(String author) {
         List<Book> books = new ArrayList<>();
