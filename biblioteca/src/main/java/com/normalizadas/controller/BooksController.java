@@ -39,18 +39,45 @@ public class BooksController {
         return book;
     }
 
+    /**
+     * Function name: bookExists
+     * @param title
+     * @return boolean 
+     *  
+     */
     public boolean bookExists(String title) {
         boolean bookExists = bookDAOInterface.bookExists(title);
         return bookExists;
     }
 
+    /**
+     * Function name: insertBook
+     * @param title
+     * @param description
+     * @param isbn
+     * @param stock
+     * @param id_language
+     * @return
+     */
     public int insertBook(String title, String description, String isbn, int stock, int id_language){
         return bookDAOInterface.insertBook(title, description, isbn, stock, id_language);
     }
+
+    /**
+     * Function name:addBookAuthor
+     * @param bookId
+     * @param authorId
+     * @throws SQLException
+     */
     public void addBookAuthor(int bookId, int authorId) throws SQLException{
         bookDAOInterface.addBookAuthor(bookId, authorId);
     }
-    
+    /**
+     * Function name:addBookGenre
+     * @param bookId
+     * @param genreId
+     * @throws SQLException
+     */
     public void addBookGenre(int bookId, int genreId) throws SQLException{
         bookDAOInterface.addBookGenre(bookId, genreId);
     }

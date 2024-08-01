@@ -18,7 +18,11 @@ public class AuthorsController {
         List<Author> authors = authorDAOInterface.getAuthors(id);
         return authors;
     }
-
+    /**
+     * Function name findOrCreateAuthor
+     * @param name
+     * @return Author ()
+     */
     public Author findOrCreateAuthor(String name){
         Author author = authorDAOInterface.findOrCreateAuthor(name);
         return author;

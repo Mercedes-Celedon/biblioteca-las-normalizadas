@@ -102,8 +102,9 @@ public class BookView {
 
     /**
      * Function name: showAddBook()
-     * This function requests the data of the new book from the user
      * @throws SQLException
+     *  This function requests the data of the new book from the user,
+     *  then it calls he corresponding functions to update the database
      */
     public void showAddBook() throws SQLException {
         scanner.nextLine();

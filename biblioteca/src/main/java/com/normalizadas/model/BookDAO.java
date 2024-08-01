@@ -143,6 +143,13 @@ public class BookDAO implements BookDAOInterface {
 
     }
 
+    /**
+     * Function name: bookExists
+     * @param title book's title
+     * @return boolean 
+     *              The fuction sends a query to the database 
+     *              and it returns if the book serched exists or not
+     */
     public boolean bookExists(String title) {
         String sql = "SELECT id FROM books WHERE title = ?";
         try {
@@ -159,6 +166,16 @@ public class BookDAO implements BookDAOInterface {
         return false;
     }
 
+    /**
+     * @param title
+     * @param description
+     * @param isbn
+     * @param stock
+     * @param id_languaje
+     * @return int  book id
+     *              This function updates the books's table of the database 
+     *              then returns the corresponding id
+     */
     public int insertBook(String title, String description, String isbn, int stock, int id_language) {
         String sql = "INSERT INTO books (title, description, isbn, stock, id_language) VALUES (?, ?, ?, ?, ?)";
         try {
@@ -183,11 +200,15 @@ public class BookDAO implements BookDAOInterface {
         return 0;
     }
 
+    /**
+     * Function name addBookAuthor
+     * @param bookId
+     * @param authorId
+     * The function updates the associative table with the corresponding ids
+     */
     @Override
     public void addBookAuthor(int bookId, int authorId) throws SQLException {
-        // // TODO Auto-generated method stub
-        // throw new UnsupportedOperationException("Unimplemented method
-        // 'addBookAuthor'");
+
         String sql = "INSERT INTO books_authors (id_book, id_author) VALUES (?, ?)";
         try {
             conn = DBManager.getDbConnection();
@@ -200,6 +221,12 @@ public class BookDAO implements BookDAOInterface {
         }
     }
 
+        /**
+     * Function name addBookAuthor
+     * @param bookId
+     * @param genreId
+     * The function updates the associative table with the corresponding ids
+     */
     @Override
     public void addBookGenre(int bookId, int genreId) throws SQLException {
         // // TODO Auto-generated method stub
