@@ -70,8 +70,8 @@ public class BooksController {
      * Function name: bookExists
      * 
      * @param title
-     * @return boolean
-     *         TODO
+     * @return boolean (if books exists or not)
+     *                  Calls BookDAO and returns a boolean               
      */
     public boolean bookExists(String title) {
         boolean bookExists = bookDAOInterface.bookExists(title);
@@ -86,8 +86,8 @@ public class BooksController {
      * @param isbn
      * @param stock
      * @param id_language
-     * @return
-     *         TODO
+     * @return int (book's id)
+     *                 Calls BookDAO and returns an int  
      */
     public int insertBook(String title, String description, String isbn, int stock, int id_language) {
         return bookDAOInterface.insertBook(title, description, isbn, stock, id_language);

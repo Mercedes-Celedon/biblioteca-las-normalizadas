@@ -119,9 +119,10 @@ public class BookView {
     }
 
     /**
-     * TODO
-     * 
+     * Function name: showAddBook
      * @throws SQLException
+     * The function asks the user for the data of the new book 
+     * and calls the corresponding functions to update the database
      */
     public void showAddBook() throws SQLException {
         scanner.nextLine();
@@ -163,12 +164,13 @@ public class BookView {
             Genre genre = genresController.findOrCreateGenre(ge.trim());
             booksController.addBookGenre(bookId, genre.getId());
         }
+        
         System.out.println("Libro añadido con éxito");
     }
 
     /**
      * Function Name: showUpdateMenu
-     * This function asks the user which book they want to modify, then gives them
+     * This function asks the user which book they want to modify, if it exists then gives them
      * the different modification options
      * and, depending on the choice, calls the different methods
      */
@@ -176,33 +178,36 @@ public class BookView {
         scanner.nextLine();
         System.out.println("Introduce el título del libro que quieres modificar:");
         String title = scanner.nextLine();
-        Book book = booksController.getBookbyTitle(title);
-        System.out.print(book);
-        System.out.println("Vas a modificar el libro -> " + book.getTitle() +
-                "\nPor favor selecciona el número de la opción deseada:" +
-                "\n1. Modificar características del libro (Título, Descripción, ISBN, Stock o Idioma" +
-                "\n2. Corregir el nombre del autor." +
-                "\n3. Corregir el género." +
-                "\n\n¡Atención, no cambiar autores o géneros! si deseas hacerlo deberás eliminar el libro y " +
-                "volver a introducirlo con los nuevos datos.");
-        int opc = 0;
-        opc = scanner.nextInt();
-        scanner.nextLine();
-        System.out.println("Si no quieres modificar algún dato, deja el campo en blanco y pulsa enter.");
-        switch (opc) {
-            case 1:
-                updateBookInfo(book);
-                break;
-            case 2:
-                updateAuthor(authorsController.getAuthorsByBook(book.getId()), book);
-                break;
-            case 3:
-                updateGenre(genresController.getGenresByBook(book.getId()), book);
-                break;
-            default:
-                System.out.println("Ninguna opción elegida. Saliendo al menú inicial.");
-        }
 
+        if (!booksController.bookExists(title)) {
+            System.out.println("\nError, el libro no existe. \nSaliendo al menú principal.");
+        } else {
+            Book book = booksController.getBookbyTitle(title);
+            System.out.println("Vas a modificar el libro -> " + book.getTitle() +
+                    "\nPor favor selecciona el número de la opción deseada:" +
+                    "\n1. Modificar características del libro (Título, Descripción, ISBN, Stock o Idioma" +
+                    "\n2. Corregir el nombre del autor." +
+                    "\n3. Corregir el género." +
+                    "\n\n¡Atención, no cambiar autores o géneros! si deseas hacerlo deberás eliminar el libro y " +
+                    "volver a introducirlo con los nuevos datos.");
+            int opc = 0;
+            opc = scanner.nextInt();
+            scanner.nextLine();
+            System.out.println("Si no quieres modificar algún dato, deja el campo en blanco y pulsa enter.");
+            switch (opc) {
+                case 1:
+                    updateBookInfo(book);
+                    break;
+                case 2:
+                    updateAuthor(authorsController.getAuthorsByBook(book.getId()), book);
+                    break;
+                case 3:
+                    updateGenre(genresController.getGenresByBook(book.getId()), book);
+                    break;
+                default:
+                    System.out.println("\nNinguna opción elegida. \nSaliendo al menú principal.");
+            }
+        }
     }
 
     /**
@@ -219,25 +224,29 @@ public class BookView {
         scanner.nextLine();
         System.out.println("Introduce el título del libro que quieres eliminar:");
         String title = scanner.nextLine();
-        Book book = booksController.getBookbyTitle(title);
+        if (!booksController.bookExists(title)) {
+            System.out.print("\nError, el libro no existe. \nVolviendo al menú principal. ");
+        } else {
+            Book book = booksController.getBookbyTitle(title);
 
-        System.out.println("¿Seguro que quieres eliminar el libro: " + book.getTitle() + "?");
-        System.out.println("1. Sí.");
-        System.out.println("2. No.");
+            System.out.println("¿Seguro que quieres eliminar el libro: " + book.getTitle() + "?");
+            System.out.println("1. Sí.");
+            System.out.println("2. No.");
 
-        int choice = scanner.nextInt();
-        scanner.nextLine();
+            int choice = scanner.nextInt();
+            scanner.nextLine();
 
-        switch (choice) {
-            case 1:
-                booksController.deleteBook(book.getId());
-                break;
-            case 2:
-                System.out.println("El libro no se ha eliminado. Volviendo al menú principal.");
-                showMainMenu();
-                break;
-            default:
-                System.out.println("Error. Volviendo al menú principal.");
+            switch (choice) {
+                case 1:
+                    booksController.deleteBook(book.getId());
+                    break;
+                case 2:
+                    System.out.println("El libro no se ha eliminado. Volviendo al menú principal.");
+                    showMainMenu();
+                    break;
+                default:
+                    System.out.println("Error. Volviendo al menú principal.");
+            }
         }
     }
 
@@ -257,12 +266,16 @@ public class BookView {
      */
     public void askTitleBook() {
         scanner.nextLine();
-        System.out.print("Escribe el Titulo del libro: ");
-        String askTitleFilter = scanner.nextLine();
-        Book book = booksController.getBookbyTitle(askTitleFilter);
-        List<Book> books = new ArrayList<>();
-        books.add(book);
-        printBook(books, true);
+        System.out.print("Escribe el Título del libro: ");
+        String title = scanner.nextLine();
+        if (!booksController.bookExists(title)) {
+            System.out.print("\nError, el libro no existe. \nVolviendo al menú principal. ");
+        } else {
+            Book book = booksController.getBookbyTitle(title);
+            List<Book> books = new ArrayList<>();
+            books.add(book);
+            printBook(books, true);
+        }
     }
 
     /**

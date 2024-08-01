@@ -42,9 +42,12 @@ public class GenreDAO implements GenreDAOInterface{
     }
 
     /**
-     * TODO
-     * @param genre
-     * @return
+     * Function name: findOrCreateGenre
+     * @param name
+     * @return Genre   (genre's id)
+     *                  The function send a query to find if the genre (or genres) 
+     *                  is in the database already, and if it is, returns it's id
+     *                  If it is not in the database, it updates it.
      */
     public Genre findOrCreateGenre(String genre)  {
         String sql = "SELECT id FROM genres WHERE genre = ?";
