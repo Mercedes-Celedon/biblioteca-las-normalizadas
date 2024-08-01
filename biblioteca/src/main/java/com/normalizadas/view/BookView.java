@@ -189,6 +189,16 @@ public class BookView {
 
     }
 
+    /**
+     * Function name: showDeleteMenu
+     * 
+     * @throws SQLException
+     * 
+     *    This function asks user to add the title of the book
+     *    they want to delete, then asks again if they are sure
+     *    they want to delete it; in the case of yes, it calls the
+     *    pertinent method
+     */
     public void showDeleteMenu() throws SQLException {
         scanner.nextLine();
         System.out.println("Introduce el título del libro que quieres eliminar:");

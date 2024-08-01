@@ -217,6 +217,7 @@ public class BookDAO implements BookDAOInterface {
         }
     }
 
+    
     public Book getBookbyTitle(String title) {
         Book book = new Book();
         String sql = "SELECT b.title, b.description, b.isbn, b.stock, b.id, l.language FROM books as b\n" +
