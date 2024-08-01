@@ -31,6 +31,7 @@ public class GenresController {
      * Function name findOrCreateGenre
      * @param name
      * @return Genre (genre's id)
+     *                 Calls GenreDAO and returns a Genre  
      */
     public Genre findOrCreateGenre(String name){
         Genre newGenre = genreDAOInterface.findOrCreateGenre(name);

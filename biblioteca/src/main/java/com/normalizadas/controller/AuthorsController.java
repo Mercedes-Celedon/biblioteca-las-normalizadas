@@ -29,7 +29,7 @@ public class AuthorsController {
      * Function name findOrCreateAuthor
      * @param name
      * @return Author (author's id)
-     * 
+     *                 Calls AuthorkDAO and returns an Author  
      */
     public Author findOrCreateAuthor(String name){
         Author author = authorDAOInterface.findOrCreateAuthor(name);
