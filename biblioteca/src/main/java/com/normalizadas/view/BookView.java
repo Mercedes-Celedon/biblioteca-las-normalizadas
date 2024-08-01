@@ -170,10 +170,7 @@ public class BookView {
         scanner = new Scanner(System.in);
         System.out.println("Introduce el título del libro que quieres modificar:");
         String title = scanner.nextLine();
-        // ¡Esto hay que cambiarlo cuando getBooks retorne un libro solo!!!!
-        List<Book> selectedBook = booksController.getBooksbyTitle(title);
-        Book book = selectedBook.get(0);
-        // Hasta aquí
+        Book book = booksController.getBookbyTitle(title);
         System.out.println("Vas a modificar el libro -> " + book.getTitle() +
                         "\nPor favor selecciona el número de la opción deseada:"+
                         "\n1. Modificar características del libro (Título, Descripción, ISBN, Stock o Idioma" +
@@ -237,7 +234,9 @@ public class BookView {
         scanner.nextLine();
         System.out.print("Escribe el Titulo del libro: ");
         String askTitleFilter=scanner.nextLine();
-        List<Book> books= booksController.getBooksbyTitle(askTitleFilter);
+        Book book= booksController.getBookbyTitle(askTitleFilter);
+        List<Book> books = new ArrayList<>();
+        books.add(book);
         printBook(books, true);//poner true si quieres el menú con descripción
     }
 

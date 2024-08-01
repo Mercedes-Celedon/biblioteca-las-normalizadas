@@ -7,8 +7,7 @@ public interface BookDAOInterface {
     List<Book> getAllBooks();
     List<Book> getBooksbyGenres(String genre);
     List<Book> getBooksbyAuthors(String author);
-    List<Book> getBooksbyTitles(String title);
-    //Book getBookbyTitle(String title);
+    Book getBookbyTitle(String title);
     boolean bookExists(String title);
     int insertBook(String title, String description, String isbn, int stock, int id_language);
     void addBookAuthor(int bookId, int authorId) throws SQLException;
