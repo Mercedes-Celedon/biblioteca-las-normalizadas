@@ -12,6 +12,6 @@ public interface BookDAOInterface {
     int insertBook(String title, String description, String isbn, int stock, int id_language);
     void addBookAuthor(int bookId, int authorId) throws SQLException;
     void addBookGenre(int bookId, int genreId) throws SQLException;
-    void updateBook(Book book, int id_language);
+    String updateBook(Book book, int id_language);
     void deleteBook(int id);
 }
