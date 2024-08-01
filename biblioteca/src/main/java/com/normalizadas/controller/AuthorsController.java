@@ -28,8 +28,8 @@ public class AuthorsController {
     /**
      * Function name findOrCreateAuthor
      * @param name
-     * @return Author ()
-     * TODO
+     * @return Author (author's id)
+     * 
      */
     public Author findOrCreateAuthor(String name){
         Author author = authorDAOInterface.findOrCreateAuthor(name);
