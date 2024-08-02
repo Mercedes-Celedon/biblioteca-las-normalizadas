@@ -9,18 +9,20 @@ public class GenresController {
     private GenreDAOInterface genreDAOInterface;
 
     /**
-     * TODO
-     * @param genreDAOInterface
-     * constructor
+     * Function name: GenresController
+     * @param genreDAOInterface Genre Model
+     *                          Constructor of the genres controller
      */
     public GenresController(GenreDAOInterface genreDAOInterface){
         this.genreDAOInterface = genreDAOInterface;
     }
 
     /**
-     * TODO
-     * @param id
-     * @return
+     * Function name: getGenresByBook
+     *
+     * @param id    book id
+     * @return      List<Genre>
+     *              Gets the id of book and returns all of its genres
      */
     public List<Genre> getGenresByBook(int id){
         List<Genre> genres = genreDAOInterface.getGenres(id);
@@ -28,9 +30,10 @@ public class GenresController {
     }
 
     /**
-     * TODO
-     * @param name
-     * @return
+     * Function name findOrCreateGenre
+     * @param name  genre name
+     * @return      Genre
+     *              Calls GenreDAO and returns a Genre
      */
     public Genre findOrCreateGenre(String name){
         Genre newGenre = genreDAOInterface.findOrCreateGenre(name);
@@ -38,8 +41,10 @@ public class GenresController {
     }
 
     /**
-     * TODO
-     * @param updatedGenre
+     * Function name: updateGenre
+     * @param updatedGenre  The genre to update
+     * @return (String)     message
+     *                      Gets a genre by parameter and returns a message with the update result
      */
     public String updateGenre(Genre updatedGenre) {
         return genreDAOInterface.updateGenre(updatedGenre);

@@ -8,15 +8,18 @@ import java.util.ArrayList;
 import java.util.List;
 import com.normalizadas.config.DBManager;
 
-
 public class BookDAO implements BookDAOInterface {
 
     private Connection conn;
     private PreparedStatement stmn;
 
     /**
-     * TODO
-     * @param id
+     * Function name: deleteBook
+     * 
+     * @param id book id
+     *           This function deletes a book first from the table books_authors,
+     *           then from the table books_genres and finally from the main table
+     *           books
      */
     public void deleteBook(int id) {
 
@@ -54,8 +57,9 @@ public class BookDAO implements BookDAOInterface {
     }
 
     /**
-     * TODO
-     * @return
+     * Function name: getAllBooks
+     * @return  List<Book>
+     *          gets all books in db and returns a list of books
      */
     public List<Book> getAllBooks() {
         List<Book> books = new ArrayList<>();
@@ -85,9 +89,10 @@ public class BookDAO implements BookDAOInterface {
     }
 
     /**
-     * TODO
-     * @param genre
-     * @return
+     * Function name: getBooksbyGenres
+     * @param genre     genre name
+     * @return          List<Book>
+     *                  Gets by parameter a genre and returns all books that have said genre
      */
     public List<Book> getBooksbyGenres(String genre) {
         List<Book> books = new ArrayList<>();
@@ -122,9 +127,12 @@ public class BookDAO implements BookDAOInterface {
     }
 
     /**
-     * TODO
-     * @param author
-     * @return
+     * Function name: getBooksByAuthors
+     * @param author    author name
+     * @return          List<Book>
+     *                  Function that receives the author name as a parameter,
+     *                  and generates a list of books by connecting to the database,
+     *                  brings all the data associated with the search for the book by author.
      */
     public List<Book> getBooksbyAuthors(String author) {
         List<Book> books = new ArrayList<>();
@@ -163,9 +171,11 @@ public class BookDAO implements BookDAOInterface {
 
     /**
      * Function name: bookExists
+     * 
      * @param title book's title
-     * @return boolean 
-     * The function sends a query to the database, and it returns if the searched book exists or not
+     * @return      boolean
+     *              The function sends a query to the database, and it returns if the
+     *              searched book exists or not
      */
     public boolean bookExists(String title) {
         String sql = "SELECT id FROM books WHERE title = ?";
@@ -184,14 +194,16 @@ public class BookDAO implements BookDAOInterface {
     }
 
     /**
-     * @param title
-     * @param description
-     * @param isbn
-     * @param stock
-     * @param id_language
-     * @return int  book id
-     * This function updates the books table of the database
-     * then returns the corresponding id
+     * Function name: insertBook
+     *
+     * @param title         book title
+     * @param description   book description
+     * @param isbn          book isbn
+     * @param stock         quantity in stock
+     * @param id_language   book language id
+     * @return int          (book's id)
+     *         This function inserts a book in the database
+     *         then returns the corresponding id
      */
     public int insertBook(String title, String description, String isbn, int stock, int id_language) {
         String sql = "INSERT INTO books (title, description, isbn, stock, id_language) VALUES (?, ?, ?, ?, ?)";
@@ -219,9 +231,11 @@ public class BookDAO implements BookDAOInterface {
 
     /**
      * Function name addBookAuthor
-     * @param bookId
-     * @param authorId
-     * The function updates the associative table with the corresponding ids
+     * 
+     * @param bookId    book id
+     * @param authorId  author id
+     *                  The function inserts a relationship between book and author in the associative table with the
+     *                  corresponding ids
      */
     @Override
     public void addBookAuthor(int bookId, int authorId) throws SQLException {
@@ -240,9 +254,11 @@ public class BookDAO implements BookDAOInterface {
 
     /**
      * Function name addBookAuthor
-     * @param bookId
-     * @param genreId
-     * The function updates the associative table with the corresponding ids
+     * 
+     * @param bookId    book id
+     * @param genreId   genre id
+     *                  The function inserts a relationship between book and author in the associative table with the
+     *                  corresponding ids
      */
     @Override
     public void addBookGenre(int bookId, int genreId) throws SQLException {
@@ -262,9 +278,12 @@ public class BookDAO implements BookDAOInterface {
     }
 
     /**
-     * TODO
-     * @param title
-     * @return
+     * Function name: getBookbyTitle
+     * 
+     * @param title book title
+     * @return      book
+     *              The function sends a query to the db and returns the data of
+     *              the book if the book (title) exists
      */
     public Book getBookbyTitle(String title) {
         Book book = new Book();
@@ -286,21 +305,21 @@ public class BookDAO implements BookDAOInterface {
                 book.setStock(result.getInt("stock"));
                 book.setLanguage(result.getString("language"));
             }
-
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
             DBManager.closeConnection();
         }
         return book;
-
     }
 
     /**
-     * TODO
-     * 
-     * @param book
-     * @param id_language
+     * Function name: updateGenre
+     * @param book          a book
+     * @param id_language   the language id of the book
+     * @return String -     a success or error message
+     *                      Gets by parameter a book that has already the data updated and its language and executes the query that updates
+     *                      the bd entry.
      */
     @Override
     public String updateBook(Book book, int id_language) {
@@ -317,7 +336,8 @@ public class BookDAO implements BookDAOInterface {
             stmn.setInt(5, id_language);
             stmn.setInt(6, book.getId());
             int execution = stmn.executeUpdate();
-            message = (execution == 0) ? "\nNo se ha podido modificar el libro" : "\nEl libro se ha actualizado correctamente";
+            message = (execution == 0) ? "\nNo se ha podido modificar el libro"
+                    : "\nEl libro se ha actualizado correctamente";
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {

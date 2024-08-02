@@ -13,9 +13,10 @@ public class AuthorDAO implements AuthorDAOInterface {
     private PreparedStatement stmn;
 
     /**
-     * TODO
-     * @param id
-     * @return
+     * Function name: getAuthors
+     * @param id    book id
+     * @return      List<Author>
+     *              gets the id of a book and returns all of its authors
      */
     public List<Author> getAuthors(int id) {
         List<Author> authors = new ArrayList<>();
@@ -42,9 +43,12 @@ public class AuthorDAO implements AuthorDAOInterface {
     }
 
     /**
-     * TODO
-     * @param name
-     * @return
+     * Function name: findOrCreateAuthor
+     * @param name      author's name
+     * @return Author   (author's id)
+     *                  The function send a query to find if the author 
+     *                  is in the database already, and if it is, returns it's id
+     *                  If it is not in the database, it updates it.
      */
     public Author findOrCreateAuthor(String name)  {
         String sql = "SELECT id FROM authors WHERE name = ?";
@@ -65,7 +69,6 @@ public class AuthorDAO implements AuthorDAOInterface {
                 rs = stmn.getGeneratedKeys();
                 if (rs.next()) {
                     author.setId(rs.getInt(1));
-                    System.out.println(rs.getInt(1));
                     author.setName(name);
                 }
             }
@@ -79,8 +82,10 @@ public class AuthorDAO implements AuthorDAOInterface {
     }
 
     /**
-     * TODO
-     * @param author
+     * Function name: updateAuthor
+     * @param author an author object
+     * @return String - a success or error message
+     * Gets by parameter an author that has already the data updated and executes the query that updates the bd entry.
      */
     @Override
     public String updateAuthor(Author author) {

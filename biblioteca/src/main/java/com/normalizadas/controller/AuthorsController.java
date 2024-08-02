@@ -9,36 +9,44 @@ public class AuthorsController {
     private AuthorDAOInterface authorDAOInterface;
 
     /**
-     * TODO
-     * @param authorDAOInterface
+     * Function name: AuthorsController
+     * @param authorDAOInterface Author Model
+     *                           Constructor of the authors controller
      */
-    public AuthorsController(AuthorDAOInterface authorDAOInterface){
+    public AuthorsController(AuthorDAOInterface authorDAOInterface) {
         this.authorDAOInterface = authorDAOInterface;
     }
 
     /**
-     * TODO
-     * @param id
-     * @return
+     * Function name: getAuthorsByBook
+     *
+     * @param id book id
+     * @return   List<Author>
+     *           Gets the id of book and returns all of its authors
      */
-    public List<Author> getAuthorsByBook(int id){
+    public List<Author> getAuthorsByBook(int id) {
         List<Author> authors = authorDAOInterface.getAuthors(id);
         return authors;
     }
+
     /**
-     * Function name findOrCreateAuthor
-     * @param name
-     * @return Author ()
-     * TODO
+     * Function name: findOrCreateAuthor
+     *
+     * @param name  Author name
+     * @return      Author
+     *              Calls AuthorkDAO and returns an Author
      */
-    public Author findOrCreateAuthor(String name){
+    public Author findOrCreateAuthor(String name) {
         Author author = authorDAOInterface.findOrCreateAuthor(name);
         return author;
     }
 
     /**
-     * TODO
-     * @param updatedAuthor
+     * Function name: updateAuthor
+     *
+     * @param updatedAuthor The author to update
+     * @return (String)     message
+     *                      Gets an author by parameter and returns a message with the update result
      */
     public String updateAuthor(Author updatedAuthor) {
         return authorDAOInterface.updateAuthor(updatedAuthor);
