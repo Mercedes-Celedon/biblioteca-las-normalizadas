@@ -14,49 +14,6 @@ public class BookDAO implements BookDAOInterface {
     private PreparedStatement stmn;
 
     /**
-     * Function name: deleteBook
-     * 
-     * @param id book id
-     *           This function deletes a book first from the table books_authors,
-     *           then from the table books_genres and finally from the main table
-     *           books
-     */
-    public void deleteBook(int id) {
-
-        try {
-            conn = DBManager.getDbConnection();
-            String deleteBooksAuthors = "DELETE FROM books_authors WHERE id_book = ?";
-            try (PreparedStatement stmn = conn.prepareStatement(deleteBooksAuthors)) {
-                stmn.setInt(1, id);
-                stmn.executeUpdate();
-            }
-
-            String deleteBooksGenres = "DELETE FROM books_genres WHERE id_book = ?";
-            try (PreparedStatement stmn = conn.prepareStatement(deleteBooksGenres)) {
-                stmn.setInt(1, id);
-                stmn.executeUpdate();
-            }
-
-            String deleteBooks = "DELETE FROM books WHERE id = ?";
-            try (PreparedStatement stmn = conn.prepareStatement(deleteBooks)) {
-                stmn.setInt(1, id);
-                int row = stmn.executeUpdate();
-                if (row == 0) {
-                    System.out.println("No se ha podido borrar el registro.");
-                } else {
-                    System.out.println("Se ha borrado correctamente.");
-                }
-            }
-
-        } catch (SQLException e) {
-            System.out.println("Conexión fallida. " + e.getMessage());
-
-        } finally {
-            DBManager.closeConnection();
-        }
-    }
-
-    /**
      * Function name: getAllBooks
      * @return  List<Book>
      *          gets all books in db and returns a list of books
@@ -86,6 +43,42 @@ public class BookDAO implements BookDAOInterface {
             DBManager.closeConnection();
         }
         return books;
+    }
+
+    /**
+     * Function name: getBookbyTitle
+     *
+     * @param title book title
+     * @return      book
+     *              The function sends a query to the db and returns the data of
+     *              the book if the book (title) exists
+     */
+    public Book getBookbyTitle(String title) {
+        Book book = new Book();
+        String sql = "SELECT b.title, b.description, b.isbn, b.stock, b.id, l.language FROM books as b\n" +
+                "JOIN books_authors as ba ON b.id=ba.id_book\n" +
+                "JOIN authors as au ON ba.id_author=au.id\n" +
+                "JOIN languages as l ON l.id=b.id_language\n" +
+                "WHERE b.title = ?";
+        try {
+            conn = DBManager.getDbConnection();
+            stmn = conn.prepareStatement(sql);
+            stmn.setString(1, title);
+            ResultSet result = stmn.executeQuery();
+            while (result.next()) {
+                book.setId(result.getInt("id"));
+                book.setTitle(result.getString("title"));
+                book.setDescription(result.getString("description"));
+                book.setIsbn(result.getString("isbn"));
+                book.setStock(result.getInt("stock"));
+                book.setLanguage(result.getString("language"));
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            DBManager.closeConnection();
+        }
+        return book;
     }
 
     /**
@@ -278,42 +271,6 @@ public class BookDAO implements BookDAOInterface {
     }
 
     /**
-     * Function name: getBookbyTitle
-     * 
-     * @param title book title
-     * @return      book
-     *              The function sends a query to the db and returns the data of
-     *              the book if the book (title) exists
-     */
-    public Book getBookbyTitle(String title) {
-        Book book = new Book();
-        String sql = "SELECT b.title, b.description, b.isbn, b.stock, b.id, l.language FROM books as b\n" +
-                "JOIN books_authors as ba ON b.id=ba.id_book\n" +
-                "JOIN authors as au ON ba.id_author=au.id\n" +
-                "JOIN languages as l ON l.id=b.id_language\n" +
-                "WHERE b.title = ?";
-        try {
-            conn = DBManager.getDbConnection();
-            stmn = conn.prepareStatement(sql);
-            stmn.setString(1, title);
-            ResultSet result = stmn.executeQuery();
-            while (result.next()) {
-                book.setId(result.getInt("id"));
-                book.setTitle(result.getString("title"));
-                book.setDescription(result.getString("description"));
-                book.setIsbn(result.getString("isbn"));
-                book.setStock(result.getInt("stock"));
-                book.setLanguage(result.getString("language"));
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        } finally {
-            DBManager.closeConnection();
-        }
-        return book;
-    }
-
-    /**
      * Function name: updateGenre
      * @param book          a book
      * @param id_language   the language id of the book
@@ -344,5 +301,48 @@ public class BookDAO implements BookDAOInterface {
             DBManager.closeConnection();
         }
         return message;
+    }
+
+    /**
+     * Function name: deleteBook
+     *
+     * @param id book id
+     *           This function deletes a book first from the table books_authors,
+     *           then from the table books_genres and finally from the main table
+     *           books
+     */
+    public void deleteBook(int id) {
+
+        try {
+            conn = DBManager.getDbConnection();
+            String deleteBooksAuthors = "DELETE FROM books_authors WHERE id_book = ?";
+            try (PreparedStatement stmn = conn.prepareStatement(deleteBooksAuthors)) {
+                stmn.setInt(1, id);
+                stmn.executeUpdate();
+            }
+
+            String deleteBooksGenres = "DELETE FROM books_genres WHERE id_book = ?";
+            try (PreparedStatement stmn = conn.prepareStatement(deleteBooksGenres)) {
+                stmn.setInt(1, id);
+                stmn.executeUpdate();
+            }
+
+            String deleteBooks = "DELETE FROM books WHERE id = ?";
+            try (PreparedStatement stmn = conn.prepareStatement(deleteBooks)) {
+                stmn.setInt(1, id);
+                int row = stmn.executeUpdate();
+                if (row == 0) {
+                    System.out.println("No se ha podido borrar el registro.");
+                } else {
+                    System.out.println("Se ha borrado correctamente.");
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Conexión fallida. " + e.getMessage());
+
+        } finally {
+            DBManager.closeConnection();
+        }
     }
 }
