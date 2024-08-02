@@ -170,14 +170,14 @@ public class BookView {
      */
     public void showUpdateMenu() {
         scanner.nextLine();
-        System.out.println("Introduce el título del libro que quieres modificar:");
+        System.out.println("\nIntroduce el título del libro que quieres modificar:");
         String title = scanner.nextLine();
 
         if (!booksController.bookExists(title)) {
             System.out.println("\nError, el libro no existe. \nSaliendo al menú principal.");
         } else {
             Book book = booksController.getBookbyTitle(title);
-            System.out.println("Vas a modificar el libro -> " + book.getTitle() +
+            System.out.println("\nVas a modificar el libro -> " + book.getTitle() +
                     "\nPor favor selecciona el número de la opción deseada:" +
                     "\n1. Modificar características del libro (Título, Descripción, ISBN, Stock o Idioma" +
                     "\n2. Corregir el nombre del autor." +
@@ -434,7 +434,7 @@ public class BookView {
         data = scanner.nextLine();
         book.setLanguage(!data.isEmpty() ? data : book.getLanguage());
 
-        booksController.updateBook(book, getIdLanguage(book.getLanguage()));
+        System.out.println(booksController.updateBook(book, getIdLanguage(book.getLanguage())));
     }
 
     /**
@@ -450,12 +450,12 @@ public class BookView {
     public void updateAuthor(List<Author> authors, Book book) {
 
         for (Author author : authors) {
-            System.out.println("Nombre actual del autor -> " + author.getName());
+            System.out.println("\nNombre actual del autor -> " + author.getName());
             System.out.print("Autor corregido -> ");
             String name = scanner.nextLine();
             if (!name.isEmpty()) {
                 author.setName(name);
-                authorsController.updateAuthor(author);
+                System.out.println(authorsController.updateAuthor(author));
             }
         }
     }
@@ -472,12 +472,12 @@ public class BookView {
      */
     public void updateGenre(List<Genre> genres, Book book) {
         for (Genre genre : genres) {
-            System.out.println("Nombre actual del genero -> " + genre.getGenre());
+            System.out.println("\nNombre actual del genero -> " + genre.getGenre());
             System.out.print("Genero corregido -> ");
             String genreName = scanner.nextLine();
             if (!genreName.isEmpty()) {
                 genre.setGenre(genreName);
-                genresController.updateGenre(genre);
+                System.out.println(genresController.updateGenre(genre));
             }
         }
     }
